@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>lords</title>
+  <script src="../../jsgame0.js"></script>
+  <style type="text/css" media="screen">
+@font-face {
+  font-family: 'blackchancery';
+  src: url('fonts/blackchancery.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  background-color: white;
+  color: black;
+}
+.hidden {
+  display: none;
+}
+#original {
+  margin-left: 1em;
+}
+  </style>
+</head>
+
+<body>
+<section id="imageLoader" class="hidden">
+  <img class="hidden" src="images/background.png" alt="background" data-name="background">
+  <img class="hidden" src="images/landscape.png" alt="landscape" data-name="landscape">
+  <img class="hidden" src="images/mountain1.png" alt="mountain1" data-name="mountain1">
+  <img class="hidden" src="images/tower1.png" alt="tower1" data-name="tower1">
+  <img class="hidden" src="images/tree1.png" alt="tree1" data-name="tree1">
+</section>
+
+<main>
+<h1>lords</h1>
+
+<canvas id="screen">
+The game screen appears here if your browser supports the Canvas API.
+</canvas>
+<section id="controls">
+  <button type="button" id="reset">Reset</button>
+  <button type="button" id="pause">Pause</button>
+</section>
+
+<h2>Attribution</h2>
+
+<p><a href="https://wireframe.raspberrypi.com/issues/57">Code your own landscape engine, pages 66-67, by Mark Vanstone</a>.</p>
+
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported</a>.</p>
+
+<p><a href="https://www.raspberrypi.com/news/code-your-own-landscape-engine-wireframe-57/">Blog post of Source Code</a>.</p>
+
+<h2>Original Python code</h2>
+
+<pre id="original"><code>
+# The Lords of Midnight
+import pgzrun
+from pygame import transform, image, Color
+
+playerx = 50
+playery = 50
+playerdir = 0
+myDirs = [(0,1, &quot;North&quot;),(-1,1, &quot;North East&quot;),(-1,0, &quot;East&quot;),(-1,-1, &quot;South East&quot;),(0,-1, &quot;South&quot;),(1,-1, &quot;South West&quot;),(1,0, &quot;West&quot;),(1,1, &quot;North West&quot;)]
+landscape = image.load(&#x27;images/landscape.png&#x27;)
+tree = image.load(&#x27;images/tree1.png&#x27;)
+mountain = image.load(&#x27;images/mountain1.png&#x27;)
+tower = image.load(&#x27;images/tower1.png&#x27;)
+
+def draw():
+    screen.blit(&quot;background&quot;, (0, 0))
+    drawLandscape()
+    d = int(playerdir/45)
+    if d &gt; 7: d -= 8
+    screen.draw.text(&quot;You are facing &quot;+myDirs[d][2], center = (400, 50), owidth=0.5, ocolor=(255,255,255), color=(0,0,0) , fontsize=60, fontname=&quot;blackchancery&quot; )
+
+def update():
+    pass
+
+def on_key_down(key):
+    global playerdir
+    if key.name == &quot;RIGHT&quot;:
+        playerdir += 45
+        if playerdir &gt; 360: playerdir -= 360
+    if key.name == &quot;LEFT&quot;:
+        playerdir -= 45
+        if playerdir &lt; 0: playerdir += 360
+    if key.name == &quot;UP&quot;:
+        movePlayer()
+
+def drawLandscape():
+    global gameStatus
+    rotatedLand = rotatedLandscape()
+    playerpos = getPlayerPos(rotatedLand)
+    x = playerpos[0]
+    y = playerpos[1]
+    for r in range(9,0,-1):
+        for c in range(-5*int(r/2),5*int(r/2),1):
+            pixel = rotatedLand.get_at((x-c,y-r))
+            s = r*10
+            d = (10-r)*20
+            if pixel == Color(&#x27;blue&#x27;):
+                i = transform.scale(mountain, ((10-r)*50, (10-r)*40))
+                screen.blit(i,(200+s-(d*c),180+(r*5)))
+            if pixel == Color(&#x27;green&#x27;):
+                i = transform.scale(tree, ((10-r)*20, (10-r)*20))
+                screen.blit(i,(290+s-(d*c),310-(r*8)))
+            if pixel == Color(&#x27;red&#x27;):
+                i = transform.scale(tower, ((10-r)*20, (10-r)*20))
+                screen.blit(i,(290+s-(d*c),310-(r*8)))
+
+def rotatedLandscape():
+    land = landscape.copy()
+    land.set_at((playerx,playery),Color(&quot;black&quot;))
+    land.set_at((playerx+1,playery),Color(&quot;black&quot;))
+    rotated_image = transform.rotate(land, playerdir)
+    return rotated_image
+
+def getPlayerPos(i):
+    s = i.get_size()
+    for x in range(s[0]):
+        for y in range(s[1]):
+            if i.get_at((x,y)) == Color(&quot;black&quot;): return (x,y)
+
+def movePlayer():
+    global playerx, playery
+    d = int(playerdir/45)
+    if d &gt; 7: d -= 8
+    if playerx - myDirs[d][0] &gt; 25 and playerx - myDirs[d][0] &lt; 75 and playery - myDirs[d][1] &gt; 25 and playery - myDirs[d][1] &lt;75:
+        playerx -= myDirs[d][0]
+        playery -= myDirs[d][1]
+
+pgzrun.go()
+</code></pre>
+</main>
+
+<script>
+// The Lords of Midnight
+
+var playerx, playery, playerdir;
+
+const myDirs = [[0, 1, "North"], [-1, 1, "North East"], [-1, 0, "East"], [-1, -1, "South East"], [0, -1, "South"], [1, -1, "South West"], [1, 0, "West"], [1, 1, "North West"]];
+
+function reset() {
+  playerx = 50;
+  playery = 50;
+  playerdir = 0;
+}
+
+function draw() {
+  drawLandscape();
+  let d = Math.trunc(playerdir / 45);
+  if (d > 7) {
+    d -= 8;
+  }
+  screen.draw.text("You are facing " + myDirs[d][2], {
+    center: [400, 50],
+    owidth: 0.5,
+    ocolor: [255, 255, 255],
+    color: [0, 0, 0],
+    fontsize: 60,
+    fontname: "blackchancery"
+  });
+}
+
+function on_key_down(key) {
+  if (key === keys.RIGHT) {
+    playerdir += 45;
+    if (playerdir > 360) {
+      playerdir -= 360;
+    }
+  }
+  if (key === keys.LEFT) {
+    playerdir -= 45;
+    if (playerdir < 0) {
+      playerdir += 360;
+    }
+  }
+  if (key === keys.UP) {
+    movePlayer();
+  }
+}
+
+function drawLandscape() {
+  let [surface, x, y] = rotatedLandscape(),
+      pixel, s, d;
+
+  screen.blit("background", [0, 0]);
+  for (let r = 9; r > 0; r--) {
+    for (let c = -5 * Math.trunc(r / 2); c < 5 * Math.trunc(r / 2); c++) {
+      pixel = surface.getAt(x - c, y - r);
+      s = r * 10;
+      d = (10 - r) * 20;
+      if (Surface.isColorEqual(pixel, [0, 0, 255])) {
+        screen.blit('mountain1', new Rect(0, 0, images['mountain1'].width, images['mountain1'].height), new Rect(200 + s - (d * c), 180 + (r * 5), (10 - r) * 50, (10 - r) * 40));
+      }
+      if (Surface.isColorEqual(pixel, [0, 255, 0])) {
+        screen.blit('tree1', new Rect(0, 0, images['tree1'].width, images['tree1'].height), new Rect(290 + s - (d * c), 310 - (r * 8), (10 - r) * 20, (10 - r) * 20));
+      }
+      if (Surface.isColorEqual(pixel, [255, 0, 0])) {
+        screen.blit('tower1', new Rect(0, 0, images['tower1'].width, images['tower1'].height), new Rect(290 + s - (d * c), 310 - (r * 8), (10 - r) * 20, (10 - r) * 20));
+      }
+    }
+  }
+}
+
+function rotatedLandscape() {
+  screen.fill([0, 255, 0]);
+  let landscape = new Actor('landscape');
+  landscape.anchor = [playerx, playery];
+  landscape.angle = playerdir;
+  landscape.draw();
+  return [screen.getSurface(), playerx, playery];
+}
+
+function movePlayer() {
+  let d = Math.trunc(playerdir / 45);
+  if (d > 7) {
+    d -= 8;
+  }
+  if (((playerx - myDirs[d][0]) > 25) && ((playerx - myDirs[d][0]) < 75) && ((playery - myDirs[d][1]) > 25) && ((playery - myDirs[d][1]) < 75)) {
+    playerx -= myDirs[d][0];
+    playery -= myDirs[d][1];
+  }
+}
+
+window.addEventListener('load', (event) => {
+  images.LOAD('#imageLoader img');
+  reset();
+  screen.set_mode('#screen', '#reset', '#pause');
+});
+</script>
+</body>
+
+</html>
