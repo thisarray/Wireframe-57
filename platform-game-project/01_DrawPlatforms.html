@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing01_DrawPlatforms</title>
+  <script src="../../jsgame0.js"></script>
+  <style type="text/css" media="screen">
+body {
+  background-color: white;
+  color: black;
+}
+.hidden {
+  display: none;
+}
+#original {
+  margin-left: 1em;
+}
+  </style>
+</head>
+
+<body>
+
+<main>
+<h1>Listing01_DrawPlatforms</h1>
+
+<canvas id="screen">
+The game screen appears here if your browser supports the Canvas API.
+</canvas>
+<section id="controls">
+  <button type="button" id="reset">Reset</button>
+  <button type="button" id="pause">Pause</button>
+</section>
+
+<pre id="output"></pre>
+
+<h2>Attribution</h2>
+
+<p><a href="https://wireframe.raspberrypi.com/issues/57">Make your own retro platformer, pages 50-55, by Jordi Sontanja</a>.</p>
+
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported</a>.</p>
+
+<h2>Original Python code</h2>
+
+<pre id="original"><code>
+# Draw platforms program:
+# - Mouse click: add line to current platform
+# - Delete or Backspace: delete last line
+# - Return: add new platform
+# - Space: print the platforms
+import pgzrun
+from pygame import image, Color, Surface
+
+lines = [[]]
+
+usePoint = False
+lastPoint = (0,0)
+
+def draw():
+    screen.clear()
+    for line in lines:
+        for i in range(1, len(line)):
+            screen.draw.line(line[i-1], line[i], (255,255,255))
+    if usePoint and len(lines[-1]) &gt; 0:
+        screen.draw.line(lines[-1][-1], lastPoint, (255,255,255))
+
+def update(dt):
+    pass
+
+def on_mouse_down(pos, button):
+    global usePoint, lastPoint
+    usePoint = True
+    lastPoint = pos
+
+def on_mouse_up(pos):
+    global usePoint
+    lines[-1].append(pos)
+    usePoint = False
+
+def on_mouse_move(pos):
+    global lastPoint
+    lastPoint = pos
+
+def on_key_down(key):
+    if key == keys.SPACE:
+        print(str(lines))
+    elif key == keys.RETURN:
+        lines.append([])
+    elif len(lines[-1]) &gt; 0 and (key == keys.BACKSPACE or key == keys.DELETE):
+        lines[-1].pop(len(lines[-1]) - 1)
+
+pgzrun.go()
+</code></pre>
+</main>
+
+<script>
+/*
+ * Draw platforms program:
+ * - Mouse click: add line to current platform
+ * - Delete or Backspace: delete last line
+ * - Return: add new platform
+ * - Space: print the platforms
+ */
+
+const output = document.querySelector('#output');
+
+var lines, usePoint, lastPoint;
+
+function reset() {
+  lines = [[]];
+
+  usePoint = false;
+  lastPoint = [0, 0];
+}
+
+function draw() {
+  screen.clear();
+  for (let line of lines) {
+    for (let i = 1; i < line.length; i++) {
+      screen.draw.line(line[i-1], line[i], [255, 255, 255]);
+    }
+  }
+  let length = lines[lines.length-1].length;
+  if (usePoint && (length > 0)) {
+    screen.draw.line(lines[lines.length-1][length-1], lastPoint, [255, 255, 255]);
+  }
+}
+
+function on_mouse_down(pos, button) {
+  usePoint = true;
+  lastPoint = pos;
+}
+
+function on_mouse_up(pos) {
+  lines[lines.length-1].push(pos);
+  usePoint = false;
+}
+
+function on_mouse_move(pos){
+  lastPoint = pos;
+}
+
+function on_key_down(key) {
+  if (key === keys.SPACE) {
+    output.textContent = JSON.stringify(lines, null, 2);
+  }
+  else if (key === keys.RETURN) {
+    lines.push([]);
+  }
+  else if ((lines[lines.length-1].length > 0) && ((key === keys.BACKSPACE) || (key === keys.DELETE))) {
+    lines[lines.length-1].pop();
+  }
+}
+
+window.addEventListener('load', (event) => {
+  reset();
+  screen.set_mode('#screen', '#reset', '#pause');
+});
+</script>
+</body>
+
+</html>
