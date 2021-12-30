@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing09_PrototypeShootCollectables</title>
+  <script src="../../jsgame0.js"></script>
+  <style type="text/css" media="screen">
+body {
+  background-color: white;
+  color: black;
+}
+.hidden {
+  display: none;
+}
+#original {
+  margin-left: 1em;
+}
+  </style>
+</head>
+
+<body>
+
+<main>
+<h1>Listing09_PrototypeShootCollectables</h1>
+
+<canvas id="screen">
+The game screen appears here if your browser supports the Canvas API.
+</canvas>
+<section id="controls">
+  <button type="button" id="reset">Reset</button>
+  <button type="button" id="pause">Pause</button>
+</section>
+
+<h2>Attribution</h2>
+
+<p><a href="https://wireframe.raspberrypi.com/issues/57">Make your own retro platformer, pages 50-55, by Jordi Sontanja</a>.</p>
+
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported</a>.</p>
+
+<h2>Original Python code</h2>
+
+<pre id="original"><code>
+# Player movement prototype program:
+# - Cursor left-right: move player
+# - Cursor up: player jump
+# - Space: shoot a collectable piece
+import pgzrun
+from random import randint
+from pygame import image, Color, Surface
+from shapely.geometry import Point, Polygon, LineString
+from shapely.affinity import translate
+import math
+
+surfaces = [[(0, 567), (135, 570), (312, 566), (566, 563), (731, 570), (799, 569)], [(85, 472), (188, 469), (287, 470)],
+            [(457, 472), (592, 469), (705, 470)], [(247, 336), (370, 334), (489, 335)],
+            [(73, 232), (153, 226), (264, 220), (357, 221)], [(437, 223), (606, 219), (727, 219)],
+            [(150, 97), (53, 90), (0, 89)], [(603, 95), (715, 91), (799, 89)], [(288, 26), (421, 24), (521, 22)],
+            [(61, -101), (188, -106), (326, -106)], [(447, -103), (601, -109), (757, -109)],
+            [(271, -217), (388, -217), (520, -219)], [(221, -329), (87, -327), (0, -327)],
+            [(532, -327), (693, -331), (799, -333)], [(184, -463), (344, -463), (516, -464), (652, -466)],
+            [(193, -588), (104, -615), (29, -644), (0, -649)],
+            [(618, -585), (722, -638), (789, -667), (799, -669)], [(0, -750), (799, -750)]]
+surfaceLines = [LineString(surfaces[i]) for i in range(len(surfaces))]
+
+playerHalfSize = 15
+playerAccelerationDown = 0.5
+playerJumpSpeed = 12
+playerTerminalSpeed = 12
+playerLateralSpeed = 4
+coyoteTimeVerticalSpeed = 4
+
+screenPosition = 0
+
+collectableHalfSize = 10
+
+class CollectableFlying:
+    def __init__(self, startX, startY):
+        self.centre = [startX, startY]
+        self.speedX = randint(-startX,800-startX)/100
+        self.speedY = randint(-6,-4)  #-5
+        self.accelerationDown = 0.1
+        #print(str(self.centre))
+    def draw(self):
+        points = [(self.centre[0]-collectableHalfSize, self.centre[1]),
+                  (self.centre[0], self.centre[1]-collectableHalfSize),
+                  (self.centre[0]+collectableHalfSize, self.centre[1]),
+                  (self.centre[0], self.centre[1]+collectableHalfSize)]
+        for i in range(len(points)):
+            screen.draw.line((points[i-1][0], points[i-1][1]-screenPosition),
+                             (points[i][0], points[i][1]-screenPosition), (32,32,255))
+    def update(self):
+        self.centre[0] += self.speedX
+        if self.centre[0] &lt; collectableHalfSize or self.centre[0] &gt; 800 - collectableHalfSize:
+            self.centre[0] -= self.speedX
+            self.speedX = 0
+        self.speedY += self.accelerationDown
+        self.centre[1] += self.speedY
+    def checkCollission(self):
+        if self.speedY &gt; 1:
+            for platform in surfaceLines:
+                bottomLine = LineString([(self.centre[0]-collectableHalfSize, self.centre[1]),
+                                         (self.centre[0], self.centre[1]+collectableHalfSize),
+                                         (self.centre[0]+collectableHalfSize, self.centre[1])])
+                intersection = bottomLine.intersection(platform)
+                if not intersection.is_empty:
+                    point = [self.centre[0], self.centre[1]]
+                    if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                        point[1] = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - collectableHalfSize
+                    elif intersection.geom_type == &#x27;Point&#x27;:
+                        point[1] = intersection.coords[0][1] - collectableHalfSize
+                    return True, point
+        return False, [0,0]
+
+class Collectable:
+    def __init__(self, startX, startY):
+        self.centre = [startX, startY]
+        self.creationTime = 0
+    def draw(self):
+        points = [(self.centre[0]-collectableHalfSize, self.centre[1]),
+                  (self.centre[0], self.centre[1]-collectableHalfSize),
+                  (self.centre[0]+collectableHalfSize, self.centre[1]),
+                  (self.centre[0], self.centre[1]+collectableHalfSize)]
+        for i in range(len(points)):
+            screen.draw.line((points[i-1][0], points[i-1][1]-screenPosition),
+                             (points[i][0], points[i][1]-screenPosition), (128,128,255))
+    def update(self):
+        self.creationTime += 1
+
+class Collectables:
+    def __init__(self):
+        self.collectablesFlying = []
+        self.collectables = []
+    def addCollectable(self, startX, startY):
+        self.collectablesFlying.append(CollectableFlying(startX, startY))
+    def draw(self):
+        for collectable in self.collectablesFlying:
+            collectable.draw()
+        for collectable in self.collectables:
+            collectable.draw()
+    def update(self):
+        for collectable in self.collectablesFlying:
+            collectable.update()
+        for collectable in self.collectables:
+            collectable.update()
+        for i in reversed(range(len(self.collectablesFlying))):
+            collission, point = self.collectablesFlying[i].checkCollission()
+            if collission:
+                self.collectables.append(Collectable(point[0], point[1]))
+                del self.collectablesFlying[i]
+            elif self.collectablesFlying[i].centre[1] &gt; 600 + collectableHalfSize:
+                del self.collectablesFlying[i]
+
+allCollectables = Collectables()
+
+def shootCollectable(posX, posY):
+    allCollectables.addCollectable(posX, posY)
+
+class Player:
+    def __init__(self):
+        self.centre = [400, 500]
+        self.centredLineString = LineString([(-playerHalfSize,-playerHalfSize*0),
+                                             (-playerHalfSize,playerHalfSize),
+                                             (playerHalfSize,playerHalfSize),
+                                             (playerHalfSize,-playerHalfSize*0)])
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+        self.polygon = Polygon(self.lineString)
+        self.speedY = 0
+        self.directionX = -1
+        self.jumping = False
+    def draw(self):
+        #print(str(self.centre))
+        for i in range(len(self.lineString.coords)):
+            screen.draw.line((self.lineString.coords[i-1][0],self.lineString.coords[i-1][1]-screenPosition),
+                             (self.lineString.coords[i][0],self.lineString.coords[i][1]-screenPosition), (255,0,0))
+    def update(self, platforms):
+        if self.speedY &gt;= 0:
+            for platform in platforms:
+                if not self.jumping:
+                    intersection = self.polygon.intersection(platform)
+                else:
+                    bottomLine = LineString([(self.centre[0]-playerHalfSize, self.centre[1]+playerHalfSize-2),
+                                             (self.centre[0]-playerHalfSize, self.centre[1]+playerHalfSize+self.speedY+2),
+                                             (self.centre[0]+playerHalfSize, self.centre[1]+playerHalfSize+self.speedY+2),
+                                             (self.centre[0]+playerHalfSize, self.centre[1]+playerHalfSize-2)])
+                    intersection = bottomLine.intersection(platform)
+                if not intersection.is_empty:
+                    newPositionY = self.centre[1]
+                    if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                        newPositionY = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - playerHalfSize
+                    elif intersection.geom_type == &#x27;Point&#x27;:
+                        newPositionY = intersection.coords[0][1] - playerHalfSize
+                    elif intersection.geom_type == &#x27;LineString&#x27;:
+                        newPositionY = min(intersection.coords, key=lambda x: x[1])[1] - playerHalfSize
+                    if self.centre[1] &gt; newPositionY:
+                        self.centre[1] = newPositionY
+                    self.speedY = 0
+                    self.jumping = False
+            if not self.jumping and self.speedY &gt;= coyoteTimeVerticalSpeed:
+                self.jumping = True
+        if self.centre[1] &gt; 600 - playerHalfSize:
+            self.centre[1] = 600 - playerHalfSize
+            self.speedY = 0
+            self.jumping = False
+        else:
+            self.speedY += playerAccelerationDown
+        if self.speedY &gt; playerTerminalSpeed:
+            self.speedY = playerTerminalSpeed
+        self.centre[1] += self.speedY
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+        self.polygon = Polygon(self.lineString)
+    def jump(self):
+        if not self.jumping:
+            self.speedY = -playerJumpSpeed
+            self.jumping = True
+    def left(self):
+        self.centre[0] -= playerLateralSpeed
+        self.directionX = -1
+        if self.centre[0] &lt; playerHalfSize:
+            self.centre[0] = playerHalfSize
+    def right(self):
+        self.centre[0] += playerLateralSpeed
+        self.directionX = 1
+        if self.centre[0] &gt; 800 - playerHalfSize:
+            self.centre[0] = 800 - playerHalfSize
+
+player = Player()
+
+def draw():
+    screen.clear()
+    for surface in surfaceLines:
+        for i in range(1, len(surface.coords)):
+            screen.draw.line((surface.coords[i-1][0], surface.coords[i-1][1]-screenPosition),
+                             (surface.coords[i][0], surface.coords[i][1]-screenPosition), (255,255,255))
+    player.draw()
+    allCollectables.draw()
+
+def screenPositionUpdate(player):
+    global screenPosition
+    if player.centre[1] - screenPosition &lt; 150:
+        screenPosition = player.centre[1] - 150
+    elif player.centre[1] - screenPosition &gt; 600 - 150:
+        screenPosition = player.centre[1] - (600 - 150)
+        if screenPosition &gt; 0:
+            screenPosition = 0
+
+def update(dt):
+    global screenPosition
+    if keyboard.left:
+        player.left()
+    elif keyboard.right:
+        player.right()
+    if keyboard.up:
+        player.jump()
+    player.update(surfaceLines)
+    allCollectables.update()
+    screenPositionUpdate(player)
+
+def on_key_down(key):
+    if key == keys.SPACE:
+        shootCollectable(player.centre[0], player.centre[1])
+
+pgzrun.go()
+</code></pre>
+</main>
+
+<script>
+/*
+ * Player movement prototype program:
+ * - Cursor left-right: move player
+ * - Cursor up: player jump
+ * - Space: shoot a collectable piece
+ */
+
+const PLATFORMS = [[[0, 567], [135, 570], [312, 566], [566, 563], [731, 570], [799, 569]],
+                   [[85, 472], [188, 469], [287, 470]],
+                   [[457, 472], [592, 469], [705, 470]],
+                   [[247, 336], [370, 334], [489, 335]],
+                   [[73, 232], [153, 226], [264, 220], [357, 221]],
+                   [[437, 223], [606, 219], [727, 219]],
+                   [[150, 97], [53, 90], [0, 89]],
+                   [[603, 95], [715, 91], [799, 89]],
+                   [[288, 26], [421, 24], [521, 22]],
+                   [[61, -101], [188, -106], [326, -106]],
+                   [[447, -103], [601, -109], [757, -109]],
+                   [[271, -217], [388, -217], [520, -219]],
+                   [[221, -329], [87, -327], [0, -327]],
+                   [[532, -327], [693, -331], [799, -333]],
+                   [[184, -463], [344, -463], [516, -464], [652, -466]],
+                   [[193, -588], [104, -615], [29, -644], [0, -649]],
+                   [[618, -585], [722, -638], [789, -667], [799, -669]],
+                   [[0, -750], [799, -750]]];
+
+const PLAYER_HALF_SIZE = 15;
+const PLAYER_ACCELERATION_DOWN = 0.5;
+const PLAYER_JUMP_SPEED = 12;
+const PLAYER_TERMINAL_SPEED = 12;
+const PLAYER_LATERAL_SPEED = 4;
+const COYOTE_TIME_VERTICAL_SPEED = 4;
+
+const COLLECTABLE_HALF_SIZE = 10;
+
+/*
+ * Return a random integer N such that min <= N < max.
+ */
+function getRandomInteger(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor((Math.random() * (max - min)) + min);
+}
+
+/*
+ * Return an Array of coordinates where boundingBox has collided with the platforms in surface.
+ *
+ * Due to smoothing to approximate lines that are not strictly horizontal or vertical,
+ * it is easier to check a particular pixel is not the background color than
+ * to check a particular pixel is of a particular color.
+ */
+function intersection(surface, boundingBox, background = [0, 0, 0]) {
+  let area = (new Rect(0, 0, surface.width, surface.height)).clip(boundingBox),
+      xMin = Math.floor(area.left),
+      xMax = Math.ceil(area.right),
+      yMin = Math.floor(area.top),
+      yMax = Math.ceil(area.bottom),
+      result = [];
+  for (let x = xMin; x < xMax; x++) {
+    for (let y = yMin; y < yMax; y++) {
+      if (!Surface.isColorEqual(surface.getAt(x, y), background)) {
+        result.push([x, y]);
+      }
+    }
+  }
+  return result;
+}
+
+class CollectableFlying {
+  constructor(startX, startY) {
+    this.centre = [startX, startY];
+    this.speedX = getRandomInteger(-startX, 800 - startX + 1) / 100;
+    this.speedY = getRandomInteger(-6, -3);  //-5
+    this.accelerationDown = 0.1;
+  }
+
+  draw() {
+    let points = [[this.centre[0] - COLLECTABLE_HALF_SIZE, this.centre[1]],
+                  [this.centre[0], this.centre[1] - COLLECTABLE_HALF_SIZE],
+                  [this.centre[0] + COLLECTABLE_HALF_SIZE, this.centre[1]],
+                  [this.centre[0], this.centre[1] + COLLECTABLE_HALF_SIZE]],
+        lastPoint;
+    for (let i = 0; i < points.length; i++) {
+      if (i <= 0) {
+        lastPoint = [points[points.length-1][0], points[points.length-1][1] - screenPosition];
+      }
+      else {
+        lastPoint = [points[i-1][0], points[i-1][1] - screenPosition];
+      }
+      screen.draw.line(lastPoint, [points[i][0], points[i][1] - screenPosition], [32, 32, 255]);
+    }
+  }
+
+  update() {
+    this.centre[0] += this.speedX;
+    if ((this.centre[0] < COLLECTABLE_HALF_SIZE) || (this.centre[0] > (800 - COLLECTABLE_HALF_SIZE))) {
+      this.centre[0] -= this.speedX;
+      this.speedX = 0;
+    }
+    this.speedY += this.accelerationDown;
+    this.centre[1] += this.speedY;
+  }
+
+  checkCollission(surface) {
+    if (surface == null) {
+      return [false, [0, 0]];
+    }
+
+    if (this.speedY > 1) {
+      let boundingBox = new Rect(this.centre[0] - COLLECTABLE_HALF_SIZE, this.centre[1], COLLECTABLE_HALF_SIZE * 2, COLLECTABLE_HALF_SIZE),
+          result, point;
+
+      // Convert from global coordinates to screen coordinates
+      boundingBox.move_ip(0, -screenPosition);
+
+      result = intersection(surface, boundingBox);
+      if (result.length > 0) {
+        point = [this.centre[0], this.centre[1]];
+        if (result.length > 1) {
+          point[1] = Math.min(...result.map(c => c[1])) - COLLECTABLE_HALF_SIZE;
+        }
+        else if (result.length === 1) {
+          point[1] = result[0][1] - COLLECTABLE_HALF_SIZE;
+        }
+
+        // Convert from screen coordinates to global coordinates
+        point[1] += screenPosition;
+
+        return [true, point];
+      }
+    }
+    return [false, [0, 0]];
+  }
+}
+
+class Collectable {
+  constructor(startX, startY) {
+    this.centre = [startX, startY];
+    this.creationTime = 0;
+  }
+
+  draw() {
+    let points = [[this.centre[0] - COLLECTABLE_HALF_SIZE, this.centre[1]],
+                  [this.centre[0], this.centre[1] - COLLECTABLE_HALF_SIZE],
+                  [this.centre[0] + COLLECTABLE_HALF_SIZE, this.centre[1]],
+                  [this.centre[0], this.centre[1] + COLLECTABLE_HALF_SIZE]],
+        lastPoint;
+    for (let i = 0; i < points.length; i++) {
+      if (i <= 0) {
+        lastPoint = [points[points.length-1][0], points[points.length-1][1] - screenPosition];
+      }
+      else {
+        lastPoint = [points[i-1][0], points[i-1][1] - screenPosition];
+      }
+      screen.draw.line(lastPoint, [points[i][0], points[i][1] - screenPosition], [128, 128, 255]);
+    }
+  }
+
+  update() {
+    this.creationTime += 1;
+  }
+}
+
+class Collectables {
+  constructor() {
+    this.collectablesFlying = [];
+    this.collectables = [];
+  }
+
+  addCollectable(startX, startY) {
+    this.collectablesFlying.push(new CollectableFlying(startX, startY));
+  }
+
+  draw() {
+    for (let collectable of this.collectablesFlying) {
+      collectable.draw();
+    }
+    for (let collectable of this.collectables) {
+      collectable.draw();
+    }
+  }
+
+  update(surface) {
+    for (let collectable of this.collectablesFlying) {
+      collectable.update();
+    }
+    for (let collectable of this.collectables) {
+      collectable.update();
+    }
+    for (let i = this.collectablesFlying.length - 1; i >= 0; i--) {
+      let [collission, point] = this.collectablesFlying[i].checkCollission(surface);
+      if (collission) {
+        this.collectables.push(new Collectable(point[0], point[1]));
+        this.collectablesFlying.splice(i, 1);
+      }
+      else if (this.collectablesFlying[i].centre[1] > (600 + COLLECTABLE_HALF_SIZE)) {
+        this.collectablesFlying.splice(i, 1);
+      }
+    }
+  }
+}
+
+function shootCollectable(posX, posY) {
+  allCollectables.addCollectable(posX, posY);
+}
+
+class Player {
+  constructor() {
+    this.centre = [400, 500];
+    this.centredLineString = new Rect(-PLAYER_HALF_SIZE, -PLAYER_HALF_SIZE, PLAYER_HALF_SIZE * 2, PLAYER_HALF_SIZE * 2);
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+    this.speedY = 0;
+    this.directionX = -1;
+    this.jumping = false;
+  }
+
+  draw() {
+    screen.draw.rect(this.lineString.move(0, -screenPosition), [255, 0, 0]);
+  }
+
+  update(surface) {
+    if (surface == null) {
+      return;
+    }
+
+    if (this.speedY >= 0) {
+      let boundingBox, result, newPositionY;
+      if (!this.jumping) {
+        // Convert from global coordinates to screen coordinates
+        boundingBox = this.lineString.move(0, -screenPosition);
+      }
+      else {
+        boundingBox = new Rect(this.centre[0] - PLAYER_HALF_SIZE, this.centre[1] + PLAYER_HALF_SIZE - 2, PLAYER_HALF_SIZE * 2, this.speedY + 4);
+        // Convert from global coordinates to screen coordinates
+        boundingBox.move_ip(0, -screenPosition);
+      }
+      result = intersection(surface, boundingBox);
+      if (result.length > 0) {
+        newPositionY = this.centre[1];
+        if (result.length > 1) {
+          newPositionY = Math.min(...result.map(c => c[1])) - PLAYER_HALF_SIZE;
+        }
+        else if (result.length === 1) {
+          newPositionY = result[0][1] - PLAYER_HALF_SIZE;
+        }
+
+        // Convert from screen coordinates to global coordinates
+        newPositionY += screenPosition;
+
+        if (this.centre[1] > newPositionY) {
+          this.centre[1] = newPositionY;
+        }
+        this.speedY = 0;
+        this.jumping = false;
+      }
+      if ((!this.jumping) && (this.speedY >= COYOTE_TIME_VERTICAL_SPEED)) {
+        this.jumping = true;
+      }
+    }
+    if (this.centre[1] > (600 - PLAYER_HALF_SIZE)) {
+      this.centre[1] = 600 - PLAYER_HALF_SIZE;
+      this.speedY = 0;
+      this.jumping = false;
+    }
+    else {
+      this.speedY += PLAYER_ACCELERATION_DOWN;
+    }
+    if (this.speedY > PLAYER_TERMINAL_SPEED) {
+      this.speedY = PLAYER_TERMINAL_SPEED;
+    }
+    this.centre[1] += this.speedY;
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+  }
+
+  jump() {
+    if (!this.jumping) {
+      this.speedY = -PLAYER_JUMP_SPEED;
+      this.jumping = true;
+    }
+  }
+
+  left() {
+    this.centre[0] -= PLAYER_LATERAL_SPEED;
+    this.directionX = -1;
+    if (this.centre[0] < PLAYER_HALF_SIZE) {
+      this.centre[0] = PLAYER_HALF_SIZE;
+    }
+  }
+
+  right() {
+    this.centre[0] += PLAYER_LATERAL_SPEED;
+    this.directionX = 1;
+    if (this.centre[0] > (800 - PLAYER_HALF_SIZE)) {
+      this.centre[0] = 800 - PLAYER_HALF_SIZE;
+    }
+  }
+}
+
+var screenPosition, allCollectables, surface, player;
+
+function reset() {
+  screenPosition = 0;
+  allCollectables = new Collectables();
+  surface = null;
+  player = new Player();
+}
+
+function draw() {
+  screen.clear();
+  for (let platform of PLATFORMS) {
+    for (let i = 1; i < platform.length; i++) {
+      screen.draw.line([platform[i-1][0], platform[i-1][1] - screenPosition],
+                       [platform[i][0], platform[i][1] - screenPosition], [255, 255, 255]);
+    }
+  }
+
+  // Get the screen with just the platforms
+  surface = screen.getSurface();
+
+  player.draw();
+  allCollectables.draw();
+}
+
+function screenPositionUpdate(player) {
+  if ((player.centre[1] - screenPosition) < 150) {
+    screenPosition = player.centre[1] - 150;
+  }
+  else if ((player.centre[1] - screenPosition) > (600 - 150)) {
+    screenPosition = player.centre[1] - (600 - 150);
+    if (screenPosition > 0) {
+      screenPosition = 0;
+    }
+  }
+}
+
+function update(dt) {
+  if (keyboard[keys.LEFT]) {
+    player.left();
+  }
+  else if (keyboard[keys.RIGHT]) {
+    player.right();
+  }
+  if (keyboard[keys.UP]) {
+    player.jump();
+  }
+  player.update(surface);
+  allCollectables.update(surface);
+  screenPositionUpdate(player);
+}
+
+function on_key_down(key) {
+  if (key === keys.SPACE) {
+    shootCollectable(player.centre[0], player.centre[1]);
+  }
+}
+
+window.addEventListener('load', (event) => {
+  reset();
+  screen.set_mode('#screen', '#reset', '#pause');
+});
+</script>
+</body>
+
+</html>
