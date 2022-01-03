@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing14_PlacePlatforms</title>
+  <script src="../../jsgame0.js"></script>
+  <style type="text/css" media="screen">
+body {
+  background-color: white;
+  color: black;
+}
+.hidden {
+  display: none;
+}
+#original {
+  margin-left: 1em;
+}
+  </style>
+</head>
+
+<body>
+<section id="imageLoader" class="hidden">
+  <img class="hidden" src="images/bee_1_left.png" alt="bee_1_left" data-name="bee_1_left">
+  <img class="hidden" src="images/bee_1_right.png" alt="bee_1_right" data-name="bee_1_right">
+  <img class="hidden" src="images/bee_2_left.png" alt="bee_2_left" data-name="bee_2_left">
+  <img class="hidden" src="images/bee_2_right.png" alt="bee_2_right" data-name="bee_2_right">
+  <img class="hidden" src="images/bee_3_left.png" alt="bee_3_left" data-name="bee_3_left">
+  <img class="hidden" src="images/bee_3_right.png" alt="bee_3_right" data-name="bee_3_right">
+  <img class="hidden" src="images/collectable_1.png" alt="collectable_1" data-name="collectable_1">
+  <img class="hidden" src="images/collectable_2.png" alt="collectable_2" data-name="collectable_2">
+  <img class="hidden" src="images/collectable_3.png" alt="collectable_3" data-name="collectable_3">
+  <img class="hidden" src="images/collectable_4.png" alt="collectable_4" data-name="collectable_4">
+  <img class="hidden" src="images/collectable_5.png" alt="collectable_5" data-name="collectable_5">
+  <img class="hidden" src="images/collectable_rainbow.png" alt="collectable_rainbow" data-name="collectable_rainbow">
+  <img class="hidden" src="images/falling_rainbow.png" alt="falling_rainbow" data-name="falling_rainbow">
+  <img class="hidden" src="images/flying_candy_1.png" alt="flying_candy_1" data-name="flying_candy_1">
+  <img class="hidden" src="images/flying_candy_2.png" alt="flying_candy_2" data-name="flying_candy_2">
+  <img class="hidden" src="images/flying_candy_3.png" alt="flying_candy_3" data-name="flying_candy_3">
+  <img class="hidden" src="images/flying_candy_4.png" alt="flying_candy_4" data-name="flying_candy_4">
+  <img class="hidden" src="images/green_worm_left.png" alt="green_worm_left" data-name="green_worm_left">
+  <img class="hidden" src="images/green_worm_right.png" alt="green_worm_right" data-name="green_worm_right">
+  <img class="hidden" src="images/platform_cloud_1.png" alt="platform_cloud_1" data-name="platform_cloud_1">
+  <img class="hidden" src="images/platform_cloud_2.png" alt="platform_cloud_2" data-name="platform_cloud_2">
+  <img class="hidden" src="images/platform_cloud_3.png" alt="platform_cloud_3" data-name="platform_cloud_3">
+  <img class="hidden" src="images/platform_grass_1.png" alt="platform_grass_1" data-name="platform_grass_1">
+  <img class="hidden" src="images/platform_grass_2.png" alt="platform_grass_2" data-name="platform_grass_2">
+  <img class="hidden" src="images/platform_grass_3.png" alt="platform_grass_3" data-name="platform_grass_3">
+  <img class="hidden" src="images/platform_grass_4.png" alt="platform_grass_4" data-name="platform_grass_4">
+  <img class="hidden" src="images/platform_rock_1.png" alt="platform_rock_1" data-name="platform_rock_1">
+  <img class="hidden" src="images/platform_rock_2.png" alt="platform_rock_2" data-name="platform_rock_2">
+  <img class="hidden" src="images/platform_rock_3.png" alt="platform_rock_3" data-name="platform_rock_3">
+  <img class="hidden" src="images/platform_rock_4.png" alt="platform_rock_4" data-name="platform_rock_4">
+  <img class="hidden" src="images/platform_tree_1.png" alt="platform_tree_1" data-name="platform_tree_1">
+  <img class="hidden" src="images/platform_tree_2.png" alt="platform_tree_2" data-name="platform_tree_2">
+  <img class="hidden" src="images/platform_tree_3.png" alt="platform_tree_3" data-name="platform_tree_3">
+  <img class="hidden" src="images/platform_tree_4.png" alt="platform_tree_4" data-name="platform_tree_4">
+  <img class="hidden" src="images/platform_tree_5.png" alt="platform_tree_5" data-name="platform_tree_5">
+  <img class="hidden" src="images/player_collided_1.png" alt="player_collided_1" data-name="player_collided_1">
+  <img class="hidden" src="images/player_collided_2.png" alt="player_collided_2" data-name="player_collided_2">
+  <img class="hidden" src="images/player_icon.png" alt="player_icon" data-name="player_icon">
+  <img class="hidden" src="images/player_jump_down_left.png" alt="player_jump_down_left" data-name="player_jump_down_left">
+  <img class="hidden" src="images/player_jump_down_right.png" alt="player_jump_down_right" data-name="player_jump_down_right">
+  <img class="hidden" src="images/player_jump_up_left.png" alt="player_jump_up_left" data-name="player_jump_up_left">
+  <img class="hidden" src="images/player_jump_up_right.png" alt="player_jump_up_right" data-name="player_jump_up_right">
+  <img class="hidden" src="images/player_stand_left.png" alt="player_stand_left" data-name="player_stand_left">
+  <img class="hidden" src="images/player_stand_right.png" alt="player_stand_right" data-name="player_stand_right">
+  <img class="hidden" src="images/player_walk_1_left.png" alt="player_walk_1_left" data-name="player_walk_1_left">
+  <img class="hidden" src="images/player_walk_1_right.png" alt="player_walk_1_right" data-name="player_walk_1_right">
+  <img class="hidden" src="images/player_walk_2_left.png" alt="player_walk_2_left" data-name="player_walk_2_left">
+  <img class="hidden" src="images/player_walk_2_right.png" alt="player_walk_2_right" data-name="player_walk_2_right">
+  <img class="hidden" src="images/rainbow.png" alt="rainbow" data-name="rainbow">
+  <img class="hidden" src="images/red_worm_left.png" alt="red_worm_left" data-name="red_worm_left">
+  <img class="hidden" src="images/red_worm_right.png" alt="red_worm_right" data-name="red_worm_right">
+</section>
+
+<main>
+<h1>Listing14_PlacePlatforms</h1>
+
+<canvas id="screen">
+The game screen appears here if your browser supports the Canvas API.
+</canvas>
+<section id="controls">
+  <button type="button" id="reset">Reset</button>
+  <button type="button" id="pause">Pause</button>
+</section>
+
+<pre id="output"></pre>
+
+<h2>Attribution</h2>
+
+<p><a href="https://wireframe.raspberrypi.com/issues/57">Make your own retro platformer, pages 50-55, by Jordi Sontanja</a>.</p>
+
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported</a>.</p>
+
+<h2>Original Python code</h2>
+
+<pre id="original"><code>
+# Place platforms on play area
+# - Mouse click: add the current platform
+# - Mouse secondary click: select next platform
+# - Cursor Left and Right: select previous or next platform
+# - Cursor Up and Down: displace the screen
+# - Space: print the platform positions
+import pgzrun
+from pygame import image, Color, Surface
+
+platformNames = [&#x27;platform_rock_1&#x27;, &#x27;platform_rock_2&#x27;, &#x27;platform_rock_3&#x27;, &#x27;platform_rock_4&#x27;,
+                 &#x27;platform_grass_1&#x27;, &#x27;platform_grass_2&#x27;, &#x27;platform_grass_3&#x27;, &#x27;platform_grass_4&#x27;,
+                 &#x27;platform_tree_1&#x27;, &#x27;platform_tree_2&#x27;, &#x27;platform_tree_3&#x27;, &#x27;platform_tree_4&#x27;, &#x27;platform_tree_5&#x27;,
+                 &#x27;platform_cloud_1&#x27;, &#x27;platform_cloud_2&#x27;, &#x27;platform_cloud_3&#x27;]
+
+platformImages = [Actor(platformNames[i]) for i in range(len(platformNames))]
+platforms = []
+
+activePlatform = 0
+currentPosition = (0,0)
+currentY = 0
+
+def draw():
+    screen.clear()
+    for platform in platforms:
+        platform.draw()
+    platformImages[activePlatform].draw()
+
+def update(dt):
+    platformImages[activePlatform].pos = currentPosition
+
+def on_mouse_down(pos, button):
+    global activePlatform
+    if mouse.LEFT == button:
+        platforms.append(Actor(platformNames[activePlatform], currentPosition))
+    elif mouse.RIGHT == button:
+        activePlatform = (activePlatform + 1) % len(platformNames)
+
+def on_mouse_move(pos):
+    global currentPosition
+    currentPosition = pos
+
+def on_key_down(key):
+    global currentY, activePlatform
+    if key == keys.UP:
+        currentY -= 100
+        for platform in platforms:
+            platform.pos = (platform.pos[0], platform.pos[1] + 100)
+    elif key == keys.DOWN and currentY &lt; 0:
+        currentY += 100
+        for platform in platforms:
+            platform.pos = (platform.pos[0], platform.pos[1] - 100)
+    elif key == keys.RIGHT:
+        activePlatform = (activePlatform + 1) % len(platformNames)
+    elif key == keys.LEFT:
+        activePlatform = (activePlatform + len(platformNames) - 1) % len(platformNames)
+    elif key == keys.SPACE:
+        for platform in platforms:
+            print(&quot;(&quot;+str(platformNames.index(platform.image))+&quot;,&quot;+
+                  str(round(platform.pos[0]))+&quot;,&quot;+
+                  str(round(platform.pos[1] + currentY))+&quot;),&quot;)
+
+pgzrun.go()
+
+</code></pre>
+</main>
+
+<script>
+/*
+ * Place platforms on play area
+ * - Mouse click: add the current platform
+ * - Mouse secondary click: select next platform
+ * - Cursor Left and Right: select previous or next platform
+ * - Cursor Up and Down: displace the screen
+ * - Space: print the platform positions
+ */
+
+const output = document.querySelector('#output');
+
+const PLATFORM_NAMES = ['platform_rock_1', 'platform_rock_2', 'platform_rock_3', 'platform_rock_4',
+                        'platform_grass_1', 'platform_grass_2', 'platform_grass_3', 'platform_grass_4',
+                        'platform_tree_1', 'platform_tree_2', 'platform_tree_3', 'platform_tree_4', 'platform_tree_5',
+                        'platform_cloud_1', 'platform_cloud_2', 'platform_cloud_3'];
+
+var platforms, activePlatform, currentPosition, currentY;
+
+function reset() {
+  platforms = [];
+
+  activePlatform = 0;
+  currentPosition = [0, 0];
+  currentY = 0;
+}
+
+function draw() {
+  screen.clear();
+  for (let platform of platforms) {
+    platform.draw();
+  }
+  let actor = new Actor(PLATFORM_NAMES[activePlatform]);
+  actor.pos = currentPosition;
+  actor.draw();
+}
+
+function on_mouse_down(pos, button) {
+  if ((button & mouse.LEFT) > 0) {
+    let actor = new Actor(PLATFORM_NAMES[activePlatform]);
+    actor.pos = currentPosition;
+    platforms.push(actor);
+  }
+  else if ((button & mouse.RIGHT) > 0) {
+    activePlatform = (activePlatform + 1) % PLATFORM_NAMES.length;
+  }
+}
+
+function on_mouse_move(pos) {
+  currentPosition = pos;
+}
+
+function on_key_down(key) {
+  if (key === keys.UP) {
+    currentY -= 100;
+    for (let platform of platforms) {
+      platform.pos = [platform.pos[0], platform.pos[1] + 100];
+    }
+  }
+  else if ((key === keys.DOWN) && (currentY < 0)) {
+    currentY += 100;
+    for (let platform of platforms) {
+      platform.pos = [platform.pos[0], platform.pos[1] - 100];
+    }
+  }
+  else if (key === keys.RIGHT) {
+    activePlatform = (activePlatform + 1) % PLATFORM_NAMES.length;
+  }
+  else if (key === keys.LEFT) {
+    activePlatform = (activePlatform + PLATFORM_NAMES.length - 1) % PLATFORM_NAMES.length;
+  }
+  else if (key === keys.SPACE) {
+    let outputObject = {
+      enemies: {},
+      platforms: {}
+    };
+    for (let name of PLATFORM_NAMES) {
+      outputObject['platforms'][name] = {
+        pos: []
+      };
+    }
+    for (let platform of platforms) {
+      outputObject['platforms'][platform.name]['pos'].push([Math.round(platform.pos[0]), Math.round(platform.pos[1] + currentY)]);
+    }
+    console.log(JSON.stringify(outputObject, null, 2));
+    output.textContent = JSON.stringify(outputObject, null, 2);
+  }
+}
+
+window.addEventListener('load', (event) => {
+  images.LOAD('#imageLoader img');
+  reset();
+  screen.set_mode('#screen', '#reset', '#pause');
+});
+</script>
+</body>
+
+</html>
