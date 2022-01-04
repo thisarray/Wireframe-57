@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing16_TestPlatforms</title>
+  <script src="../../jsgame0.js"></script>
+  <script id="level" type="application/json">
+{
+  "enemies": {
+    "bee_1_left": [
+      [623, -2798],
+      [675, -3376],
+      [674, -3624],
+      [647, -3930],
+      [690, -4193]
+    ],
+    "bee_1_right": [
+      [169, -2724],
+      [132, -3378],
+      [120, -3621],
+      [136, -3914],
+      [132, -4189]
+    ],
+    "green_worm_left": [
+      [645, 227],
+      [383, 69],
+      [228, -67],
+      [334, -920],
+      [396, -1247],
+      [390, -1666],
+      [343, -2033],
+      [457, -2034],
+      [619, -1874],
+      [737, -1876],
+      [181, -2640],
+      [333, -2896]
+    ],
+    "green_worm_right": [
+      [111, 379],
+      [548, -69],
+      [387, -247],
+      [378, -647],
+      [449, -921],
+      [399, -1473],
+      [74, -1879],
+      [174, -1880]
+    ],
+    "red_worm_left": [
+      [218, -1083],
+      [196, -2379],
+      [743, -3552],
+      [779, -3814],
+      [393, -4229]
+    ],
+    "red_worm_right": [
+      [603, -1080],
+      [717, -2339],
+      [57, -3536],
+      [23, -3826],
+      [414, -4228]
+    ]
+  },
+  "platforms": {
+    "platform_cloud_1": {
+      "lines": [
+        [-114, -4],
+        [-82, -14],
+        [-39, -17],
+        [-12, -33],
+        [37, -35],
+        [52, -22],
+        [87, -18],
+        [113, -8]
+      ],
+      "pos": [
+        [125, -3501],
+        [668, -3511],
+        [409, -3921]
+      ]
+    },
+    "platform_cloud_2": {
+      "lines": [
+        [-158, -4],
+        [-119, -8],
+        [-72, -23],
+        [-45, -19],
+        [-4, -35],
+        [24, -23],
+        [61, -22],
+        [84, -8],
+        [130, -11],
+        [159, 1]
+      ],
+      "pos": [
+        [192, -3219],
+        [618, -3221],
+        [397, -3378],
+        [396, -3614],
+        [181, -4025],
+        [645, -4034],
+        [404, -4173]
+      ]
+    },
+    "platform_cloud_3": {
+      "lines": [
+        [-237, -5],
+        [-216, -15],
+        [-168, -14],
+        [-139, -29],
+        [-92, -27],
+        [-49, -42],
+        [7, -21],
+        [31, -40],
+        [61, -41],
+        [84, -22],
+        [141, -33],
+        [180, -12],
+        [237, 1]
+      ],
+      "pos": [
+        [219, -3039],
+        [659, -3036],
+        [120, -3774],
+        [690, -3766],
+        [183, -4361],
+        [621, -4356]
+      ]
+    },
+    "platform_grass_1": {
+      "lines": [
+        [-145, -8],
+        [-129, -22],
+        [-89, -37],
+        [-18, -29],
+        [52, -36],
+        [104, -28],
+        [146, -8]
+      ],
+      "pos": [
+        [396, -1622],
+        [402, -1983]
+      ]
+    },
+    "platform_grass_2": {
+      "lines": [
+        [-153, -8],
+        [-131, -16],
+        [-100, -16],
+        [-22, -10],
+        [44, -16],
+        [95, -8],
+        [150, -1]
+      ],
+      "pos": [
+        [400, -1219]
+      ]
+    },
+    "platform_grass_3": {
+      "lines": [
+        [-166, -12],
+        [-152, -23],
+        [-97, -29],
+        [-22, -17],
+        [24, -18],
+        [82, -29],
+        [142, -25],
+        [166, -17]
+      ],
+      "pos": [
+        [147, -728],
+        [454, -731],
+        [697, -736],
+        [258, -878],
+        [559, -878],
+        [109, -1039],
+        [704, -1036],
+        [400, -1439],
+        [119, -1841],
+        [676, -1833],
+        [128, -2144],
+        [429, -2146],
+        [720, -2149]
+      ]
+    },
+    "platform_grass_4": {
+      "lines": [
+        [-51, 1],
+        [-39, -12],
+        [-13, -21],
+        [22, -22],
+        [51, -9]
+      ],
+      "pos": [
+        [113, -1335],
+        [708, -1334],
+        [166, -1533],
+        [647, -1535],
+        [110, -1719],
+        [680, -1729]
+      ]
+    },
+    "platform_rock_1": {
+      "lines": [
+        [-194, -23],
+        [-182, -32],
+        [-138, -35],
+        [-104, -38],
+        [-80, -43],
+        [-15, -34],
+        [34, -36],
+        [59, -42],
+        [93, -37],
+        [126, -28],
+        [181, -26],
+        [192, -24]
+      ],
+      "pos": [
+        [663, 433],
+        [119, 429],
+        [121, 273],
+        [654, 278]
+      ]
+    },
+    "platform_rock_2": {
+      "lines": [
+        [-134, -25],
+        [-98, -31],
+        [-37, -37],
+        [25, -35],
+        [98, -34],
+        [131, -25]
+      ],
+      "pos": [
+        [386, 122],
+        [391, -594]
+      ]
+    },
+    "platform_rock_3": {
+      "lines": [
+        [-59, -10],
+        [-29, -27],
+        [-1, -34],
+        [36, -29],
+        [56, -15]
+      ],
+      "pos": [
+        [98, -337],
+        [684, -339],
+        [289, -403],
+        [505, -404],
+        [90, -537],
+        [684, -546]
+      ]
+    },
+    "platform_rock_4": {
+      "lines": [
+        [-174, -19],
+        [-137, -35],
+        [-93, -34],
+        [-1, -28],
+        [78, -38],
+        [171, -30]
+      ],
+      "pos": [
+        [676, 599],
+        [403, 597],
+        [90, 599],
+        [243, -23],
+        [547, -25],
+        [391, -203]
+      ]
+    },
+    "platform_tree_1": {
+      "lines": [
+        [-166, -38],
+        [-135, -46],
+        [-96, -40],
+        [-62, -20],
+        [-30, 9],
+        [-8, 20],
+        [16, 25],
+        [92, 16],
+        [145, 18],
+        [166, 23]
+      ],
+      "pos": [
+        [161, -2536]
+      ]
+    },
+    "platform_tree_2": {
+      "lines": [
+        [-165, 10],
+        [-110, -5],
+        [-66, -21],
+        [-23, -41],
+        [16, -51],
+        [63, -51],
+        [124, -29],
+        [162, -25]
+      ],
+      "pos": [
+        [153, -2310],
+        [154, -2779]
+      ]
+    },
+    "platform_tree_3": {
+      "lines": [
+        [-47, -9],
+        [-5, -25],
+        [66, -30]
+      ],
+      "pos": [
+        [131, -2594],
+        [700, -2919],
+        [284, -2851]
+      ]
+    },
+    "platform_tree_4": {
+      "lines": [
+        [-134, -18],
+        [-84, 2],
+        [-57, 1],
+        [25, -20],
+        [62, -18],
+        [85, -12],
+        [133, -14]
+      ],
+      "pos": [
+        [677, -2302],
+        [687, -2701]
+      ]
+    },
+    "platform_tree_5": {
+      "lines": [
+        [-147, -45],
+        [-122, -48],
+        [-66, -59],
+        [-21, -58],
+        [18, -42],
+        [53, -13],
+        [109, 13],
+        [143, 20]
+      ],
+      "pos": [
+        [665, -2511],
+        [660, -2841]
+      ]
+    }
+  }
+}
+  </script>
+  <style type="text/css" media="screen">
+body {
+  background-color: white;
+  color: black;
+}
+.hidden {
+  display: none;
+}
+#original {
+  margin-left: 1em;
+}
+  </style>
+</head>
+
+<body>
+<section id="imageLoader" class="hidden">
+  <img class="hidden" src="images/bee_1_left.png" alt="bee_1_left" data-name="bee_1_left">
+  <img class="hidden" src="images/bee_1_right.png" alt="bee_1_right" data-name="bee_1_right">
+  <img class="hidden" src="images/bee_2_left.png" alt="bee_2_left" data-name="bee_2_left">
+  <img class="hidden" src="images/bee_2_right.png" alt="bee_2_right" data-name="bee_2_right">
+  <img class="hidden" src="images/bee_3_left.png" alt="bee_3_left" data-name="bee_3_left">
+  <img class="hidden" src="images/bee_3_right.png" alt="bee_3_right" data-name="bee_3_right">
+  <img class="hidden" src="images/collectable_1.png" alt="collectable_1" data-name="collectable_1">
+  <img class="hidden" src="images/collectable_2.png" alt="collectable_2" data-name="collectable_2">
+  <img class="hidden" src="images/collectable_3.png" alt="collectable_3" data-name="collectable_3">
+  <img class="hidden" src="images/collectable_4.png" alt="collectable_4" data-name="collectable_4">
+  <img class="hidden" src="images/collectable_5.png" alt="collectable_5" data-name="collectable_5">
+  <img class="hidden" src="images/collectable_rainbow.png" alt="collectable_rainbow" data-name="collectable_rainbow">
+  <img class="hidden" src="images/falling_rainbow.png" alt="falling_rainbow" data-name="falling_rainbow">
+  <img class="hidden" src="images/flying_candy_1.png" alt="flying_candy_1" data-name="flying_candy_1">
+  <img class="hidden" src="images/flying_candy_2.png" alt="flying_candy_2" data-name="flying_candy_2">
+  <img class="hidden" src="images/flying_candy_3.png" alt="flying_candy_3" data-name="flying_candy_3">
+  <img class="hidden" src="images/flying_candy_4.png" alt="flying_candy_4" data-name="flying_candy_4">
+  <img class="hidden" src="images/green_worm_left.png" alt="green_worm_left" data-name="green_worm_left">
+  <img class="hidden" src="images/green_worm_right.png" alt="green_worm_right" data-name="green_worm_right">
+  <img class="hidden" src="images/platform_cloud_1.png" alt="platform_cloud_1" data-name="platform_cloud_1">
+  <img class="hidden" src="images/platform_cloud_2.png" alt="platform_cloud_2" data-name="platform_cloud_2">
+  <img class="hidden" src="images/platform_cloud_3.png" alt="platform_cloud_3" data-name="platform_cloud_3">
+  <img class="hidden" src="images/platform_grass_1.png" alt="platform_grass_1" data-name="platform_grass_1">
+  <img class="hidden" src="images/platform_grass_2.png" alt="platform_grass_2" data-name="platform_grass_2">
+  <img class="hidden" src="images/platform_grass_3.png" alt="platform_grass_3" data-name="platform_grass_3">
+  <img class="hidden" src="images/platform_grass_4.png" alt="platform_grass_4" data-name="platform_grass_4">
+  <img class="hidden" src="images/platform_rock_1.png" alt="platform_rock_1" data-name="platform_rock_1">
+  <img class="hidden" src="images/platform_rock_2.png" alt="platform_rock_2" data-name="platform_rock_2">
+  <img class="hidden" src="images/platform_rock_3.png" alt="platform_rock_3" data-name="platform_rock_3">
+  <img class="hidden" src="images/platform_rock_4.png" alt="platform_rock_4" data-name="platform_rock_4">
+  <img class="hidden" src="images/platform_tree_1.png" alt="platform_tree_1" data-name="platform_tree_1">
+  <img class="hidden" src="images/platform_tree_2.png" alt="platform_tree_2" data-name="platform_tree_2">
+  <img class="hidden" src="images/platform_tree_3.png" alt="platform_tree_3" data-name="platform_tree_3">
+  <img class="hidden" src="images/platform_tree_4.png" alt="platform_tree_4" data-name="platform_tree_4">
+  <img class="hidden" src="images/platform_tree_5.png" alt="platform_tree_5" data-name="platform_tree_5">
+  <img class="hidden" src="images/player_collided_1.png" alt="player_collided_1" data-name="player_collided_1">
+  <img class="hidden" src="images/player_collided_2.png" alt="player_collided_2" data-name="player_collided_2">
+  <img class="hidden" src="images/player_icon.png" alt="player_icon" data-name="player_icon">
+  <img class="hidden" src="images/player_jump_down_left.png" alt="player_jump_down_left" data-name="player_jump_down_left">
+  <img class="hidden" src="images/player_jump_down_right.png" alt="player_jump_down_right" data-name="player_jump_down_right">
+  <img class="hidden" src="images/player_jump_up_left.png" alt="player_jump_up_left" data-name="player_jump_up_left">
+  <img class="hidden" src="images/player_jump_up_right.png" alt="player_jump_up_right" data-name="player_jump_up_right">
+  <img class="hidden" src="images/player_stand_left.png" alt="player_stand_left" data-name="player_stand_left">
+  <img class="hidden" src="images/player_stand_right.png" alt="player_stand_right" data-name="player_stand_right">
+  <img class="hidden" src="images/player_walk_1_left.png" alt="player_walk_1_left" data-name="player_walk_1_left">
+  <img class="hidden" src="images/player_walk_1_right.png" alt="player_walk_1_right" data-name="player_walk_1_right">
+  <img class="hidden" src="images/player_walk_2_left.png" alt="player_walk_2_left" data-name="player_walk_2_left">
+  <img class="hidden" src="images/player_walk_2_right.png" alt="player_walk_2_right" data-name="player_walk_2_right">
+  <img class="hidden" src="images/rainbow.png" alt="rainbow" data-name="rainbow">
+  <img class="hidden" src="images/red_worm_left.png" alt="red_worm_left" data-name="red_worm_left">
+  <img class="hidden" src="images/red_worm_right.png" alt="red_worm_right" data-name="red_worm_right">
+</section>
+
+<main>
+<h1>Listing16_TestPlatforms</h1>
+
+<canvas id="screen">
+The game screen appears here if your browser supports the Canvas API.
+</canvas>
+<section id="controls">
+  <button type="button" id="reset">Reset</button>
+  <button type="button" id="pause">Pause</button>
+</section>
+
+<h2>Attribution</h2>
+
+<p><a href="https://wireframe.raspberrypi.com/issues/57">Make your own retro platformer, pages 50-55, by Jordi Sontanja</a>.</p>
+
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported</a>.</p>
+
+<h2>Original Python code</h2>
+
+<pre id="original"><code>
+# Player movement prototype program:
+# - Cursor left-right: move player
+# - Cursor up: player jump
+# - Space: shoot a rainbow
+import pgzrun
+from pygame import image, Color, Surface
+from shapely.geometry import Point, Polygon, LineString
+from shapely.affinity import translate
+import math
+
+platformNames = [&#x27;platform_rock_1&#x27;, &#x27;platform_rock_2&#x27;, &#x27;platform_rock_3&#x27;, &#x27;platform_rock_4&#x27;,
+                 &#x27;platform_grass_1&#x27;, &#x27;platform_grass_2&#x27;, &#x27;platform_grass_3&#x27;, &#x27;platform_grass_4&#x27;,
+                 &#x27;platform_tree_1&#x27;, &#x27;platform_tree_2&#x27;, &#x27;platform_tree_3&#x27;, &#x27;platform_tree_4&#x27;, &#x27;platform_tree_5&#x27;,
+                 &#x27;platform_cloud_1&#x27;, &#x27;platform_cloud_2&#x27;, &#x27;platform_cloud_3&#x27;]
+
+platformLines = [[(-194, -23), (-182, -32), (-138, -35), (-104, -38), (-80, -43), (-15, -34), (34, -36), (59, -42), (93, -37), (126, -28), (181, -26), (192, -24)],
+                 [(-134, -25), (-98, -31), (-37, -37), (25, -35), (98, -34), (131, -25)], [(-59, -10), (-29, -27), (-1, -34), (36, -29), (56, -15)],
+                 [(-174, -19), (-137, -35), (-93, -34), (-1, -28), (78, -38), (171, -30)], [(-145, -8), (-129, -22), (-89, -37), (-18, -29), (52, -36), (104, -28), (146, -8)],
+                 [(-153, -8), (-131, -16), (-100, -16), (-22, -10), (44, -16), (95, -8), (150, -1)],
+                 [(-166, -12), (-152, -23), (-97, -29), (-22, -17), (24, -18), (82, -29), (142, -25), (166, -17)], [(-51, 1), (-39, -12), (-13, -21), (22, -22), (51, -9)],
+                 [(-166, -38), (-135, -46), (-96, -40), (-62, -20), (-30, 9), (-8, 20), (16, 25), (92, 16), (145, 18), (166, 23)],
+                 [(-165, 10), (-110, -5), (-66, -21), (-23, -41), (16, -51), (63, -51), (124, -29), (162, -25)],
+                 [(-47, -9), (-5, -25), (66, -30)], [(-134, -18), (-84, 2), (-57, 1), (25, -20), (62, -18), (85, -12), (133, -14)],
+                 [(-147, -45), (-122, -48), (-66, -59), (-21, -58), (18, -42), (53, -13), (109, 13), (143, 20)],
+                 [(-114, -4), (-82, -14), (-39, -17), (-12, -33), (37, -35), (52, -22), (87, -18), (113, -8)],
+                 [(-158, -4), (-119, -8), (-72, -23), (-45, -19), (-4, -35), (24, -23), (61, -22), (84, -8), (130, -11), (159, 1)],
+                 [(-237, -5), (-216, -15), (-168, -14), (-139, -29), (-92, -27), (-49, -42), (7, -21), (31, -40), (61, -41), (84, -22), (141, -33), (180, -12), (237, 1)]]
+
+platforms = [(3,676,599),(3,403,597),(3,90,599),(0,663,433),(0,119,429),(0,121,273),(0,654,278),(1,386,122),
+             (3,243,-23),(3,547,-25),(3,391,-203),(2,98,-337),(2,684,-339),(2,289,-403),(2,505,-404),(2,90,-537),
+             (2,684,-546),(1,391,-594),(6,147,-728),(6,454,-731),(6,697,-736),(6,258,-878),(6,559,-878),(6,109,-1039),
+             (6,704,-1036),(5,400,-1219),(7,113,-1335),(7,708,-1334),(6,400,-1439),(7,166,-1533),(7,647,-1535),
+             (4,396,-1622),(7,110,-1719),(7,680,-1729),(6,119,-1841),(6,676,-1833),(4,402,-1983),(6,128,-2144),
+             (6,429,-2146),(6,720,-2149),(9,153,-2310),(11,677,-2302),(12,665,-2511),(8,161,-2536),(10,131,-2594),
+             (11,687,-2701),(9,154,-2779),(12,660,-2841),(10,700,-2919),(10,284,-2851),(15,219,-3039),(15,659,-3036),
+             (14,192,-3219),(14,618,-3221),(14,397,-3378),(13,125,-3501),(13,668,-3511),(14,396,-3614),(15,120,-3774),
+             (15,690,-3766),(13,409,-3921),(14,181,-4025),(14,645,-4034),(14,404,-4173),(15,183,-4361),(15,621,-4356),]
+
+maxHeightPlatform = 124
+class AllPlatforms():
+    def __init__(self):
+        self.platformActors = [Actor(platformNames[platforms[i][0]], (platforms[i][1], platforms[i][2])) for i in range(len(platforms))]
+        self.platformLineStrings = []
+        for i in range(len(platforms)):
+            points = [(platformLines[platforms[i][0]][j][0] + platforms[i][1],
+                       platformLines[platforms[i][0]][j][1] + platforms[i][2])
+                      for j in range(len(platformLines[platforms[i][0]]))]
+            self.platformLineStrings.append(LineString(points))
+    def draw(self):
+        for platform in self.platformActors:
+            if platform.y &gt; -maxHeightPlatform/2 and platform.y &lt; 600+maxHeightPlatform/2:
+                platform.draw()
+        for line in self.platformLineStrings:
+            for i in range(1, len(line.coords)):
+                screen.draw.line((line.coords[i-1][0], line.coords[i-1][1]-screenPosition),
+                                 (line.coords[i][0], line.coords[i][1]-screenPosition), (128,128,255))
+    def update(self, newScreenPosition):
+        for i in range(len(platforms)):
+            self.platformActors[i].x = platforms[i][1]
+            self.platformActors[i].y = platforms[i][2] - screenPosition
+
+allPlatforms = AllPlatforms()
+
+rainbowHalfSize = 39
+rainbowTimeLife = 200
+class Rainbow:
+    def __init__(self, centreX, centreY):
+        self.centre = [centreX, centreY]
+        self.timeFromCreation = 0
+        points = []
+        for i in range(0, 180+20, 20):
+            points.append((self.centre[0] + rainbowHalfSize*math.cos(math.pi*i/180)/2, self.centre[1] - rainbowHalfSize*math.sin(math.pi*i/180)))
+        self.lineString = LineString(points)
+    def draw(self):
+        for i in range(1, len(self.lineString.coords)):
+            screen.draw.line((self.lineString.coords[i-1][0], self.lineString.coords[i-1][1]-screenPosition),
+                             (self.lineString.coords[i][0], self.lineString.coords[i][1]-screenPosition), (255,255,255))
+    def update(self):
+        self.timeFromCreation += 1
+
+rainbowAccelerationDown = 1
+class FallingRainbow:
+    def __init__(self, centreX, centreY):
+        self.centre = [centreX, centreY]
+        self.speedY = 0
+        points = []
+        for i in range(0, 180+20, 20):
+            points.append((self.centre[0] + rainbowHalfSize*math.cos(math.pi*i/180), self.centre[1] - rainbowHalfSize*math.sin(math.pi*i/180)))
+        self.lineString = LineString(points)
+    def draw(self):
+        for i in range(1, len(self.lineString.coords)):
+            screen.draw.line((self.lineString.coords[i-1][0], self.lineString.coords[i-1][1]-screenPosition),
+                             (self.lineString.coords[i][0], self.lineString.coords[i][1]-screenPosition), (255,255,255))
+    def update(self):
+        self.speedY += rainbowAccelerationDown
+        self.centre[1] += self.speedY
+        points = []
+        for i in range(0, 180+20, 20):
+            points.append((self.centre[0] + rainbowHalfSize*math.cos(math.pi*i/180), self.centre[1] - rainbowHalfSize*math.sin(math.pi*i/180)))
+        self.lineString = LineString(points)
+
+class AllRainbows:
+    def __init__(self):
+        self.rainbows = []
+        self.fallingRainbows = []
+    def draw(self):
+        for rainbow in self.rainbows:
+            rainbow.draw()
+        for fallingRainbow in self.fallingRainbows:
+            fallingRainbow.draw()
+    def update(self):
+        for i in reversed(range(len(self.rainbows))):
+            self.rainbows[i].update()
+            if self.rainbows[i].timeFromCreation &gt; rainbowTimeLife:
+                self.rainbowFall(i)
+        for i in reversed(range(len(self.fallingRainbows))):
+            self.fallingRainbows[i].update()
+            if self.fallingRainbows[i].centre[1]-screenPosition-rainbowHalfSize &gt; 600:
+                del self.fallingRainbows[i]
+    def rainbowFall(self, index):
+        self.fallingRainbows.append(FallingRainbow(self.rainbows[index].centre[0], self.rainbows[index].centre[1]))
+        del self.rainbows[index]
+    def append(self, posX, posY):
+        self.rainbows.append(Rainbow(posX, posY))
+
+
+allRainbows = AllRainbows()
+
+playerHalfSize = 15
+playerAccelerationDown = 0.5
+playerJumpSpeed = 14
+playerTerminalSpeed = 12
+playerLateralSpeed = 4
+coyoteTimeVerticalSpeed = 4
+playerVerticalSpeedToDestroyRainbow = 2
+
+screenPosition = 0
+
+class Player:
+    def __init__(self):
+        self.centre = [400, 500]
+        self.centredLineString = LineString([(-playerHalfSize,-playerHalfSize*0),
+                                             (-playerHalfSize,playerHalfSize),
+                                             (playerHalfSize,playerHalfSize),
+                                             (playerHalfSize,-playerHalfSize*0)])
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+        self.polygon = Polygon(self.lineString)
+        self.speedY = 0
+        self.directionX = -1
+        self.jumping = False
+    def draw(self):
+        for i in range(len(self.lineString.coords)):
+            screen.draw.line((self.lineString.coords[i-1][0],self.lineString.coords[i-1][1]-screenPosition),
+                             (self.lineString.coords[i][0],self.lineString.coords[i][1]-screenPosition), (255,0,0))
+    def intersectPlatform(self, platform, collidingObject):
+        intersection = collidingObject.intersection(platform)
+        if not intersection.is_empty:
+            newPositionY = self.centre[1]
+            if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                newPositionY = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - playerHalfSize
+            elif intersection.geom_type == &#x27;Point&#x27;:
+                newPositionY = intersection.coords[0][1] - playerHalfSize
+            elif intersection.geom_type == &#x27;LineString&#x27;:
+                newPositionY = min(intersection.coords, key=lambda x: x[1])[1] - playerHalfSize
+            if self.centre[1] &gt; newPositionY:
+                self.centre[1] = newPositionY
+            self.speedY = 0
+            self.jumping = False
+            return True
+        return False
+    def update(self):
+        if self.speedY &gt;= 0:
+            if not self.jumping:
+                collidingObject = self.polygon
+            else:
+                collidingObject = LineString([(self.centre[0]-playerHalfSize, self.centre[1]+playerHalfSize-2),
+                                              (self.centre[0]-playerHalfSize, self.centre[1]+playerHalfSize+self.speedY+2),
+                                              (self.centre[0]+playerHalfSize, self.centre[1]+playerHalfSize+self.speedY+2),
+                                              (self.centre[0]+playerHalfSize, self.centre[1]+playerHalfSize-2)])
+            for platform in allPlatforms.platformLineStrings:
+                self.intersectPlatform(platform, collidingObject)
+            previousSpeed = self.speedY
+            for i in reversed(range(len(allRainbows.rainbows))):
+                if self.intersectPlatform(allRainbows.rainbows[i].lineString, collidingObject):
+                    if previousSpeed &gt;= playerVerticalSpeedToDestroyRainbow:
+                        allRainbows.rainbowFall(i)
+            if not self.jumping and self.speedY &gt;= coyoteTimeVerticalSpeed:
+                self.jumping = True
+        if self.centre[1] &gt; 600 - playerHalfSize:
+            self.centre[1] = 600 - playerHalfSize
+            self.speedY = 0
+            self.jumping = False
+        else:
+            self.speedY += playerAccelerationDown
+        if self.speedY &gt; playerTerminalSpeed:
+            self.speedY = playerTerminalSpeed
+        self.centre[1] += self.speedY
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+        self.polygon = Polygon(self.lineString)
+    def jump(self):
+        if not self.jumping:
+            self.speedY = -playerJumpSpeed
+            self.jumping = True
+    def stopJump(self):
+        if self.jumping and self.speedY &lt; -playerJumpSpeed/2:
+            self.speedY = -playerJumpSpeed/2
+    def left(self):
+        self.centre[0] -= playerLateralSpeed
+        self.directionX = -1
+        if self.centre[0] &lt; playerHalfSize:
+            self.centre[0] = playerHalfSize
+    def right(self):
+        self.centre[0] += playerLateralSpeed
+        self.directionX = 1
+        if self.centre[0] &gt; 800 - playerHalfSize:
+            self.centre[0] = 800 - playerHalfSize
+    def shootRainbow(self):
+        allRainbows.append(self.centre[0] + self.directionX * (rainbowHalfSize + playerHalfSize + 2), self.centre[1] + playerHalfSize)
+
+player = Player()
+
+backgroundBaseColour = (95, 148, 255)
+backgroundColour = (0,0,0)
+
+maxScreenPosition = -platforms[-1][2]
+
+def backgroundColourUpdate(backgroundBaseColour, screenPosition):
+    colourScale = -screenPosition / maxScreenPosition
+    if colourScale &gt; 1:
+        colourScale = 1
+    return (backgroundBaseColour[0]*colourScale,
+            backgroundBaseColour[1]*colourScale,
+            backgroundBaseColour[2]*colourScale)
+
+def draw():
+    screen.fill(backgroundColour)
+    allPlatforms.draw()
+    player.draw()
+    allRainbows.draw()
+
+def screenPositionUpdate(player):
+    global screenPosition
+    if player.centre[1] - screenPosition &lt; 150:
+        screenPosition = player.centre[1] - 150
+    elif player.centre[1] - screenPosition &gt; 600 - 150:
+        screenPosition = player.centre[1] - (600 - 150)
+        if screenPosition &gt; 0:
+            screenPosition = 0
+
+def update(dt):
+    global screenPosition, backgroundColour
+    if keyboard.left:
+        player.left()
+    elif keyboard.right:
+        player.right()
+    if keyboard.up:
+        player.jump()
+    else:
+        player.stopJump()
+    player.update()
+    screenPositionUpdate(player)
+    backgroundColour = backgroundColourUpdate(backgroundBaseColour, screenPosition)
+    allRainbows.update()
+    allPlatforms.update(screenPosition)
+
+def on_key_down(key):
+    if key == keys.SPACE:
+        player.shootRainbow()
+
+pgzrun.go()
+</code></pre>
+</main>
+
+<script>
+/*
+ * Player movement prototype program:
+ * - Cursor left-right: move player
+ * - Cursor up: player jump
+ * - Space: shoot a rainbow
+ */
+
+const LEVEL_DATA = JSON.parse(document.querySelector('#level').textContent);
+
+const MAX_HEIGHT_PLATFORM = 124;
+
+class AllPlatforms {
+  constructor() {
+    this.platformActors = [];
+    for (const name of Object.getOwnPropertyNames(LEVEL_DATA['platforms'])) {
+      for (let pos of LEVEL_DATA['platforms'][name]['pos']) {
+        let actor = new Actor(name);
+        actor.pos = pos;
+        actor.start = pos;
+        this.platformActors.push(actor);
+      }
+    }
+  }
+
+  draw() {
+    for (let platform of this.platformActors) {
+      if ((platform.posy > (-MAX_HEIGHT_PLATFORM / 2)) && (platform.posy < (600 + (MAX_HEIGHT_PLATFORM / 2)))) {
+        platform.draw();
+      }
+    }
+  }
+
+  drawLines() {
+    for (let platform of this.platformActors) {
+      let lines = LEVEL_DATA['platforms'][platform.name]['lines'];
+      for (let i = 1; i < lines.length; i++) {
+        screen.draw.line([lines[i-1][0] + platform.start[0], lines[i-1][1] + platform.start[1] - screenPosition],
+                         [lines[i][0] + platform.start[0], lines[i][1] + platform.start[1] - screenPosition], [128, 128, 255]);
+      }
+    }
+  }
+
+  update(newScreenPosition) {
+    for (let platform of this.platformActors) {
+      platform.posx = platform.start[0];
+      platform.posy = platform.start[1] - screenPosition;
+    }
+  }
+}
+
+const RAINBOW_HALF_SIZE = 39;
+const RAINBOW_TIME_LIFE = 200;
+
+class Rainbow {
+  constructor(centreX, centreY) {
+    this.centre = [centreX, centreY];
+    this.timeFromCreation = 0;
+    this.points = [];
+    for (let i = 0; i < (180 + 20); i += 20) {
+      this.points.push([this.centre[0] + (RAINBOW_HALF_SIZE * Math.cos(Math.PI * i / 180) / 2), this.centre[1] - (RAINBOW_HALF_SIZE * Math.sin(Math.PI * i / 180))]);
+    }
+
+    let xCoordinates = this.points.map(c => c[0]),
+        yCoordinates = this.points.map(c => c[1]),
+        x = Math.min(...xCoordinates),
+        y = Math.min(...yCoordinates),
+        width = Math.max(...xCoordinates) - x,
+        height = Math.max(...yCoordinates) - y;
+    this.rect = new Rect(x, y, width, height);
+  }
+
+  draw() {
+    for (let i = 1; i < this.points.length; i++) {
+      screen.draw.line([this.points[i-1][0], this.points[i-1][1] - screenPosition],
+                       [this.points[i][0], this.points[i][1] - screenPosition], [255, 255, 255]);
+    }
+  }
+
+  update() {
+    this.timeFromCreation += 1;
+  }
+}
+
+const RAINBOW_ACCELERATION_DOWN = 1;
+
+class FallingRainbow {
+  constructor(centreX, centreY) {
+    this.centre = [centreX, centreY];
+    this.speedY = 0;
+    this.points = [];
+    for (let i = 0; i < (180 + 20); i += 20) {
+      this.points.push([this.centre[0] + (RAINBOW_HALF_SIZE * Math.cos(Math.PI * i / 180)), this.centre[1] - (RAINBOW_HALF_SIZE * Math.sin(Math.PI * i / 180))]);
+    }
+  }
+
+  draw() {
+    for (let i = 1; i < this.points.length; i++) {
+      screen.draw.line([this.points[i-1][0], this.points[i-1][1] - screenPosition],
+                       [this.points[i][0], this.points[i][1] - screenPosition], [255, 255, 255]);
+    }
+  }
+
+  update() {
+    this.speedY += RAINBOW_ACCELERATION_DOWN;
+    this.centre[1] += this.speedY;
+    this.points = [];
+    for (let i = 0; i < (180 + 20); i += 20) {
+      this.points.push([this.centre[0] + (RAINBOW_HALF_SIZE * Math.cos(Math.PI * i / 180)), this.centre[1] - (RAINBOW_HALF_SIZE * Math.sin(Math.PI * i / 180))]);
+    }
+  }
+}
+
+class AllRainbows {
+  constructor() {
+    this.rainbows = [];
+    this.fallingRainbows = [];
+  }
+
+  draw() {
+    for (let rainbow of this.rainbows) {
+      rainbow.draw();
+    }
+    for (let rainbow of this.fallingRainbows) {
+      rainbow.draw();
+    }
+  }
+
+  update() {
+    for (let i = this.rainbows.length - 1; i >= 0; i--) {
+      this.rainbows[i].update();
+      if (this.rainbows[i].timeFromCreation > RAINBOW_TIME_LIFE) {
+        this.rainbowFall(i);
+      }
+    }
+    for (let i = this.fallingRainbows.length - 1; i >= 0; i--) {
+      this.fallingRainbows[i].update();
+      if ((this.fallingRainbows[i].centre[1] - screenPosition - RAINBOW_HALF_SIZE) > 600) {
+        this.fallingRainbows.splice(i, 1);
+      }
+    }
+  }
+
+  rainbowFall(index) {
+    this.fallingRainbows.push(new FallingRainbow(this.rainbows[index].centre[0], this.rainbows[index].centre[1]));
+    this.rainbows.splice(index, 1);
+  }
+
+  append(posX, posY) {
+    this.rainbows.push(new Rainbow(posX, posY));
+  }
+}
+
+const PLAYER_HALF_SIZE = 15;
+const PLAYER_ACCELERATION_DOWN = 0.5;
+const PLAYER_JUMP_SPEED = 14;
+const PLAYER_TERMINAL_SPEED = 12;
+const PLAYER_LATERAL_SPEED = 4;
+const COYOTE_TIME_VERTICAL_SPEED = 4;
+const PLAYER_VERTICAL_SPEED_TO_DESTROY_RAINBOW = 2;
+
+/*
+ * Return an Array of coordinates where boundingBox has collided with the platforms in surface.
+ *
+ * Due to smoothing to approximate lines that are not strictly horizontal or vertical,
+ * it is easier to check a particular pixel is not the background color than
+ * to check a particular pixel is of a particular color.
+ */
+function intersection(surface, boundingBox, background = [0, 0, 0]) {
+  let area = (new Rect(0, 0, surface.width, surface.height)).clip(boundingBox),
+      xMin = Math.floor(area.left),
+      xMax = Math.ceil(area.right),
+      yMin = Math.floor(area.top),
+      yMax = Math.ceil(area.bottom),
+      result = [];
+  for (let x = xMin; x < xMax; x++) {
+    for (let y = yMin; y < yMax; y++) {
+      if (!Surface.isColorEqual(surface.getAt(x, y), background)) {
+        result.push([x, y]);
+      }
+    }
+  }
+  return result;
+}
+
+class Player {
+  constructor() {
+    this.centre = [400, 500];
+    this.centredLineString = new Rect(-PLAYER_HALF_SIZE, -PLAYER_HALF_SIZE, PLAYER_HALF_SIZE * 2, PLAYER_HALF_SIZE * 2);
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+    this.speedY = 0;
+    this.directionX = -1;
+    this.jumping = false;
+  }
+
+  draw() {
+    screen.draw.rect(this.lineString.move(0, -screenPosition), [255, 0, 0]);
+  }
+
+  update(surface, backgroundColour) {
+    if (surface == null) {
+      return;
+    }
+
+    if (this.speedY >= 0) {
+      let boundingBox, result, newPositionY;
+      if (!this.jumping) {
+        // Convert from global coordinates to screen coordinates
+        boundingBox = this.lineString.move(0, -screenPosition);
+      }
+      else {
+        boundingBox = new Rect(this.centre[0] - PLAYER_HALF_SIZE, this.centre[1] + PLAYER_HALF_SIZE - 2, PLAYER_HALF_SIZE * 2, this.speedY + 4);
+        // Convert from global coordinates to screen coordinates
+        boundingBox.move_ip(0, -screenPosition);
+      }
+      result = intersection(surface, boundingBox, backgroundColour);
+      if (result.length > 0) {
+        newPositionY = this.centre[1];
+        if (result.length > 1) {
+          newPositionY = Math.min(...result.map(c => c[1])) - PLAYER_HALF_SIZE;
+        }
+        else if (result.length === 1) {
+          newPositionY = result[0][1] - PLAYER_HALF_SIZE;
+        }
+
+        // Convert from screen coordinates to global coordinates
+        newPositionY += screenPosition;
+
+        if (this.centre[1] > newPositionY) {
+          this.centre[1] = newPositionY;
+        }
+        this.speedY = 0;
+        this.jumping = false;
+      }
+
+      // Convert from screen coordinates to global coordinates
+      boundingBox.move_ip(0, screenPosition);
+
+      let previousSpeed = this.speedY;
+      for (let i = allRainbows.rainbows.length - 1; i >= 0; i--) {
+        if (boundingBox.colliderect(allRainbows.rainbows[i].rect)) {
+          if (previousSpeed >= PLAYER_VERTICAL_SPEED_TO_DESTROY_RAINBOW) {
+            allRainbows.rainbowFall(i);
+          }
+        }
+      }
+      if ((!this.jumping) && (this.speedY >= COYOTE_TIME_VERTICAL_SPEED)) {
+        this.jumping = true;
+      }
+    }
+    if (this.centre[1] > (600 - PLAYER_HALF_SIZE)) {
+      this.centre[1] = 600 - PLAYER_HALF_SIZE;
+      this.speedY = 0;
+      this.jumping = false;
+    }
+    else {
+      this.speedY += PLAYER_ACCELERATION_DOWN;
+    }
+    if (this.speedY > PLAYER_TERMINAL_SPEED) {
+      this.speedY = PLAYER_TERMINAL_SPEED;
+    }
+    this.centre[1] += this.speedY;
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+  }
+
+  jump() {
+    if (!this.jumping) {
+      this.speedY = -PLAYER_JUMP_SPEED;
+      this.jumping = true;
+    }
+  }
+
+  stopJump() {
+    if (this.jumping && (this.speedY < (-PLAYER_JUMP_SPEED / 2))) {
+      this.speedY = -PLAYER_JUMP_SPEED / 2;
+    }
+  }
+
+  left() {
+    this.centre[0] -= PLAYER_LATERAL_SPEED;
+    this.directionX = -1;
+    if (this.centre[0] < PLAYER_HALF_SIZE) {
+      this.centre[0] = PLAYER_HALF_SIZE;
+    }
+  }
+
+  right() {
+    this.centre[0] += PLAYER_LATERAL_SPEED;
+    this.directionX = 1;
+    if (this.centre[0] > (800 - PLAYER_HALF_SIZE)) {
+      this.centre[0] = 800 - PLAYER_HALF_SIZE;
+    }
+  }
+
+  shootRainbow() {
+    allRainbows.append(this.centre[0] + (this.directionX * (RAINBOW_HALF_SIZE + PLAYER_HALF_SIZE + 2)), this.centre[1] + PLAYER_HALF_SIZE);
+  }
+}
+
+const BACKGROUND_BASE_COLOUR = [95, 148, 255];
+
+function backgroundColourUpdate(backgroundBaseColour, screenPosition) {
+  let colourScale = Math.abs(screenPosition / maxScreenPosition);
+  if (colourScale > 1) {
+    colourScale = 1;
+  }
+  return [Math.trunc(BACKGROUND_BASE_COLOUR[0] * colourScale),
+          Math.trunc(BACKGROUND_BASE_COLOUR[1] * colourScale),
+          Math.trunc(BACKGROUND_BASE_COLOUR[2] * colourScale)];
+}
+
+var allPlatforms, allRainbows, screenPosition, surface, player, backgroundColour, maxScreenPosition;
+
+function reset() {
+  allPlatforms = new AllPlatforms();
+  allRainbows = new AllRainbows();
+  screenPosition = 0;
+  surface = null;
+  player = new Player();
+  backgroundColour = [0, 0, 0];
+  maxScreenPosition = -Math.min(...allPlatforms.platformActors.map(a => a.start[1]));
+}
+
+function draw() {
+  screen.fill(backgroundColour);
+
+  allPlatforms.drawLines();
+  // Get the screen with just the platform lines
+  surface = screen.getSurface();
+
+  allPlatforms.draw();
+  player.draw();
+  allRainbows.draw();
+}
+
+function screenPositionUpdate(player) {
+  if ((player.centre[1] - screenPosition) < 150) {
+    screenPosition = player.centre[1] - 150;
+  }
+  else if ((player.centre[1] - screenPosition) > (600 - 150)) {
+    screenPosition = player.centre[1] - (600 - 150);
+    if (screenPosition > 0) {
+      screenPosition = 0;
+    }
+  }
+}
+
+function update(dt) {
+  if (keyboard[keys.LEFT]) {
+    player.left();
+  }
+  else if (keyboard[keys.RIGHT]) {
+    player.right();
+  }
+  if (keyboard[keys.UP]) {
+    player.jump();
+  }
+  else {
+    player.stopJump();
+  }
+  player.update(surface, backgroundColour);
+  screenPositionUpdate(player);
+  backgroundColour = backgroundColourUpdate(BACKGROUND_BASE_COLOUR, screenPosition);
+  allRainbows.update();
+  allPlatforms.update(screenPosition);
+}
+
+function on_key_down(key) {
+  if (key === keys.SPACE) {
+    player.shootRainbow();
+  }
+}
+
+window.addEventListener('load', (event) => {
+  images.LOAD('#imageLoader img');
+  reset();
+  screen.set_mode('#screen', '#reset', '#pause');
+});
+</script>
+</body>
+
+</html>
