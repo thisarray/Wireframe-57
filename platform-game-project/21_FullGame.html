@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Listing17_TestPlayerGraphics</title>
+  <title>Listing21_FullGame</title>
   <script src="../../jsgame0.js"></script>
   <script id="level" type="application/json">
 {
@@ -421,7 +421,7 @@ body {
 </section>
 
 <main>
-<h1>Listing17_TestPlayerGraphics</h1>
+<h1>Listing21_FullGame</h1>
 
 <canvas id="screen">
 The game screen appears here if your browser supports the Canvas API.
@@ -448,6 +448,7 @@ import pgzrun
 from pygame import image, Color, Surface
 from shapely.geometry import Point, Polygon, LineString
 from shapely.affinity import translate
+from random import randint
 import math
 
 platformNames = [&#x27;platform_rock_1&#x27;, &#x27;platform_rock_2&#x27;, &#x27;platform_rock_3&#x27;, &#x27;platform_rock_4&#x27;,
@@ -478,7 +479,26 @@ platforms = [(3,676,599),(3,403,597),(3,90,599),(0,663,433),(0,119,429),(0,121,2
              (14,192,-3219),(14,618,-3221),(14,397,-3378),(13,125,-3501),(13,668,-3511),(14,396,-3614),(15,120,-3774),
              (15,690,-3766),(13,409,-3921),(14,181,-4025),(14,645,-4034),(14,404,-4173),(15,183,-4361),(15,621,-4356),]
 
+enemyNames = [[&#x27;green_worm_right&#x27;, &#x27;green_worm_left&#x27;],
+              [&#x27;red_worm_right&#x27;, &#x27;red_worm_left&#x27;],
+              [&#x27;bee_1_right&#x27;, &#x27;bee_1_left&#x27;,
+               &#x27;bee_2_right&#x27;, &#x27;bee_2_left&#x27;,
+               &#x27;bee_3_right&#x27;, &#x27;bee_3_left&#x27;]]
+
+enemies = [(0,1,111,379),(0,-1,645,227),(0,-1,383,69),(0,-1,228,-67),(0,1,548,-69),(0,1,387,-247),(0,1,378,-647),(0,1,449,-921),
+           (0,-1,334,-920),(1,-1,218,-1083),(1,1,603,-1080),(0,-1,396,-1247),(0,1,399,-1473),(0,-1,390,-1666),(0,-1,343,-2033),
+           (0,-1,457,-2034),(0,1,74,-1879),(0,1,174,-1880),(0,-1,619,-1874),(0,-1,737,-1876),(1,-1,196,-2379),(1,1,717,-2339),
+           (0,-1,181,-2640),(0,-1,333,-2896),(2,-1,623,-2798),(2,1,169,-2724),(2,1,132,-3378),(2,-1,675,-3376),(2,-1,674,-3624),
+           (2,1,120,-3621),(2,1,136,-3914),(2,-1,647,-3930),(2,1,132,-4189),(2,-1,690,-4193),(1,1,57,-3536),(1,-1,743,-3552),
+           (1,-1,779,-3814),(1,1,23,-3826),(1,-1,393,-4229),(1,1,414,-4228)]
+
 drawLines = False
+
+def RectanglesIntersect(centreA, halfSizeA, centreB, halfSizeB):
+    if centreA[0] - halfSizeA[0] &lt; centreB[0] + halfSizeB[0] and centreA[0] + halfSizeA[0] &gt; centreB[0] - halfSizeB[0]:
+        if centreA[1] - halfSizeA[1] &lt; centreB[1] + halfSizeB[1] and centreA[1] + halfSizeA[1] &gt; centreB[1] - halfSizeB[1]:
+            return True
+    return False
 
 maxHeightPlatform = 124
 class AllPlatforms():
@@ -526,6 +546,14 @@ class Rainbow:
                     screen.draw.line((self.lineString.coords[i-1][0], self.lineString.coords[i-1][1]-screenPosition),
                                      (self.lineString.coords[i][0], self.lineString.coords[i][1]-screenPosition), (255,255,255))
     def update(self):
+        if self.timeFromCreation == 0:
+            for i in reversed(range(len(allEnemies.enemies))):
+                enemyLine = LineString([(allEnemies.enemies[i].centre[0] - enemyHalfSize, allEnemies.enemies[i].centre[1] - enemyHalfSize),
+                                        (allEnemies.enemies[i].centre[0] - enemyHalfSize, allEnemies.enemies[i].centre[1] + enemyHalfSize),
+                                        (allEnemies.enemies[i].centre[0] + enemyHalfSize, allEnemies.enemies[i].centre[1] + enemyHalfSize),
+                                        (allEnemies.enemies[i].centre[0] + enemyHalfSize, allEnemies.enemies[i].centre[1] - enemyHalfSize)])
+                if self.lineString.intersects(enemyLine):
+                    allEnemies.killEnemy(i)
         self.timeFromCreation += 1
 
 rainbowAccelerationDown = 1
@@ -534,27 +562,35 @@ class FallingRainbow:
         self.centre = [centreX, centreY]
         self.rainbowActor = Actor(&#x27;falling_rainbow&#x27;, (centreX, centreY - rainbowHalfSize/2))
         self.speedY = 0
-        points = []
-        for i in range(0, 180+20, 20):
-            points.append((self.centre[0] + rainbowHalfSize*math.cos(math.pi*i/180), self.centre[1] - rainbowHalfSize*math.sin(math.pi*i/180)))
-        self.lineString = LineString(points)
     def draw(self):
         self.rainbowActor.y = self.centre[1] - rainbowHalfSize/2 - screenPosition
         self.rainbowActor.draw()
         if drawLines:
-            for i in range(1, len(self.lineString.coords)):
-                screen.draw.line((self.lineString.coords[i-1][0], self.lineString.coords[i-1][1]-screenPosition),
-                                 (self.lineString.coords[i][0], self.lineString.coords[i][1]-screenPosition), (255,255,255))
+            screen.draw.line((self.centre[0] - rainbowHalfSize, self.centre[1] - screenPosition - rainbowHalfSize//2),
+                             (self.centre[0] + rainbowHalfSize, self.centre[1] - screenPosition - rainbowHalfSize//2), (255,255,255))
+            screen.draw.line((self.centre[0] + rainbowHalfSize, self.centre[1] - screenPosition - rainbowHalfSize//2),
+                             (self.centre[0] + rainbowHalfSize, self.centre[1] - screenPosition + rainbowHalfSize + self.speedY), (255,255,255))
+            screen.draw.line((self.centre[0] + rainbowHalfSize, self.centre[1] - screenPosition + rainbowHalfSize + self.speedY),
+                             (self.centre[0] - rainbowHalfSize, self.centre[1] - screenPosition + rainbowHalfSize + self.speedY), (255,255,255))
+            screen.draw.line((self.centre[0] - rainbowHalfSize, self.centre[1] - screenPosition + rainbowHalfSize + self.speedY),
+                             (self.centre[0] - rainbowHalfSize, self.centre[1] - screenPosition - rainbowHalfSize//2), (255,255,255))
     def update(self):
         self.speedY += rainbowAccelerationDown
         self.centre[1] += self.speedY
-        points = []
-        for i in range(0, 180+20, 20):
-            points.append((self.centre[0] + rainbowHalfSize*math.cos(math.pi*i/180), self.centre[1] - rainbowHalfSize*math.sin(math.pi*i/180)))
-        self.lineString = LineString(points)
+        centerCollision = [self.centre[0], self.centre[1] + self.speedY * 2]
+        halfSizeCollision = [rainbowHalfSize, (rainbowHalfSize + self.speedY) / 2]
+        for i in reversed(range(len(allEnemies.enemies))):
+            if RectanglesIntersect(centerCollision, halfSizeCollision, allEnemies.enemies[i].centre, [enemyHalfSize, enemyHalfSize]):
+                allEnemies.killEnemy(i)
+        for i in reversed(range(len(allRainbows.rainbows))):
+            if RectanglesIntersect(centerCollision, halfSizeCollision, allRainbows.rainbows[i].centre, [rainbowHalfSize, rainbowHalfSize/2]):
+                allRainbows.rainbowFall(i)
 
 class AllRainbows:
     def __init__(self):
+        self.rainbows = []
+        self.fallingRainbows = []
+    def restart(self):
         self.rainbows = []
         self.fallingRainbows = []
     def draw(self):
@@ -588,11 +624,13 @@ playerTerminalSpeed = 12
 playerLateralSpeed = 4
 coyoteTimeVerticalSpeed = 4
 playerVerticalSpeedToDestroyRainbow = 5
+playerMinTimeBetweenRainbows = 16
 
 screenPosition = 0
 
 playerImageNames = [&#x27;player_stand_right&#x27;, &#x27;player_walk_1_right&#x27;, &#x27;player_stand_right&#x27;, &#x27;player_walk_2_right&#x27;, &#x27;player_jump_up_right&#x27;, &#x27;player_jump_down_right&#x27;,
-                    &#x27;player_stand_left&#x27;, &#x27;player_walk_1_left&#x27;, &#x27;player_stand_left&#x27;, &#x27;player_walk_2_left&#x27;, &#x27;player_jump_up_left&#x27;, &#x27;player_jump_down_left&#x27;]
+                    &#x27;player_stand_left&#x27;, &#x27;player_walk_1_left&#x27;, &#x27;player_stand_left&#x27;, &#x27;player_walk_2_left&#x27;, &#x27;player_jump_up_left&#x27;, &#x27;player_jump_down_left&#x27;,
+                    &#x27;player_collided_1&#x27;, &#x27;player_collided_2&#x27;]
 class Player:
     def __init__(self):
         self.centre = [400, 500]
@@ -607,18 +645,24 @@ class Player:
         self.directionX = -1
         self.jumping = False
         self.actors = [Actor(name) for name in playerImageNames]
-        self.numberOfRainbows = 3
+        self.numberOfRainbows = 1
+        self.lastRainbowShot = playerMinTimeBetweenRainbows
+        self.active = True
+        self.lives = 3
     def draw(self):
         indexImage = 0
-        if self.jumping:
-            if self.speedY &lt; 0:
-                indexImage = 4
-            else:
-                indexImage = 5
-        elif self.walking:
-            indexImage = (self.centre[0]//13) % 4
-        if self.directionX &lt; 0:
-            indexImage += 6
+        if self.active:
+            if self.jumping:
+                if self.speedY &lt; 0:
+                    indexImage = 4
+                else:
+                    indexImage = 5
+            elif self.walking:
+                indexImage = (self.centre[0]//13) % 4
+            if self.directionX &lt; 0:
+                indexImage += 6
+        else:
+            indexImage = 12 + (self.centre[0]//13) % 2
         self.actors[indexImage].x = self.centre[0]
         self.actors[indexImage].y = self.centre[1] - screenPosition
         self.actors[indexImage].draw()
@@ -642,7 +686,36 @@ class Player:
             self.jumping = False
             return True
         return False
+    def intersectEnemy(self, enemies):
+        for enemy in enemies:
+            if enemy.active:
+                if RectanglesIntersect(self.centre, [playerHalfSizeX, playerHalfSizeY], enemy.centre, [enemyHalfSize, enemyHalfSize]):
+                    return True
+        return False
+    def addRainbow(self):
+        if self.numberOfRainbows &lt; 3:
+            self.numberOfRainbows += 1
     def update(self):
+        if self.lives == 0:
+            return
+        if not self.active:
+            self.speedY += playerAccelerationDown
+            self.centre[0] += self.speedX // 2
+            self.centre[1] += self.speedY // 2
+            if self.centre[1] &gt; 600 + playerHalfSizeY*6:
+                self.lives -= 1
+                if self.lives &gt; 0:
+                    self.centre = [400, 500]
+                    self.speedX = 0
+                    self.speedY = 0
+                    self.numberOfRainbows = 1
+                    self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+                    self.polygon = Polygon(self.lineString)
+                    allRainbows.restart()
+                    allCollectables.restart()
+                    allEnemies.restart()
+                    self.active = True
+            return
         if self.speedY &gt;= 0:
             if not self.jumping:
                 collidingObject = self.polygon
@@ -670,8 +743,16 @@ class Player:
         if self.speedY &gt; playerTerminalSpeed:
             self.speedY = playerTerminalSpeed
         self.centre[1] += self.speedY
+        if self.intersectEnemy(allEnemies.enemies):
+            self.active = False
+            self.speedY = -playerJumpSpeed
+            if self.centre[0] &gt; 400:
+                self.speedX = -playerLateralSpeed
+            else:
+                self.speedX = playerLateralSpeed
         self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
         self.polygon = Polygon(self.lineString)
+        self.lastRainbowShot += 1
     def jump(self):
         if not self.jumping:
             self.speedY = -playerJumpSpeed
@@ -694,16 +775,241 @@ class Player:
     def still(self):
         self.walking = False
     def shootRainbow(self):
-        for i in range(self.numberOfRainbows):
-            allRainbows.append(self.centre[0] + self.directionX * ((rainbowHalfSize + playerHalfSizeX + 2) + i * (rainbowHalfSize-2)*2), self.centre[1] + playerHalfSizeY, -i*10)
-
+        if self.lastRainbowShot &gt; playerMinTimeBetweenRainbows:
+            self.lastRainbowShot = 0
+            for i in range(self.numberOfRainbows):
+                allRainbows.append(self.centre[0] + self.directionX * ((rainbowHalfSize + playerHalfSizeX + 2) + i * (rainbowHalfSize-2)*2), self.centre[1] + playerHalfSizeY, -i*10)
 
 player = Player()
+
+enemyHalfSize = 12
+enemyAccelerationDown = 0.5
+enemyTerminalSpeed = 8
+enemyLateralSpeed = 2
+enemyFlyingVerticalSpeed = 1
+
+class Enemy:
+    def __init__(self, centreX, centreY, indexEnemy, directionX):
+        self.centre = [centreX, centreY]
+        self.centredLineString = LineString([(-enemyHalfSize,-enemyHalfSize),
+                                             (-enemyHalfSize,enemyHalfSize),
+                                             (enemyHalfSize,enemyHalfSize),
+                                             (enemyHalfSize,-enemyHalfSize)])
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+        self.speedX = directionX * enemyLateralSpeed
+        self.speedY = 0
+        if indexEnemy == 2:
+            self.speedY = enemyFlyingVerticalSpeed
+        self.index = indexEnemy
+        self.actors = [Actor(name) for name in enemyNames[indexEnemy]]
+        self.active = False
+    def draw(self):
+        if self.active and self.centre[1] - screenPosition &gt; -enemyHalfSize and self.centre[1] - screenPosition &lt; 600+enemyHalfSize:
+            indexActor = ((self.centre[0]//6) % (len(enemyNames[self.index])//2))*2
+            if self.speedX &lt; 0:
+                indexActor += 1
+            self.actors[indexActor].x = self.centre[0]
+            self.actors[indexActor].y = self.centre[1] - screenPosition
+            self.actors[indexActor].draw()
+            if drawLines:
+                for i in range(len(self.lineString.coords)):
+                    screen.draw.line((self.lineString.coords[i-1][0], self.lineString.coords[i-1][1] - screenPosition),
+                                     (self.lineString.coords[i][0], self.lineString.coords[i][1] - screenPosition), (255,0,0))
+    def update(self):
+        if self.centre[1] - screenPosition &gt; -enemyHalfSize/2:
+            self.active = True
+        if not self.active or self.centre[1] - screenPosition &gt; 600+enemyHalfSize:
+            return
+        if self.index == 0:
+            if self.speedX &gt; 0:
+                lineIntersection = LineString([(self.centre[0]+enemyHalfSize, self.centre[1]-6),
+                                               (self.centre[0]+enemyHalfSize, self.centre[1]+enemyHalfSize+16)])
+            else:
+                lineIntersection = LineString([(self.centre[0]-enemyHalfSize, self.centre[1]-6),
+                                               (self.centre[0]-enemyHalfSize, self.centre[1]+enemyHalfSize+16)])
+        else:
+            lineIntersection = LineString([(self.centre[0]-enemyHalfSize, self.centre[1]-enemyHalfSize),
+                                           (self.centre[0]-enemyHalfSize, self.centre[1]+enemyHalfSize+self.speedY+2),
+                                           (self.centre[0]+enemyHalfSize, self.centre[1]+enemyHalfSize+self.speedY+2),
+                                           (self.centre[0]+enemyHalfSize, self.centre[1]-enemyHalfSize)])
+        intersectionFound = False
+        for platform in allPlatforms.platformLineStrings:
+            intersection = lineIntersection.intersection(platform)
+            if not intersection.is_empty:
+                if self.index != 2:
+                    if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                        self.centre[1] = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - enemyHalfSize
+                    elif intersection.geom_type == &#x27;Point&#x27;:
+                        self.centre[1] = intersection.coords[0][1] - enemyHalfSize
+                intersectionFound = True
+                if self.index != 2:
+                    self.speedY = 0
+        for rainbow in allRainbows.rainbows:
+            intersection = lineIntersection.intersection(rainbow.lineString)
+            if not intersection.is_empty:
+                if self.index == 0 or self.index == 2:
+                    self.speedX = -self.speedX
+                elif self.index == 1 and self.speedY &lt; 1:
+                    self.speedX = -self.speedX
+                else:
+                    if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                        self.centre[1] = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - enemyHalfSize
+                    elif intersection.geom_type == &#x27;Point&#x27;:
+                        self.centre[1] = intersection.coords[0][1] - enemyHalfSize
+        if not intersectionFound and self.index == 0:
+            self.speedX = -self.speedX
+        elif intersectionFound and self.index == 2:
+            self.speedY = -self.speedY
+        elif self.centre[0] &gt;= 800 - enemyHalfSize:
+            self.speedX = -enemyLateralSpeed
+        elif self.centre[0] &lt;= enemyHalfSize:
+            self.speedX = enemyLateralSpeed
+        if self.centre[1] &gt; 600 - enemyHalfSize:
+            self.centre[1] = 600 - enemyHalfSize
+            if self.index != 2:
+                self.speedY = 0
+        elif self.index == 1:
+            self.speedY += enemyAccelerationDown
+            if self.speedY &gt; enemyTerminalSpeed:
+                self.speedY = enemyTerminalSpeed
+        self.centre[0] += self.speedX
+        self.centre[1] += self.speedY
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+
+class AllEnemies:
+    def __init__(self):
+        self.restart()
+    def restart(self):
+        self.enemies = [Enemy(enemies[i][2], enemies[i][3], enemies[i][0], enemies[i][1]) for i in range(len(enemies))]
+    def draw(self):
+        for enemy in self.enemies:
+            enemy.draw()
+    def update(self):
+        for enemy in self.enemies:
+            enemy.update()
+    def killEnemy(self, index):
+        allCollectables.addCollectable(self.enemies[index].centre[0], self.enemies[index].centre[1])
+        del self.enemies[index]
+
+allEnemies = AllEnemies()
+
+
+collectableNames = [&#x27;collectable_1&#x27;, &#x27;collectable_2&#x27;, &#x27;collectable_3&#x27;, &#x27;collectable_4&#x27;, &#x27;collectable_5&#x27;, &#x27;collectable_rainbow&#x27;]
+flyingCollectableNames = [&#x27;flying_candy_1&#x27;, &#x27;flying_candy_2&#x27;, &#x27;flying_candy_3&#x27;, &#x27;flying_candy_4&#x27;]
+
+collectableHalfSize = 10
+
+class CollectableFlying:
+    def __init__(self, startX, startY):
+        self.centre = [startX, startY]
+        self.speedX = randint(-startX,800-startX)/100
+        self.speedY = randint(-6,-4)
+        self.accelerationDown = 0.1
+        self.actors = [Actor(name, (startX, startY)) for name in flyingCollectableNames]
+        self.indexActor = 0
+    def draw(self):
+        index = (self.indexActor // 4) % len(flyingCollectableNames)
+        self.actors[index].x = self.centre[0]
+        self.actors[index].y = self.centre[1] - screenPosition
+        self.actors[index].draw()
+        if drawLines:
+            points = [(self.centre[0]-collectableHalfSize, self.centre[1]),
+                      (self.centre[0], self.centre[1]-collectableHalfSize),
+                      (self.centre[0]+collectableHalfSize, self.centre[1]),
+                      (self.centre[0], self.centre[1]+collectableHalfSize)]
+            for i in range(len(points)):
+                screen.draw.line((points[i-1][0], points[i-1][1]-screenPosition),
+                                 (points[i][0], points[i][1]-screenPosition), (32,32,255))
+    def update(self):
+        self.centre[0] += self.speedX
+        if self.centre[0] &lt; collectableHalfSize or self.centre[0] &gt; 800 - collectableHalfSize:
+            self.centre[0] -= self.speedX
+            self.speedX = 0
+        self.speedY += self.accelerationDown
+        self.centre[1] += self.speedY
+        self.indexActor += 1
+    def checkCollission(self):
+        if self.speedY &gt; 1:
+            bottomLine = LineString([(self.centre[0]-collectableHalfSize, self.centre[1]),
+                                     (self.centre[0], self.centre[1]+collectableHalfSize),
+                                     (self.centre[0]+collectableHalfSize, self.centre[1])])
+            for platform in allPlatforms.platformLineStrings:
+                intersection = bottomLine.intersection(platform)
+                if not intersection.is_empty:
+                    point = [self.centre[0], self.centre[1]]
+                    if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                        point[1] = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - collectableHalfSize
+                    elif intersection.geom_type == &#x27;Point&#x27;:
+                        point[1] = intersection.coords[0][1] - collectableHalfSize
+                    return True, point
+        return False, [0,0]
+
+class Collectable:
+    def __init__(self, startX, startY):
+        self.centre = [startX, startY]
+        self.creationTime = 0
+        self.actor = Actor(collectableNames[randint(0, 5)], (startX, startY))
+    def draw(self):
+        self.actor.y = self.centre[1] - screenPosition
+        self.actor.draw()
+        if drawLines:
+            points = [(self.centre[0]-collectableHalfSize, self.centre[1]),
+                      (self.centre[0], self.centre[1]-collectableHalfSize),
+                      (self.centre[0]+collectableHalfSize, self.centre[1]),
+                      (self.centre[0], self.centre[1]+collectableHalfSize)]
+            for i in range(len(points)):
+                screen.draw.line((points[i-1][0], points[i-1][1]-screenPosition),
+                                 (points[i][0], points[i][1]-screenPosition), (128,128,255))
+    def update(self):
+        self.creationTime += 1
+    def isRainbow(self):
+        if self.actor.image == &#x27;collectable_rainbow&#x27;:
+            return True
+        return False
+
+class Collectables:
+    def __init__(self):
+        self.collectablesFlying = []
+        self.collectables = []
+    def restart(self):
+        self.collectablesFlying = []
+        self.collectables = []
+    def addCollectable(self, startX, startY):
+        self.collectablesFlying.append(CollectableFlying(startX, startY))
+    def draw(self):
+        for collectable in self.collectablesFlying:
+            collectable.draw()
+        for collectable in self.collectables:
+            collectable.draw()
+    def update(self):
+        for collectable in self.collectablesFlying:
+            collectable.update()
+        for collectable in self.collectables:
+            collectable.update()
+        for i in reversed(range(len(self.collectablesFlying))):
+            collission, point = self.collectablesFlying[i].checkCollission()
+            if collission:
+                self.collectables.append(Collectable(point[0], point[1]))
+                del self.collectablesFlying[i]
+            elif self.collectablesFlying[i].centre[1] &gt; 600 + collectableHalfSize:
+                del self.collectablesFlying[i]
+        for i in reversed(range(len(self.collectables))):
+            if RectanglesIntersect(player.centre, [playerHalfSizeX, playerHalfSizeY], self.collectables[i].centre, [collectableHalfSize, collectableHalfSize]):
+                if self.collectables[i].isRainbow():
+                    player.addRainbow()
+                self.removeCollectable(i)
+    def removeCollectable(self, index):
+        del self.collectables[index]
+
+allCollectables = Collectables()
+
 
 backgroundBaseColour = (95, 148, 255)
 backgroundColour = (0,0,0)
 
 maxScreenPosition = -platforms[-1][2]
+
+levelClear = False
 
 def backgroundColourUpdate(backgroundBaseColour, screenPosition):
     colourScale = -screenPosition / maxScreenPosition
@@ -716,8 +1022,17 @@ def backgroundColourUpdate(backgroundBaseColour, screenPosition):
 def draw():
     screen.fill(backgroundColour)
     allPlatforms.draw()
+    allEnemies.draw()
     allRainbows.draw()
+    allCollectables.draw()
     player.draw()
+    for i in range(player.lives):
+        screen.blit(&#x27;player_icon&#x27;, (10+i*14, 10))
+    if player.lives == 0:
+        screen.draw.text(&quot;GAME OVER&quot;, center=(400, 260), fontsize=55, color=(255,0,0))
+    if levelClear:
+        screen.draw.text(&quot;LEVEL CLEAR&quot;, center=(400, 260), fontsize=55, color=(0,0,255))
+
 
 def screenPositionUpdate(player):
     global screenPosition
@@ -729,7 +1044,7 @@ def screenPositionUpdate(player):
             screenPosition = 0
 
 def update(dt):
-    global screenPosition, backgroundColour
+    global screenPosition, backgroundColour, levelClear
     if keyboard.left:
         player.left()
     elif keyboard.right:
@@ -744,7 +1059,11 @@ def update(dt):
     screenPositionUpdate(player)
     backgroundColour = backgroundColourUpdate(backgroundBaseColour, screenPosition)
     allRainbows.update()
+    allEnemies.update()
+    allCollectables.update()
     allPlatforms.update(screenPosition)
+    if player.centre[1] &lt; -maxScreenPosition - maxHeightPlatform/2:
+        levelClear = True
 
 def on_key_down(key):
     if key == keys.SPACE:
@@ -761,6 +1080,15 @@ pgzrun.go()
  * - Cursor up: player jump
  * - Space: shoot a rainbow
  */
+
+/*
+ * Return a random integer N such that min <= N < max.
+ */
+function getRandomInteger(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor((Math.random() * (max - min)) + min);
+}
 
 const LEVEL_DATA = JSON.parse(document.querySelector('#level').textContent);
 
@@ -836,6 +1164,14 @@ class Rainbow {
   }
 
   update() {
+    if (this.timeFromCreation === 0) {
+      for (let i = allEnemies.enemies.length - 1; i >= 0; i--) {
+        let enemyLine = new Rect(allEnemies.enemies[i].centre[0] - ENEMY_HALF_SIZE, allEnemies.enemies[i].centre[1] - ENEMY_HALF_SIZE, ENEMY_HALF_SIZE * 2, ENEMY_HALF_SIZE * 2);
+        if (this.rainbowActor.colliderect(enemyLine)) {
+          allEnemies.killEnemy(i);
+        }
+      }
+    }
     this.timeFromCreation += 1;
   }
 }
@@ -848,35 +1184,50 @@ class FallingRainbow {
     this.rainbowActor = new Actor('falling_rainbow');
     this.rainbowActor.pos = [centreX, centreY - (RAINBOW_HALF_SIZE / 2)];
     this.speedY = 0;
-    this.points = [];
-    for (let i = 0; i < (180 + 20); i += 20) {
-      this.points.push([this.centre[0] + (RAINBOW_HALF_SIZE * Math.cos(Math.PI * i / 180)), this.centre[1] - (RAINBOW_HALF_SIZE * Math.sin(Math.PI * i / 180))]);
-    }
   }
 
   draw() {
     this.rainbowActor.posy = this.centre[1] - (RAINBOW_HALF_SIZE / 2) - screenPosition;
     this.rainbowActor.draw();
     if (DRAW_LINES) {
-      for (let i = 1; i < this.points.length; i++) {
-        screen.draw.line([this.points[i-1][0], this.points[i-1][1] - screenPosition],
-                         [this.points[i][0], this.points[i][1] - screenPosition], [255, 255, 255]);
-      }
+      screen.draw.line([this.centre[0] - RAINBOW_HALF_SIZE, this.centre[1] - screenPosition - Math.floor(RAINBOW_HALF_SIZE / 2)],
+                       [this.centre[0] + RAINBOW_HALF_SIZE, this.centre[1] - screenPosition - Math.floor(RAINBOW_HALF_SIZE / 2)], [255, 255, 255]);
+      screen.draw.line([this.centre[0] + RAINBOW_HALF_SIZE, this.centre[1] - screenPosition - Math.floor(RAINBOW_HALF_SIZE / 2)],
+                       [this.centre[0] + RAINBOW_HALF_SIZE, this.centre[1] - screenPosition + RAINBOW_HALF_SIZE + this.speedY], [255, 255, 255]);
+      screen.draw.line([this.centre[0] + RAINBOW_HALF_SIZE, this.centre[1] - screenPosition + RAINBOW_HALF_SIZE + this.speedY],
+                       [this.centre[0] - RAINBOW_HALF_SIZE, this.centre[1] - screenPosition + RAINBOW_HALF_SIZE + this.speedY], [255, 255, 255]);
+      screen.draw.line([this.centre[0] - RAINBOW_HALF_SIZE, this.centre[1] - screenPosition + RAINBOW_HALF_SIZE + this.speedY],
+                       [this.centre[0] - RAINBOW_HALF_SIZE, this.centre[1] - screenPosition - Math.floor(RAINBOW_HALF_SIZE / 2)], [255, 255, 255]);
     }
   }
 
   update() {
     this.speedY += RAINBOW_ACCELERATION_DOWN;
     this.centre[1] += this.speedY;
-    this.points = [];
-    for (let i = 0; i < (180 + 20); i += 20) {
-      this.points.push([this.centre[0] + (RAINBOW_HALF_SIZE * Math.cos(Math.PI * i / 180)), this.centre[1] - (RAINBOW_HALF_SIZE * Math.sin(Math.PI * i / 180))]);
+    let rainbowRect = new Rect(this.centre[0] - RAINBOW_HALF_SIZE, this.centre[1] + (this.speedY * 2) - ((RAINBOW_HALF_SIZE + this.speedY) / 2), RAINBOW_HALF_SIZE * 2, RAINBOW_HALF_SIZE + this.speedY),
+        targetRect;
+    for (let i = allEnemies.enemies.length - 1; i >= 0; i--) {
+      targetRect = new Rect(allEnemies.enemies[i].centre[0] - ENEMY_HALF_SIZE, allEnemies.enemies[i].centre[1] - ENEMY_HALF_SIZE, ENEMY_HALF_SIZE * 2, ENEMY_HALF_SIZE * 2);
+      if (rainbowRect.colliderect(targetRect)) {
+        allEnemies.killEnemy(i);
+      }
+    }
+    for (let i = allRainbows.rainbows.length - 1; i >= 0; i--) {
+      targetRect = new Rect(allRainbows.rainbows[i].centre[0] - RAINBOW_HALF_SIZE, allRainbows.rainbows[i].centre[1] - (RAINBOW_HALF_SIZE / 2), RAINBOW_HALF_SIZE * 2, RAINBOW_HALF_SIZE);
+      if (rainbowRect.colliderect(targetRect)) {
+        allRainbows.rainbowFall(i);
+      }
     }
   }
 }
 
 class AllRainbows {
   constructor() {
+    this.rainbows = [];
+    this.fallingRainbows = [];
+  }
+
+  restart() {
     this.rainbows = [];
     this.fallingRainbows = [];
   }
@@ -923,6 +1274,7 @@ const PLAYER_TERMINAL_SPEED = 12;
 const PLAYER_LATERAL_SPEED = 4;
 const COYOTE_TIME_VERTICAL_SPEED = 4;
 const PLAYER_VERTICAL_SPEED_TO_DESTROY_RAINBOW = 5;
+const PLAYER_MIN_TIME_BETWEEN_RAINBOWS = 16;
 
 /*
  * Return an Array of coordinates where boundingBox has collided with the platforms in surface.
@@ -949,7 +1301,8 @@ function intersection(surface, boundingBox, background = [0, 0, 0]) {
 }
 
 const PLAYER_IMAGE_NAMES = ['player_stand_right', 'player_walk_1_right', 'player_stand_right', 'player_walk_2_right', 'player_jump_up_right', 'player_jump_down_right',
-                            'player_stand_left', 'player_walk_1_left', 'player_stand_left', 'player_walk_2_left', 'player_jump_up_left', 'player_jump_down_left'];
+                            'player_stand_left', 'player_walk_1_left', 'player_stand_left', 'player_walk_2_left', 'player_jump_up_left', 'player_jump_down_left',
+                            'player_collided_1', 'player_collided_2'];
 
 class Player {
   constructor() {
@@ -964,24 +1317,32 @@ class Player {
     for (let name of PLAYER_IMAGE_NAMES) {
       this.actors.push(new Actor(name));
     }
-    this.numberOfRainbows = 3;
+    this.numberOfRainbows = 1;
+    this.lastRainbowShot = PLAYER_MIN_TIME_BETWEEN_RAINBOWS;
+    this.active = true;
+    this.lives = 3;
   }
 
   draw() {
     let indexImage = 0;
-    if (this.jumping) {
-      if (this.speedY < 0) {
-        indexImage = 4;
+    if (this.active) {
+      if (this.jumping) {
+        if (this.speedY < 0) {
+          indexImage = 4;
+        }
+        else {
+          indexImage = 5;
+        }
       }
-      else {
-        indexImage = 5;
+      else if (this.walking) {
+        indexImage = Math.floor(this.centre[0] / 13) % 4;
+      }
+      if (this.directionX < 0) {
+        indexImage += 6;
       }
     }
-    else if (this.walking) {
-      indexImage = Math.floor(this.centre[0] / 13) % 4;
-    }
-    if (this.directionX < 0) {
-      indexImage += 6;
+    else {
+      indexImage = 12 + (Math.floor(this.centre[0] / 13) % 2);
     }
     this.actors[indexImage].posx = this.centre[0];
     this.actors[indexImage].posy = this.centre[1] - screenPosition;
@@ -991,22 +1352,66 @@ class Player {
     }
   }
 
+  intersectEnemy(enemies) {
+    let playerRect = new Rect(this.centre[0] - PLAYER_HALF_SIZE_X, this.centre[1] - PLAYER_HALF_SIZE_Y, PLAYER_HALF_SIZE_X * 2, PLAYER_HALF_SIZE_Y * 2),
+        enemyRect;
+    for (let enemy of enemies) {
+      if (enemy.active) {
+        enemyRect = new Rect(enemy.centre[0] - ENEMY_HALF_SIZE, enemy.centre[1] - ENEMY_HALF_SIZE, ENEMY_HALF_SIZE * 2, ENEMY_HALF_SIZE * 2);
+        if (playerRect.colliderect(enemyRect)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  addRainbow() {
+    if (this.numberOfRainbows < 3) {
+      this.numberOfRainbows += 1;
+    }
+  }
+
   update(surface, backgroundColour) {
     if (surface == null) {
       return;
     }
 
+    if (this.lives === 0) {
+      return;
+    }
+    if (!this.active) {
+      this.speedY += PLAYER_ACCELERATION_DOWN;
+      this.centre[0] += Math.floor(this.speedX / 2);
+      this.centre[1] += Math.floor(this.speedY / 2);
+      if (this.centre[1] > (600 + (PLAYER_HALF_SIZE_Y * 6))) {
+        this.lives -= 1;
+        if (this.lives > 0) {
+          this.centre = [400, 500];
+          this.speedX = 0;
+          this.speedY = 0;
+          this.numberOfRainbows = 1;
+          this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+          allRainbows.restart();
+          allCollectables.restart();
+          allEnemies.restart();
+          this.active = true;
+        }
+      }
+      return;
+    }
     if (this.speedY >= 0) {
       let boundingBox, result, newPositionY;
       if (!this.jumping) {
-        // Convert from global coordinates to screen coordinates
-        boundingBox = this.lineString.move(0, -screenPosition);
+        boundingBox = new Rect(this.lineString.x, this.lineString.y, this.lineString.width, this.lineString.height);
       }
       else {
         boundingBox = new Rect(this.centre[0] - PLAYER_HALF_SIZE_X, this.centre[1] + PLAYER_HALF_SIZE_Y - 2, PLAYER_HALF_SIZE_X * 2, this.speedY + 4);
-        // Convert from global coordinates to screen coordinates
-        boundingBox.move_ip(0, -screenPosition);
       }
+
+      // Convert from global coordinates to screen coordinates
+      boundingBox.move_ip(0, -screenPosition);
+
       result = intersection(surface, boundingBox, backgroundColour);
       if (result.length > 0) {
         newPositionY = this.centre[1];
@@ -1056,7 +1461,18 @@ class Player {
       this.speedY = PLAYER_TERMINAL_SPEED;
     }
     this.centre[1] += this.speedY;
+    if (this.intersectEnemy(allEnemies.enemies)) {
+      this.active = false;
+      this.speedY = -PLAYER_JUMP_SPEED;
+      if (this.centre[0] > 400) {
+        this.speedX = -PLAYER_LATERAL_SPEED;
+      }
+      else {
+        this.speedX = PLAYER_LATERAL_SPEED;
+      }
+    }
     this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+    this.lastRainbowShot += 1;
   }
 
   jump() {
@@ -1095,9 +1511,375 @@ class Player {
   }
 
   shootRainbow() {
-    for (let i = 0; i < this.numberOfRainbows; i++) {
-      allRainbows.append(this.centre[0] + (this.directionX * ((RAINBOW_HALF_SIZE + PLAYER_HALF_SIZE_X + 2) + (i * (RAINBOW_HALF_SIZE - 2) * 2))), this.centre[1] + PLAYER_HALF_SIZE_Y, -i * 10);
+    if (this.lastRainbowShot > PLAYER_MIN_TIME_BETWEEN_RAINBOWS) {
+      this.lastRainbowShot = 0;
+      for (let i = 0; i < this.numberOfRainbows; i++) {
+        allRainbows.append(this.centre[0] + (this.directionX * ((RAINBOW_HALF_SIZE + PLAYER_HALF_SIZE_X + 2) + (i * (RAINBOW_HALF_SIZE - 2) * 2))), this.centre[1] + PLAYER_HALF_SIZE_Y, -i * 10);
+      }
     }
+  }
+}
+
+const ENEMY_HALF_SIZE = 12;
+const ENEMY_ACCELERATION_DOWN = 0.5;
+const ENEMY_TERMINAL_SPEED = 8;
+const ENEMY_LATERAL_SPEED = 2;
+const ENEMY_FLYING_VERTICAL_SPEED = 1;
+
+class Enemy {
+  constructor(centreX, centreY, name) {
+    let directionX = 1;
+    if (name.endsWith('_left')) {
+      directionX = -1;
+    }
+    this.centre = [centreX, centreY];
+    this.centredLineString = new Rect(-ENEMY_HALF_SIZE, -ENEMY_HALF_SIZE, ENEMY_HALF_SIZE * 2, ENEMY_HALF_SIZE * 2);
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+    this.speedX = directionX * ENEMY_LATERAL_SPEED;
+    this.speedY = 0;
+    if (name.startsWith('bee')) {
+      this.speedY = ENEMY_FLYING_VERTICAL_SPEED;
+      this.actors = [new Actor('bee_1_right'), new Actor('bee_1_left'),
+                     new Actor('bee_2_right'), new Actor('bee_2_left'),
+                     new Actor('bee_3_right'), new Actor('bee_3_left')];
+    }
+    else if (name.startsWith('red')) {
+      this.actors = [new Actor('red_worm_right'), new Actor('red_worm_left')];
+    }
+    else {
+      this.actors = [new Actor('green_worm_right'), new Actor('green_worm_left')];
+    }
+    this.active = false;
+  }
+
+  draw() {
+    if (this.active && ((this.centre[1] - screenPosition) > -ENEMY_HALF_SIZE) && ((this.centre[1] - screenPosition) < (600 + ENEMY_HALF_SIZE))) {
+      let indexActor = (Math.floor(this.centre[0] / 6) % Math.floor(this.actors.length / 2)) * 2;
+      if (this.speedX < 0) {
+        indexActor += 1;
+      }
+      this.actors[indexActor].posx = this.centre[0];
+      this.actors[indexActor].posy = this.centre[1] - screenPosition;
+      this.actors[indexActor].draw();
+      if (DRAW_LINES) {
+        screen.draw.rect(this.lineString.move(0, -screenPosition), [255, 0, 0]);
+      }
+    }
+  }
+
+  update(surface, backgroundColour) {
+    if (surface == null) {
+      return;
+    }
+
+    if ((this.centre[1] - screenPosition) > (-ENEMY_HALF_SIZE / 2)) {
+      this.active = true;
+    }
+    if ((!this.active) || ((this.centre[1] - screenPosition) > (600 + ENEMY_HALF_SIZE))) {
+      return;
+    }
+    let intersectionFound = false,
+        lineIntersection, result;
+    if (this.actors[0].name.startsWith('green')) {
+      if (this.speedX > 0) {
+        lineIntersection = new Rect(this.centre[0] + ENEMY_HALF_SIZE, this.centre[1] - 6, 1, ENEMY_HALF_SIZE + 22);
+      }
+      else {
+        lineIntersection = new Rect(this.centre[0] - ENEMY_HALF_SIZE, this.centre[1] - 6, 1, ENEMY_HALF_SIZE + 22);
+      }
+    }
+    else {
+      lineIntersection = this.lineString.inflate(0, this.speedY + 2);
+    }
+
+    // Convert from global coordinates to screen coordinates
+    lineIntersection.move_ip(0, -screenPosition);
+
+    result = intersection(surface, lineIntersection, backgroundColour);
+    if (result.length > 0) {
+      intersectionFound = true;
+      if (!this.actors[0].name.startsWith('bee')) {
+        if (result.length > 1) {
+          this.centre[1] = Math.min(...result.map(c => c[1])) - ENEMY_HALF_SIZE;
+        }
+        else if (result.length === 1) {
+          this.centre[1] = result[0][1] - ENEMY_HALF_SIZE;
+        }
+
+        // Convert from screen coordinates to global coordinates
+        this.centre[1] += screenPosition;
+
+        this.speedY = 0;
+      }
+    }
+
+    // Convert from screen coordinates to global coordinates
+    lineIntersection.move_ip(0, screenPosition);
+
+    for (let rainbow of allRainbows.rainbows) {
+      if (lineIntersection.colliderect(rainbow.rainbowActor)) {
+        if (this.actors[0].name.startsWith('green') || this.actors[0].name.startsWith('bee')) {
+          this.speedX = -this.speedX;
+        }
+        else if (this.actors[0].name.startsWith('red') && (this.speedY < 1)) {
+          this.speedX = -this.speedX;
+        }
+        else {
+          this.centre[1] = Math.min(lineIntersection.bottom, rainbow.rainbowActor.bottom) - ENEMY_HALF_SIZE;
+        }
+      }
+    }
+    if ((!intersectionFound) && this.actors[0].name.startsWith('green')) {
+      this.speedX = -this.speedX;
+    }
+    else if (intersectionFound && this.actors[0].name.startsWith('bee')) {
+      this.speedY = -this.speedY;
+    }
+    else if (this.centre[0] >= (800 - ENEMY_HALF_SIZE)) {
+      this.speedX = -ENEMY_LATERAL_SPEED;
+    }
+    else if (this.centre[0] <= ENEMY_HALF_SIZE) {
+      this.speedX = ENEMY_LATERAL_SPEED;
+    }
+    if (this.centre[1] > (600 - ENEMY_HALF_SIZE)) {
+      this.centre[1] = 600 - ENEMY_HALF_SIZE;
+      if (!this.actors[0].name.startsWith('bee')) {
+        this.speedY = 0;
+      }
+    }
+    else if (this.actors[0].name.startsWith('red')) {
+      this.speedY += ENEMY_ACCELERATION_DOWN;
+      if (this.speedY > ENEMY_TERMINAL_SPEED) {
+        this.speedY = ENEMY_TERMINAL_SPEED;
+      }
+    }
+    this.centre[0] += this.speedX;
+    this.centre[1] += this.speedY;
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+  }
+}
+
+class AllEnemies {
+  constructor() {
+    this.restart();
+  }
+
+  restart() {
+    this.enemies = [];
+    for (const name of Object.getOwnPropertyNames(LEVEL_DATA['enemies'])) {
+      for (let pos of LEVEL_DATA['enemies'][name]) {
+        this.enemies.push(new Enemy(pos[0], pos[1], name));
+      }
+    }
+  }
+
+  draw() {
+    for (let enemy of this.enemies) {
+      enemy.draw();
+    }
+  }
+
+  update(surface, backgroundColour) {
+    if (surface == null) {
+      return;
+    }
+    for (let enemy of this.enemies) {
+      enemy.update(surface, backgroundColour);
+    }
+  }
+
+  killEnemy(index) {
+    allCollectables.addCollectable(this.enemies[index].centre[0], this.enemies[index].centre[1]);
+    this.enemies.splice(index, 1);
+  }
+}
+
+const COLLECTABLE_NAMES = ['collectable_1', 'collectable_2', 'collectable_3', 'collectable_4', 'collectable_5', 'collectable_rainbow'];
+const FLYING_COLLECTABLE_NAMES = ['flying_candy_1', 'flying_candy_2', 'flying_candy_3', 'flying_candy_4'];
+
+const COLLECTABLE_HALF_SIZE = 10;
+
+class CollectableFlying {
+  constructor(startX, startY) {
+    this.centre = [startX, startY];
+    this.speedX = getRandomInteger(-startX, 800 - startX + 1) / 100;
+    this.speedY = getRandomInteger(-6, -3);
+    this.accelerationDown = 0.1;
+    this.actors = [];
+    for (let name of FLYING_COLLECTABLE_NAMES) {
+      let actor = new Actor(name);
+      actor.pos = [startX, startY];
+      this.actors.push(actor);
+    }
+    this.indexActor = 0;
+  }
+
+  draw() {
+    let index = Math.floor(this.indexActor / 4) % FLYING_COLLECTABLE_NAMES.length;
+    this.actors[index].posx = this.centre[0];
+    this.actors[index].posy = this.centre[1] - screenPosition;
+    this.actors[index].draw();
+    if (DRAW_LINES) {
+      let points = [[this.centre[0] - COLLECTABLE_HALF_SIZE, this.centre[1]],
+                    [this.centre[0], this.centre[1] - COLLECTABLE_HALF_SIZE],
+                    [this.centre[0] + COLLECTABLE_HALF_SIZE, this.centre[1]],
+                    [this.centre[0], this.centre[1] + COLLECTABLE_HALF_SIZE]],
+          lastPoint;
+      for (let i = 0; i < points.length; i++) {
+        if (i <= 0) {
+          lastPoint = [points[points.length-1][0], points[points.length-1][1] - screenPosition];
+        }
+        else {
+          lastPoint = [points[i-1][0], points[i-1][1] - screenPosition];
+        }
+        screen.draw.line(lastPoint, [points[i][0], points[i][1] - screenPosition], [32, 32, 255]);
+      }
+    }
+  }
+
+  update() {
+    this.centre[0] += this.speedX;
+    if ((this.centre[0] < COLLECTABLE_HALF_SIZE) || (this.centre[0] > (800 - COLLECTABLE_HALF_SIZE))) {
+      this.centre[0] -= this.speedX;
+      this.speedX = 0;
+    }
+    this.speedY += this.accelerationDown;
+    this.centre[1] += this.speedY;
+    this.indexActor += 1;
+  }
+
+  checkCollission(surface, backgroundColour) {
+    if (surface == null) {
+      return [false, [0, 0]];
+    }
+
+    if (this.speedY > 1) {
+      let boundingBox = new Rect(this.centre[0] - COLLECTABLE_HALF_SIZE, this.centre[1], COLLECTABLE_HALF_SIZE * 2, COLLECTABLE_HALF_SIZE),
+          result, point;
+
+      // Convert from global coordinates to screen coordinates
+      boundingBox.move_ip(0, -screenPosition);
+
+      result = intersection(surface, boundingBox, backgroundColour);
+      if (result.length > 0) {
+        point = [this.centre[0], this.centre[1]];
+        if (result.length > 1) {
+          point[1] = Math.min(...result.map(c => c[1])) - COLLECTABLE_HALF_SIZE;
+        }
+        else if (result.length === 1) {
+          point[1] = result[0][1] - COLLECTABLE_HALF_SIZE;
+        }
+
+        // Convert from screen coordinates to global coordinates
+        point[1] += screenPosition;
+
+        return [true, point];
+      }
+    }
+    return [false, [0, 0]];
+  }
+}
+
+class Collectable {
+  constructor(startX, startY) {
+    this.centre = [startX, startY];
+    this.creationTime = 0;
+    this.actor = new Actor(COLLECTABLE_NAMES[getRandomInteger(0, 6)]);
+    this.actor.pos = [startX, startY];
+  }
+
+  draw() {
+    this.actor.posy = this.centre[1] - screenPosition;
+    this.actor.draw();
+    if (DRAW_LINES) {
+      let points = [[this.centre[0] - COLLECTABLE_HALF_SIZE, this.centre[1]],
+                    [this.centre[0], this.centre[1] - COLLECTABLE_HALF_SIZE],
+                    [this.centre[0] + COLLECTABLE_HALF_SIZE, this.centre[1]],
+                    [this.centre[0], this.centre[1] + COLLECTABLE_HALF_SIZE]],
+          lastPoint;
+      for (let i = 0; i < points.length; i++) {
+        if (i <= 0) {
+          lastPoint = [points[points.length-1][0], points[points.length-1][1] - screenPosition];
+        }
+        else {
+          lastPoint = [points[i-1][0], points[i-1][1] - screenPosition];
+        }
+        screen.draw.line(lastPoint, [points[i][0], points[i][1] - screenPosition], [128, 128, 255]);
+      }
+    }
+  }
+
+  update() {
+    this.creationTime += 1;
+  }
+
+  isRainbow() {
+    if (this.actor.name === 'collectable_rainbow') {
+      return true;
+    }
+    return false;
+  }
+}
+
+class Collectables {
+  constructor() {
+    this.collectablesFlying = [];
+    this.collectables = [];
+  }
+
+  restart() {
+    this.collectablesFlying = [];
+    this.collectables = [];
+  }
+
+  addCollectable(startX, startY) {
+    this.collectablesFlying.push(new CollectableFlying(startX, startY));
+  }
+
+  draw() {
+    for (let collectable of this.collectablesFlying) {
+      collectable.draw();
+    }
+    for (let collectable of this.collectables) {
+      collectable.draw();
+    }
+  }
+
+  update(surface, backgroundColour) {
+    if (surface == null) {
+      return;
+    }
+
+    for (let collectable of this.collectablesFlying) {
+      collectable.update();
+    }
+    for (let collectable of this.collectables) {
+      collectable.update();
+    }
+    for (let i = this.collectablesFlying.length - 1; i >= 0; i--) {
+      let [collission, point] = this.collectablesFlying[i].checkCollission(surface, backgroundColour);
+      if (collission) {
+        this.collectables.push(new Collectable(point[0], point[1]));
+        this.collectablesFlying.splice(i, 1);
+      }
+      else if (this.collectablesFlying[i].centre[1] > (600 + COLLECTABLE_HALF_SIZE)) {
+        this.collectablesFlying.splice(i, 1);
+      }
+    }
+    for (let i = this.collectables.length - 1; i >= 0; i--) {
+      let playerRect = new Rect(player.centre[0] - PLAYER_HALF_SIZE_X, player.centre[1] - PLAYER_HALF_SIZE_Y, PLAYER_HALF_SIZE_X * 2, PLAYER_HALF_SIZE_Y * 2),
+          collectableRect = new Rect(this.collectables[i].centre[0] - COLLECTABLE_HALF_SIZE, this.collectables[i].centre[1] - COLLECTABLE_HALF_SIZE, COLLECTABLE_HALF_SIZE * 2, COLLECTABLE_HALF_SIZE * 2);
+      if (playerRect.colliderect(collectableRect)) {
+        if (this.collectables[i].isRainbow()) {
+          player.addRainbow();
+        }
+        this.removeCollectable(i);
+      }
+    }
+  }
+
+  removeCollectable(index) {
+    this.collectables.splice(index, 1);
   }
 }
 
@@ -1113,7 +1895,7 @@ function backgroundColourUpdate(backgroundBaseColour, screenPosition) {
           Math.trunc(BACKGROUND_BASE_COLOUR[2] * colourScale)];
 }
 
-var allPlatforms, allRainbows, screenPosition, surface, player, backgroundColour, maxScreenPosition;
+var allPlatforms, allRainbows, screenPosition, surface, player, allEnemies, allCollectables, backgroundColour, maxScreenPosition, levelClear;
 
 function reset() {
   allPlatforms = new AllPlatforms();
@@ -1121,20 +1903,42 @@ function reset() {
   screenPosition = 0;
   surface = null;
   player = new Player();
+  allEnemies = new AllEnemies();
+  allCollectables = new Collectables();
   backgroundColour = [0, 0, 0];
   maxScreenPosition = -Math.min(...allPlatforms.platformActors.map(a => a.start[1]));
+  levelClear = false;
 }
 
 function draw() {
-  screen.fill(backgroundColour);
-
-  allPlatforms.drawLines();
   // Get the screen with just the platform lines
+  screen.fill(backgroundColour);
+  allPlatforms.drawLines();
   surface = screen.getSurface();
 
+  screen.fill(backgroundColour);
   allPlatforms.draw();
+  allEnemies.draw();
   allRainbows.draw();
+  allCollectables.draw();
   player.draw();
+  for (let i = 0; i < player.lives; i++) {
+    screen.blit('player_icon', [10 + (i * 14), 10]);
+  }
+  if (player.lives === 0) {
+    screen.draw.text("GAME OVER", {
+      center: [400, 260],
+      fontsize: 55,
+      color: [255, 0, 0]
+    });
+  }
+  if (levelClear) {
+    screen.draw.text("LEVEL CLEAR", {
+      center: [400, 260],
+      fontsize: 55,
+      color: [0, 0, 255]
+    });
+  }
 }
 
 function screenPositionUpdate(player) {
@@ -1166,10 +1970,17 @@ function update(dt) {
     player.stopJump();
   }
   player.update(surface, backgroundColour);
+  allRainbows.update();
+  allEnemies.update(surface, backgroundColour);
+  allCollectables.update(surface, backgroundColour);
+  allPlatforms.update(screenPosition);
+  if (player.centre[1] < (-maxScreenPosition - (MAX_HEIGHT_PLATFORM / 2))) {
+    levelClear = true;
+  }
+
+  // Update the screen position last so surface is consistent in the above updates
   screenPositionUpdate(player);
   backgroundColour = backgroundColourUpdate(BACKGROUND_BASE_COLOUR, screenPosition);
-  allRainbows.update();
-  allPlatforms.update(screenPosition);
 }
 
 function on_key_down(key) {
