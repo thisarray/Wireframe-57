@@ -1,0 +1,1909 @@
+<!DOCTYPE html>
+
+<html lang="en-US">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Listing30_FinalGame</title>
+  <script src="../../jsgame0.js"></script>
+  <script id="level" type="application/json">
+{
+  "enemies": {
+    "bee_1_left": [
+      [623, -2798],
+      [675, -3376],
+      [674, -3624],
+      [647, -3930],
+      [690, -4193]
+    ],
+    "bee_1_right": [
+      [169, -2724],
+      [132, -3378],
+      [120, -3621],
+      [136, -3914],
+      [132, -4189]
+    ],
+    "green_worm_left": [
+      [645, 227],
+      [383, 69],
+      [228, -67],
+      [334, -920],
+      [396, -1247],
+      [390, -1666],
+      [343, -2033],
+      [457, -2034],
+      [619, -1874],
+      [737, -1876],
+      [181, -2640],
+      [333, -2896]
+    ],
+    "green_worm_right": [
+      [111, 379],
+      [548, -69],
+      [387, -247],
+      [378, -647],
+      [449, -921],
+      [399, -1473],
+      [74, -1879],
+      [174, -1880]
+    ],
+    "red_worm_left": [
+      [218, -1083],
+      [196, -2379],
+      [743, -3552],
+      [779, -3814],
+      [393, -4229]
+    ],
+    "red_worm_right": [
+      [603, -1080],
+      [717, -2339],
+      [57, -3536],
+      [23, -3826],
+      [414, -4228]
+    ]
+  },
+  "platforms": {
+    "platform_cloud_1": {
+      "lines": [
+        [-114, -4],
+        [-82, -14],
+        [-39, -17],
+        [-12, -33],
+        [37, -35],
+        [52, -22],
+        [87, -18],
+        [113, -8]
+      ],
+      "pos": [
+        [125, -3501],
+        [668, -3511],
+        [409, -3921]
+      ]
+    },
+    "platform_cloud_2": {
+      "lines": [
+        [-158, -4],
+        [-119, -8],
+        [-72, -23],
+        [-45, -19],
+        [-4, -35],
+        [24, -23],
+        [61, -22],
+        [84, -8],
+        [130, -11],
+        [159, 1]
+      ],
+      "pos": [
+        [192, -3219],
+        [618, -3221],
+        [397, -3378],
+        [396, -3614],
+        [181, -4025],
+        [645, -4034],
+        [404, -4173]
+      ]
+    },
+    "platform_cloud_3": {
+      "lines": [
+        [-237, -5],
+        [-216, -15],
+        [-168, -14],
+        [-139, -29],
+        [-92, -27],
+        [-49, -42],
+        [7, -21],
+        [31, -40],
+        [61, -41],
+        [84, -22],
+        [141, -33],
+        [180, -12],
+        [237, 1]
+      ],
+      "pos": [
+        [219, -3039],
+        [659, -3036],
+        [120, -3774],
+        [690, -3766],
+        [183, -4361],
+        [621, -4356]
+      ]
+    },
+    "platform_grass_1": {
+      "lines": [
+        [-145, -8],
+        [-129, -22],
+        [-89, -37],
+        [-18, -29],
+        [52, -36],
+        [104, -28],
+        [146, -8]
+      ],
+      "pos": [
+        [396, -1622],
+        [402, -1983]
+      ]
+    },
+    "platform_grass_2": {
+      "lines": [
+        [-153, -8],
+        [-131, -16],
+        [-100, -16],
+        [-22, -10],
+        [44, -16],
+        [95, -8],
+        [150, -1]
+      ],
+      "pos": [
+        [400, -1219]
+      ]
+    },
+    "platform_grass_3": {
+      "lines": [
+        [-166, -12],
+        [-152, -23],
+        [-97, -29],
+        [-22, -17],
+        [24, -18],
+        [82, -29],
+        [142, -25],
+        [166, -17]
+      ],
+      "pos": [
+        [147, -728],
+        [454, -731],
+        [697, -736],
+        [258, -878],
+        [559, -878],
+        [109, -1039],
+        [704, -1036],
+        [400, -1439],
+        [119, -1841],
+        [676, -1833],
+        [128, -2144],
+        [429, -2146],
+        [720, -2149]
+      ]
+    },
+    "platform_grass_4": {
+      "lines": [
+        [-51, 1],
+        [-39, -12],
+        [-13, -21],
+        [22, -22],
+        [51, -9]
+      ],
+      "pos": [
+        [113, -1335],
+        [708, -1334],
+        [166, -1533],
+        [647, -1535],
+        [110, -1719],
+        [680, -1729]
+      ]
+    },
+    "platform_rock_1": {
+      "lines": [
+        [-194, -23],
+        [-182, -32],
+        [-138, -35],
+        [-104, -38],
+        [-80, -43],
+        [-15, -34],
+        [34, -36],
+        [59, -42],
+        [93, -37],
+        [126, -28],
+        [181, -26],
+        [192, -24]
+      ],
+      "pos": [
+        [663, 433],
+        [119, 429],
+        [121, 273],
+        [654, 278]
+      ]
+    },
+    "platform_rock_2": {
+      "lines": [
+        [-134, -25],
+        [-98, -31],
+        [-37, -37],
+        [25, -35],
+        [98, -34],
+        [131, -25]
+      ],
+      "pos": [
+        [386, 122],
+        [391, -594]
+      ]
+    },
+    "platform_rock_3": {
+      "lines": [
+        [-59, -10],
+        [-29, -27],
+        [-1, -34],
+        [36, -29],
+        [56, -15]
+      ],
+      "pos": [
+        [98, -337],
+        [684, -339],
+        [289, -403],
+        [505, -404],
+        [90, -537],
+        [684, -546]
+      ]
+    },
+    "platform_rock_4": {
+      "lines": [
+        [-174, -19],
+        [-137, -35],
+        [-93, -34],
+        [-1, -28],
+        [78, -38],
+        [171, -30]
+      ],
+      "pos": [
+        [676, 599],
+        [403, 597],
+        [90, 599],
+        [243, -23],
+        [547, -25],
+        [391, -203]
+      ]
+    },
+    "platform_tree_1": {
+      "lines": [
+        [-166, -38],
+        [-135, -46],
+        [-96, -40],
+        [-62, -20],
+        [-30, 9],
+        [-8, 20],
+        [16, 25],
+        [92, 16],
+        [145, 18],
+        [166, 23]
+      ],
+      "pos": [
+        [161, -2536]
+      ]
+    },
+    "platform_tree_2": {
+      "lines": [
+        [-165, 10],
+        [-110, -5],
+        [-66, -21],
+        [-23, -41],
+        [16, -51],
+        [63, -51],
+        [124, -29],
+        [162, -25]
+      ],
+      "pos": [
+        [153, -2310],
+        [154, -2779]
+      ]
+    },
+    "platform_tree_3": {
+      "lines": [
+        [-47, -9],
+        [-5, -25],
+        [66, -30]
+      ],
+      "pos": [
+        [131, -2594],
+        [700, -2919],
+        [284, -2851]
+      ]
+    },
+    "platform_tree_4": {
+      "lines": [
+        [-134, -18],
+        [-84, 2],
+        [-57, 1],
+        [25, -20],
+        [62, -18],
+        [85, -12],
+        [133, -14]
+      ],
+      "pos": [
+        [677, -2302],
+        [687, -2701]
+      ]
+    },
+    "platform_tree_5": {
+      "lines": [
+        [-147, -45],
+        [-122, -48],
+        [-66, -59],
+        [-21, -58],
+        [18, -42],
+        [53, -13],
+        [109, 13],
+        [143, 20]
+      ],
+      "pos": [
+        [665, -2511],
+        [660, -2841]
+      ]
+    }
+  }
+}
+  </script>
+  <style type="text/css" media="screen">
+body {
+  background-color: white;
+  color: black;
+}
+.hidden {
+  display: none;
+}
+#original {
+  margin-left: 1em;
+}
+  </style>
+</head>
+
+<body>
+<section id="imageLoader" class="hidden">
+  <img class="hidden" src="images/bee_1_left.png" alt="bee_1_left" data-name="bee_1_left">
+  <img class="hidden" src="images/bee_1_right.png" alt="bee_1_right" data-name="bee_1_right">
+  <img class="hidden" src="images/bee_2_left.png" alt="bee_2_left" data-name="bee_2_left">
+  <img class="hidden" src="images/bee_2_right.png" alt="bee_2_right" data-name="bee_2_right">
+  <img class="hidden" src="images/bee_3_left.png" alt="bee_3_left" data-name="bee_3_left">
+  <img class="hidden" src="images/bee_3_right.png" alt="bee_3_right" data-name="bee_3_right">
+  <img class="hidden" src="images/collectable_1.png" alt="collectable_1" data-name="collectable_1">
+  <img class="hidden" src="images/collectable_2.png" alt="collectable_2" data-name="collectable_2">
+  <img class="hidden" src="images/collectable_3.png" alt="collectable_3" data-name="collectable_3">
+  <img class="hidden" src="images/collectable_4.png" alt="collectable_4" data-name="collectable_4">
+  <img class="hidden" src="images/collectable_5.png" alt="collectable_5" data-name="collectable_5">
+  <img class="hidden" src="images/collectable_rainbow.png" alt="collectable_rainbow" data-name="collectable_rainbow">
+  <img class="hidden" src="images/falling_rainbow.png" alt="falling_rainbow" data-name="falling_rainbow">
+  <img class="hidden" src="images/flying_candy_1.png" alt="flying_candy_1" data-name="flying_candy_1">
+  <img class="hidden" src="images/flying_candy_2.png" alt="flying_candy_2" data-name="flying_candy_2">
+  <img class="hidden" src="images/flying_candy_3.png" alt="flying_candy_3" data-name="flying_candy_3">
+  <img class="hidden" src="images/flying_candy_4.png" alt="flying_candy_4" data-name="flying_candy_4">
+  <img class="hidden" src="images/green_worm_left.png" alt="green_worm_left" data-name="green_worm_left">
+  <img class="hidden" src="images/green_worm_right.png" alt="green_worm_right" data-name="green_worm_right">
+  <img class="hidden" src="images/platform_cloud_1.png" alt="platform_cloud_1" data-name="platform_cloud_1">
+  <img class="hidden" src="images/platform_cloud_2.png" alt="platform_cloud_2" data-name="platform_cloud_2">
+  <img class="hidden" src="images/platform_cloud_3.png" alt="platform_cloud_3" data-name="platform_cloud_3">
+  <img class="hidden" src="images/platform_grass_1.png" alt="platform_grass_1" data-name="platform_grass_1">
+  <img class="hidden" src="images/platform_grass_2.png" alt="platform_grass_2" data-name="platform_grass_2">
+  <img class="hidden" src="images/platform_grass_3.png" alt="platform_grass_3" data-name="platform_grass_3">
+  <img class="hidden" src="images/platform_grass_4.png" alt="platform_grass_4" data-name="platform_grass_4">
+  <img class="hidden" src="images/platform_rock_1.png" alt="platform_rock_1" data-name="platform_rock_1">
+  <img class="hidden" src="images/platform_rock_2.png" alt="platform_rock_2" data-name="platform_rock_2">
+  <img class="hidden" src="images/platform_rock_3.png" alt="platform_rock_3" data-name="platform_rock_3">
+  <img class="hidden" src="images/platform_rock_4.png" alt="platform_rock_4" data-name="platform_rock_4">
+  <img class="hidden" src="images/platform_tree_1.png" alt="platform_tree_1" data-name="platform_tree_1">
+  <img class="hidden" src="images/platform_tree_2.png" alt="platform_tree_2" data-name="platform_tree_2">
+  <img class="hidden" src="images/platform_tree_3.png" alt="platform_tree_3" data-name="platform_tree_3">
+  <img class="hidden" src="images/platform_tree_4.png" alt="platform_tree_4" data-name="platform_tree_4">
+  <img class="hidden" src="images/platform_tree_5.png" alt="platform_tree_5" data-name="platform_tree_5">
+  <img class="hidden" src="images/player_collided_1.png" alt="player_collided_1" data-name="player_collided_1">
+  <img class="hidden" src="images/player_collided_2.png" alt="player_collided_2" data-name="player_collided_2">
+  <img class="hidden" src="images/player_icon.png" alt="player_icon" data-name="player_icon">
+  <img class="hidden" src="images/player_jump_down_left.png" alt="player_jump_down_left" data-name="player_jump_down_left">
+  <img class="hidden" src="images/player_jump_down_right.png" alt="player_jump_down_right" data-name="player_jump_down_right">
+  <img class="hidden" src="images/player_jump_up_left.png" alt="player_jump_up_left" data-name="player_jump_up_left">
+  <img class="hidden" src="images/player_jump_up_right.png" alt="player_jump_up_right" data-name="player_jump_up_right">
+  <img class="hidden" src="images/player_stand_left.png" alt="player_stand_left" data-name="player_stand_left">
+  <img class="hidden" src="images/player_stand_right.png" alt="player_stand_right" data-name="player_stand_right">
+  <img class="hidden" src="images/player_walk_1_left.png" alt="player_walk_1_left" data-name="player_walk_1_left">
+  <img class="hidden" src="images/player_walk_1_right.png" alt="player_walk_1_right" data-name="player_walk_1_right">
+  <img class="hidden" src="images/player_walk_2_left.png" alt="player_walk_2_left" data-name="player_walk_2_left">
+  <img class="hidden" src="images/player_walk_2_right.png" alt="player_walk_2_right" data-name="player_walk_2_right">
+  <img class="hidden" src="images/rainbow.png" alt="rainbow" data-name="rainbow">
+  <img class="hidden" src="images/red_worm_left.png" alt="red_worm_left" data-name="red_worm_left">
+  <img class="hidden" src="images/red_worm_right.png" alt="red_worm_right" data-name="red_worm_right">
+</section>
+
+<main>
+<h1>Listing30_FinalGame</h1>
+
+<canvas id="screen">
+The game screen appears here if your browser supports the Canvas API.
+</canvas>
+<section id="controls">
+  <button type="button" id="reset">Reset</button>
+  <button type="button" id="pause">Pause</button>
+</section>
+
+<h2>Attribution</h2>
+
+<p><a href="https://wireframe.raspberrypi.com/issues/57">Make your own retro platformer, pages 50-55, by Jordi Sontanja</a>.</p>
+
+<p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported</a>.</p>
+
+<h2>Original Python code</h2>
+
+<pre id="original"><code>
+# Player movement prototype program:
+# - Cursor left-right: move player
+# - Cursor up: player jump
+# - Space: shoot a rainbow
+
+import pgzrun
+from pgzero.builtins import Actor
+from shapely.geometry import LineString, Polygon
+from shapely.affinity import translate
+import math
+from random import randint
+
+platformNames = [&#x27;platform_rock_1&#x27;, &#x27;platform_rock_2&#x27;, &#x27;platform_rock_3&#x27;, &#x27;platform_rock_4&#x27;,
+                 &#x27;platform_grass_1&#x27;, &#x27;platform_grass_2&#x27;, &#x27;platform_grass_3&#x27;, &#x27;platform_grass_4&#x27;,
+                 &#x27;platform_tree_1&#x27;, &#x27;platform_tree_2&#x27;, &#x27;platform_tree_3&#x27;, &#x27;platform_tree_4&#x27;, &#x27;platform_tree_5&#x27;,
+                 &#x27;platform_cloud_1&#x27;, &#x27;platform_cloud_2&#x27;, &#x27;platform_cloud_3&#x27;]
+
+platformLines = [[(-194, -23), (-182, -32), (-138, -35), (-104, -38), (-80, -43), (-15, -34), (34, -36), (59, -42), (93, -37), (126, -28), (181, -26), (192, -24)],
+                 [(-134, -25), (-98, -31), (-37, -37), (25, -35), (98, -34), (131, -25)], [(-59, -10), (-29, -27), (-1, -34), (36, -29), (56, -15)],
+                 [(-174, -19), (-137, -35), (-93, -34), (-1, -28), (78, -38), (171, -30)], [(-145, -8), (-129, -22), (-89, -37), (-18, -29), (52, -36), (104, -28), (146, -8)],
+                 [(-153, -8), (-131, -16), (-100, -16), (-22, -10), (44, -16), (95, -8), (150, -1)],
+                 [(-166, -12), (-152, -23), (-97, -29), (-22, -17), (24, -18), (82, -29), (142, -25), (166, -17)], [(-51, 1), (-39, -12), (-13, -21), (22, -22), (51, -9)],
+                 [(-166, -38), (-135, -46), (-96, -40), (-62, -20), (-30, 9), (-8, 20), (16, 25), (92, 16), (145, 18), (166, 23)],
+                 [(-165, 10), (-110, -5), (-66, -21), (-23, -41), (16, -51), (63, -51), (124, -29), (162, -25)],
+                 [(-47, -9), (-5, -25), (66, -30)], [(-134, -18), (-84, 2), (-57, 1), (25, -20), (62, -18), (85, -12), (133, -14)],
+                 [(-147, -45), (-122, -48), (-66, -59), (-21, -58), (18, -42), (53, -13), (109, 13), (143, 20)],
+                 [(-114, -4), (-82, -14), (-39, -17), (-12, -33), (37, -35), (52, -22), (87, -18), (113, -8)],
+                 [(-158, -4), (-119, -8), (-72, -23), (-45, -19), (-4, -35), (24, -23), (61, -22), (84, -8), (130, -11), (159, 1)],
+                 [(-237, -5), (-216, -15), (-168, -14), (-139, -29), (-92, -27), (-49, -42), (7, -21), (31, -40), (61, -41), (84, -22), (141, -33), (180, -12), (237, 1)]]
+
+platforms = [(3,676,599),(3,403,597),(3,90,599),(0,663,433),(0,119,429),(0,121,273),(0,654,278),(1,386,122),
+             (3,243,-23),(3,547,-25),(3,391,-203),(2,98,-337),(2,684,-339),(2,289,-403),(2,505,-404),(2,90,-537),
+             (2,684,-546),(1,391,-594),(6,147,-728),(6,454,-731),(6,697,-736),(6,258,-878),(6,559,-878),(6,109,-1039),
+             (6,704,-1036),(5,400,-1219),(7,113,-1335),(7,708,-1334),(6,400,-1439),(7,166,-1533),(7,647,-1535),
+             (4,396,-1622),(7,110,-1719),(7,680,-1729),(6,119,-1841),(6,676,-1833),(4,402,-1983),(6,128,-2144),
+             (6,429,-2146),(6,720,-2149),(9,153,-2310),(11,677,-2302),(12,665,-2511),(8,161,-2536),(10,131,-2594),
+             (11,687,-2701),(9,154,-2779),(12,660,-2841),(10,700,-2919),(10,284,-2851),(15,219,-3039),(15,659,-3036),
+             (14,192,-3219),(14,618,-3221),(14,397,-3378),(13,125,-3501),(13,668,-3511),(14,396,-3614),(15,120,-3774),
+             (15,690,-3766),(13,409,-3921),(14,181,-4025),(14,645,-4034),(14,404,-4173),(15,183,-4361),(15,621,-4356),]
+
+maxHeightPlatform = 124
+class AllPlatforms():
+    def __init__(self):
+        self.platformActors = [Actor(platformNames[platforms[i][0]], (platforms[i][1], platforms[i][2])) for i in range(len(platforms))]
+        self.platformLineStrings = []
+        for i in range(len(platforms)):
+            points = [(platformLines[platforms[i][0]][j][0] + platforms[i][1],
+                       platformLines[platforms[i][0]][j][1] + platforms[i][2])
+                      for j in range(len(platformLines[platforms[i][0]]))]
+            self.platformLineStrings.append(LineString(points))
+    def draw(self):
+        for platform in self.platformActors:
+            if platform.y &gt; -maxHeightPlatform/2 and platform.y &lt; 600+maxHeightPlatform/2:
+                platform.draw()
+    def update(self, screenPosition):
+        for i in range(len(platforms)):
+            self.platformActors[i].x = platforms[i][1]
+            self.platformActors[i].y = platforms[i][2] - screenPosition
+    def getMaxScreenPosition(self):
+        return -platforms[-1][2] - maxHeightPlatform/2
+
+def RectanglesIntersect(centreA, halfSizeA, centreB, halfSizeB):
+    if centreA[0] - halfSizeA[0] &lt; centreB[0] + halfSizeB[0] and centreA[0] + halfSizeA[0] &gt; centreB[0] - halfSizeB[0]:
+        if centreA[1] - halfSizeA[1] &lt; centreB[1] + halfSizeB[1] and centreA[1] + halfSizeA[1] &gt; centreB[1] - halfSizeB[1]:
+            return True
+    return False
+
+rainbowHalfSize = 39
+rainbowTimeLife = 200
+class Rainbow:
+    def __init__(self, centreX, centreY, creationTime):
+        self.centre = [centreX, centreY]
+        self.timeFromCreation = creationTime
+        self.rainbowActor = Actor(&#x27;rainbow&#x27;, (centreX, centreY - rainbowHalfSize/2))
+        points = []
+        for i in range(0, 180+20, 20):
+            points.append((self.centre[0] + rainbowHalfSize*math.cos(math.pi*i/180)*0.75, self.centre[1] - rainbowHalfSize*math.sin(math.pi*i/180)))
+        self.lineString = LineString(points)
+    def draw(self, screenPosition):
+        if self.timeFromCreation &gt;= 0:
+            self.rainbowActor.y = self.centre[1] - rainbowHalfSize/2 - screenPosition
+            self.rainbowActor.draw()
+    def update(self, allEnemies, allCollectables):
+        if self.timeFromCreation == 0:
+            for i in reversed(range(len(allEnemies.enemies))):
+                if self.lineString.intersects(allEnemies.enemies[i].lineString):
+                    allEnemies.killEnemy(i, allCollectables)
+        self.timeFromCreation += 1
+
+rainbowAccelerationDown = 1
+class FallingRainbow:
+    def __init__(self, centreX, centreY):
+        self.centre = [centreX, centreY]
+        self.rainbowActor = Actor(&#x27;falling_rainbow&#x27;, (centreX, centreY - rainbowHalfSize/2))
+        self.speedY = 0
+    def draw(self, screenPosition):
+        self.rainbowActor.y = self.centre[1] - rainbowHalfSize/2 - screenPosition
+        self.rainbowActor.draw()
+    def update(self, allEnemies, allRainbows, allCollectables):
+        self.speedY += rainbowAccelerationDown
+        self.centre[1] += self.speedY
+        centerCollision = [self.centre[0], self.centre[1] + self.speedY * 2]
+        halfSizeCollision = [rainbowHalfSize, (rainbowHalfSize + self.speedY) / 2]
+        for i in reversed(range(len(allEnemies.enemies))):
+            if RectanglesIntersect(centerCollision, halfSizeCollision, allEnemies.enemies[i].centre, [allEnemies.enemyHalfSize(), allEnemies.enemyHalfSize()]):
+                allEnemies.killEnemy(i, allCollectables)
+        for i in reversed(range(len(allRainbows.rainbows))):
+            if RectanglesIntersect(centerCollision, halfSizeCollision, allRainbows.rainbows[i].centre, [rainbowHalfSize, rainbowHalfSize/2]):
+                allRainbows.rainbowFall(i)
+
+class AllRainbows:
+    def __init__(self):
+        self.rainbows = []
+        self.fallingRainbows = []
+    def restart(self):
+        self.rainbows = []
+        self.fallingRainbows = []
+    def draw(self, screenPosition):
+        for rainbow in self.rainbows:
+            rainbow.draw(screenPosition)
+        for fallingRainbow in self.fallingRainbows:
+            fallingRainbow.draw(screenPosition)
+    def update(self, allEnemies, allCollectables, screenPosition):
+        for i in reversed(range(len(self.rainbows))):
+            self.rainbows[i].update(allEnemies, allCollectables)
+            if self.rainbows[i].timeFromCreation &gt; rainbowTimeLife:
+                self.rainbowFall(i)
+        for i in reversed(range(len(self.fallingRainbows))):
+            self.fallingRainbows[i].update(allEnemies, self, allCollectables)
+            if self.fallingRainbows[i].centre[1]-screenPosition-rainbowHalfSize &gt; 600:
+                del self.fallingRainbows[i]
+    def rainbowFall(self, index):
+        self.fallingRainbows.append(FallingRainbow(self.rainbows[index].centre[0], self.rainbows[index].centre[1]))
+        del self.rainbows[index]
+    def append(self, posX, posY, time):
+        self.rainbows.append(Rainbow(posX, posY, time))
+    def addRainbows(self, numberOfRainbows, posX, posY, directionX):
+        for i in range(numberOfRainbows):
+            self.append(posX + directionX * rainbowHalfSize + directionX * i * (rainbowHalfSize-2)*2, posY, -i*10)
+
+enemyNames = [[&#x27;green_worm_right&#x27;, &#x27;green_worm_left&#x27;],
+              [&#x27;red_worm_right&#x27;, &#x27;red_worm_left&#x27;],
+              [&#x27;bee_1_right&#x27;, &#x27;bee_1_left&#x27;,
+               &#x27;bee_2_right&#x27;, &#x27;bee_2_left&#x27;,
+               &#x27;bee_3_right&#x27;, &#x27;bee_3_left&#x27;]]
+
+enemies = [(0,1,111,379),(0,-1,645,227),(0,-1,383,69),(0,-1,228,-67),(0,1,548,-69),(0,1,387,-247),(0,1,378,-647),(0,1,449,-921),
+           (0,-1,334,-920),(1,-1,218,-1083),(1,1,603,-1080),(0,-1,396,-1247),(0,1,399,-1473),(0,-1,390,-1666),(0,-1,343,-2033),
+           (0,-1,457,-2034),(0,1,74,-1879),(0,1,174,-1880),(0,-1,619,-1874),(0,-1,737,-1876),(1,-1,196,-2379),(1,1,717,-2339),
+           (0,-1,181,-2640),(0,-1,333,-2896),(2,-1,623,-2798),(2,1,169,-2724),(2,1,132,-3378),(2,-1,675,-3376),(2,-1,674,-3624),
+           (2,1,120,-3621),(2,1,136,-3914),(2,-1,647,-3930),(2,1,132,-4189),(2,-1,690,-4193),(1,1,57,-3536),(1,-1,743,-3552),
+           (1,-1,779,-3814),(1,1,23,-3826),(1,-1,393,-4229),(1,1,414,-4228)]
+
+enemyHalfSize = 12
+enemyAccelerationDown = 0.5
+enemyTerminalSpeed = 8
+enemyLateralSpeed = 2
+enemyFlyingVerticalSpeed = 1
+
+class Enemy:
+    def __init__(self, centreX, centreY, indexEnemy, directionX):
+        self.centre = [centreX, centreY]
+        self.centredLineString = LineString([(-enemyHalfSize,-enemyHalfSize),
+                                             (-enemyHalfSize,enemyHalfSize),
+                                             (enemyHalfSize,enemyHalfSize),
+                                             (enemyHalfSize,-enemyHalfSize)])
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+        self.speedX = directionX * enemyLateralSpeed
+        self.speedY = 0
+        if indexEnemy == 2:
+            self.speedY = enemyFlyingVerticalSpeed
+        self.index = indexEnemy
+        self.actors = [Actor(name) for name in enemyNames[indexEnemy]]
+        self.active = False
+    def draw(self, screenPosition):
+        if self.active and self.centre[1] - screenPosition &gt; -enemyHalfSize and self.centre[1] - screenPosition &lt; 600+enemyHalfSize:
+            indexActor = ((self.centre[0]//6) % (len(enemyNames[self.index])//2))*2
+            if self.speedX &lt; 0:
+                indexActor += 1
+            self.actors[indexActor].x = self.centre[0]
+            self.actors[indexActor].y = self.centre[1] - screenPosition
+            self.actors[indexActor].draw()
+    def update(self, allPlatforms, allRainbows, screenPosition):
+        if self.centre[1] - screenPosition &gt; -enemyHalfSize/2:
+            self.active = True
+        if not self.active or self.centre[1] - screenPosition &gt; 600+enemyHalfSize:
+            return
+        if self.index == 0:
+            if self.speedX &gt; 0:
+                lineIntersection = LineString([(self.centre[0]+enemyHalfSize, self.centre[1]-6),
+                                               (self.centre[0]+enemyHalfSize, self.centre[1]+enemyHalfSize+16)])
+            else:
+                lineIntersection = LineString([(self.centre[0]-enemyHalfSize, self.centre[1]-6),
+                                               (self.centre[0]-enemyHalfSize, self.centre[1]+enemyHalfSize+16)])
+        else:
+            lineIntersection = LineString([(self.centre[0]-enemyHalfSize, self.centre[1]-enemyHalfSize),
+                                           (self.centre[0]-enemyHalfSize, self.centre[1]+enemyHalfSize+self.speedY+2),
+                                           (self.centre[0]+enemyHalfSize, self.centre[1]+enemyHalfSize+self.speedY+2),
+                                           (self.centre[0]+enemyHalfSize, self.centre[1]-enemyHalfSize)])
+        intersectionFound = False
+        for platform in allPlatforms.platformLineStrings:
+            intersection = lineIntersection.intersection(platform)
+            if not intersection.is_empty:
+                if self.index != 2:
+                    if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                        self.centre[1] = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - enemyHalfSize
+                    elif intersection.geom_type == &#x27;Point&#x27;:
+                        self.centre[1] = intersection.coords[0][1] - enemyHalfSize
+                intersectionFound = True
+                if self.index != 2:
+                    self.speedY = 0
+        for rainbow in allRainbows.rainbows:
+            intersection = lineIntersection.intersection(rainbow.lineString)
+            if not intersection.is_empty:
+                if self.index == 0 or self.index == 2:
+                    self.speedX = -self.speedX
+                elif self.index == 1 and self.speedY &lt; 1:
+                    self.speedX = -self.speedX
+                else:
+                    if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                        self.centre[1] = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - enemyHalfSize
+                    elif intersection.geom_type == &#x27;Point&#x27;:
+                        self.centre[1] = intersection.coords[0][1] - enemyHalfSize
+        if not intersectionFound and self.index == 0:
+            self.speedX = -self.speedX
+        elif intersectionFound and self.index == 2:
+            self.speedY = -self.speedY
+        elif self.centre[0] &gt;= 800 - enemyHalfSize:
+            self.speedX = -enemyLateralSpeed
+        elif self.centre[0] &lt;= enemyHalfSize:
+            self.speedX = enemyLateralSpeed
+        if self.centre[1] &gt; 600 - enemyHalfSize:
+            self.centre[1] = 600 - enemyHalfSize
+            if self.index != 2:
+                self.speedY = 0
+        elif self.index == 1:
+            self.speedY += enemyAccelerationDown
+            if self.speedY &gt; enemyTerminalSpeed:
+                self.speedY = enemyTerminalSpeed
+        self.centre[0] += self.speedX
+        self.centre[1] += self.speedY
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+
+class AllEnemies:
+    def __init__(self):
+        self.restart()
+    def restart(self):
+        self.enemies = [Enemy(enemies[i][2], enemies[i][3], enemies[i][0], enemies[i][1]) for i in range(len(enemies))]
+    def draw(self, screenPosition):
+        for enemy in self.enemies:
+            enemy.draw(screenPosition)
+    def update(self, allPlatforms, allRainbows, screenPosition):
+        for enemy in self.enemies:
+            enemy.update(allPlatforms, allRainbows, screenPosition)
+    def killEnemy(self, index, allCollectables):
+        allCollectables.addCollectable(self.enemies[index].centre[0], self.enemies[index].centre[1])
+        del self.enemies[index]
+    def enemyHalfSize(self):
+        return enemyHalfSize
+
+collectableNames = [&#x27;collectable_1&#x27;, &#x27;collectable_2&#x27;, &#x27;collectable_3&#x27;, &#x27;collectable_4&#x27;, &#x27;collectable_5&#x27;, &#x27;collectable_rainbow&#x27;]
+flyingCollectableNames = [&#x27;flying_candy_1&#x27;, &#x27;flying_candy_2&#x27;, &#x27;flying_candy_3&#x27;, &#x27;flying_candy_4&#x27;]
+
+collectableHalfSize = 10
+
+class CollectableFlying:
+    def __init__(self, startX, startY):
+        self.centre = [startX, startY]
+        self.speedX = randint(-startX,800-startX)/100
+        self.speedY = randint(-6,-4)
+        self.accelerationDown = 0.1
+        self.actors = [Actor(name, (startX, startY)) for name in flyingCollectableNames]
+        self.indexActor = 0
+    def draw(self, screenPosition):
+        index = (self.indexActor // 4) % len(flyingCollectableNames)
+        self.actors[index].x = self.centre[0]
+        self.actors[index].y = self.centre[1] - screenPosition
+        self.actors[index].draw()
+    def update(self, screenPosition):
+        self.centre[0] += self.speedX
+        if self.centre[0] &lt; collectableHalfSize or self.centre[0] &gt; 800 - collectableHalfSize:
+            self.centre[0] -= self.speedX
+            self.speedX = 0
+        self.speedY += self.accelerationDown
+        self.centre[1] += self.speedY
+        self.indexActor += 1
+    def checkCollission(self, allPlatforms):
+        if self.speedY &gt; 1:
+            bottomLine = LineString([(self.centre[0]-collectableHalfSize, self.centre[1]),
+                                     (self.centre[0], self.centre[1]+collectableHalfSize),
+                                     (self.centre[0]+collectableHalfSize, self.centre[1])])
+            for platform in allPlatforms.platformLineStrings:
+                intersection = bottomLine.intersection(platform)
+                if not intersection.is_empty:
+                    point = [self.centre[0], self.centre[1]]
+                    if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                        point[1] = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - collectableHalfSize
+                    elif intersection.geom_type == &#x27;Point&#x27;:
+                        point[1] = intersection.coords[0][1] - collectableHalfSize
+                    return True, point
+        return False, [0,0]
+
+class Collectable:
+    def __init__(self, startX, startY):
+        self.centre = [startX, startY]
+        self.creationTime = 0
+        self.actor = Actor(collectableNames[randint(0, 5)], (startX, startY))
+    def draw(self, screenPosition):
+        self.actor.y = self.centre[1] - screenPosition
+        self.actor.draw()
+    def update(self):
+        self.creationTime += 1
+    def isRainbow(self):
+        if self.actor.image == &#x27;collectable_rainbow&#x27;:
+            return True
+        return False
+
+class Collectables:
+    def __init__(self):
+        self.collectablesFlying = []
+        self.collectables = []
+    def restart(self):
+        self.collectablesFlying = []
+        self.collectables = []
+    def addCollectable(self, startX, startY):
+        self.collectablesFlying.append(CollectableFlying(startX, startY))
+    def draw(self, screenPosition):
+        for collectable in self.collectablesFlying:
+            collectable.draw(screenPosition)
+        for collectable in self.collectables:
+            collectable.draw(screenPosition)
+    def update(self, allPlatforms, player, screenPosition):
+        for collectable in self.collectablesFlying:
+            collectable.update(screenPosition)
+        for collectable in self.collectables:
+            collectable.update()
+        for i in reversed(range(len(self.collectablesFlying))):
+            collission, point = self.collectablesFlying[i].checkCollission(allPlatforms)
+            if collission:
+                self.collectables.append(Collectable(point[0], point[1]))
+                del self.collectablesFlying[i]
+            elif self.collectablesFlying[i].centre[1] &gt; 600 + collectableHalfSize:
+                del self.collectablesFlying[i]
+        for i in reversed(range(len(self.collectables))):
+            if RectanglesIntersect(player.centre, player.playerHalfSize(), self.collectables[i].centre, [collectableHalfSize, collectableHalfSize]):
+                if self.collectables[i].isRainbow():
+                    player.addRainbow()
+                self.removeCollectable(i)
+    def removeCollectable(self, index):
+        del self.collectables[index]
+
+playerHalfSizeX = 10
+playerHalfSizeY = 18
+playerAccelerationDown = 0.5
+playerJumpSpeed = 14
+playerTerminalSpeed = 12
+playerLateralSpeed = 4
+coyoteTimeVerticalSpeed = 4
+playerVerticalSpeedToDestroyRainbow = 5
+playerMinTimeBetweenRainbows = 16
+
+playerImageNames = [&#x27;player_stand_right&#x27;, &#x27;player_walk_1_right&#x27;, &#x27;player_stand_right&#x27;, &#x27;player_walk_2_right&#x27;, &#x27;player_jump_up_right&#x27;, &#x27;player_jump_down_right&#x27;,
+                    &#x27;player_stand_left&#x27;, &#x27;player_walk_1_left&#x27;, &#x27;player_stand_left&#x27;, &#x27;player_walk_2_left&#x27;, &#x27;player_jump_up_left&#x27;, &#x27;player_jump_down_left&#x27;,
+                    &#x27;player_collided_1&#x27;, &#x27;player_collided_2&#x27;]
+class Player:
+    def __init__(self):
+        self.centre = [400, 500]
+        self.centredLineString = LineString([(-playerHalfSizeX,-playerHalfSizeY*0),
+                                             (-playerHalfSizeX,playerHalfSizeY),
+                                             (playerHalfSizeX,playerHalfSizeY),
+                                             (playerHalfSizeX,-playerHalfSizeY*0)])
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+        self.polygon = Polygon(self.lineString)
+        self.speedY = 0
+        self.walking = False
+        self.directionX = -1
+        self.jumping = False
+        self.actors = [Actor(name) for name in playerImageNames]
+        self.numberOfRainbows = 1
+        self.lastRainbowShot = playerMinTimeBetweenRainbows
+        self.active = True
+        self.lives = 3
+    def draw(self, screenPosition):
+        indexImage = 0
+        if self.active:
+            if self.jumping:
+                if self.speedY &lt; 0:
+                    indexImage = 4
+                else:
+                    indexImage = 5
+            elif self.walking:
+                indexImage = (self.centre[0]//13) % 4
+            if self.directionX &lt; 0:
+                indexImage += 6
+        else:
+            indexImage = 12 + (self.centre[0]//13) % 2
+        self.actors[indexImage].x = self.centre[0]
+        self.actors[indexImage].y = self.centre[1] - screenPosition
+        self.actors[indexImage].draw()
+    def intersectPlatform(self, platform, collidingObject):
+        intersection = collidingObject.intersection(platform)
+        if not intersection.is_empty:
+            newPositionY = self.centre[1]
+            if intersection.geom_type == &#x27;MultiPoint&#x27;:
+                newPositionY = min(intersection.geoms, key=lambda x: x.coords[0][1]).coords[0][1] - playerHalfSizeY
+            elif intersection.geom_type == &#x27;Point&#x27;:
+                newPositionY = intersection.coords[0][1] - playerHalfSizeY
+            elif intersection.geom_type == &#x27;LineString&#x27;:
+                newPositionY = min(intersection.coords, key=lambda x: x[1])[1] - playerHalfSizeY
+            if self.centre[1] &gt; newPositionY:
+                self.centre[1] = newPositionY
+            self.speedY = 0
+            self.jumping = False
+            return True
+        return False
+    def intersectEnemy(self, allEnemies):
+        for enemy in allEnemies.enemies:
+            if enemy.active:
+                if RectanglesIntersect(self.centre, [playerHalfSizeX, playerHalfSizeY], enemy.centre, [allEnemies.enemyHalfSize(), allEnemies.enemyHalfSize()]):
+                    return True
+        return False
+    def addRainbow(self):
+        if self.numberOfRainbows &lt; 3:
+            self.numberOfRainbows += 1
+    def update(self, allPlatforms, allRainbows, allCollectables, allEnemies):
+        if self.lives == 0:
+            return
+        if not self.active:
+            self.speedY += playerAccelerationDown
+            self.centre[0] += self.speedX // 2
+            self.centre[1] += self.speedY // 2
+            if self.centre[1] &gt; 600 + playerHalfSizeY*6:
+                self.lives -= 1
+                if self.lives &gt; 0:
+                    self.centre = [400, 500]
+                    self.speedX = 0
+                    self.speedY = 0
+                    self.numberOfRainbows = 1
+                    self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+                    self.polygon = Polygon(self.lineString)
+                    allRainbows.restart()
+                    allCollectables.restart()
+                    allEnemies.restart()
+                    self.active = True
+            return
+        if self.speedY &gt;= 0:
+            if not self.jumping:
+                collidingObject = self.polygon
+            else:
+                collidingObject = LineString([(self.centre[0]-playerHalfSizeX, self.centre[1]+playerHalfSizeY-2),
+                                              (self.centre[0]-playerHalfSizeX, self.centre[1]+playerHalfSizeY+self.speedY+2),
+                                              (self.centre[0]+playerHalfSizeX, self.centre[1]+playerHalfSizeY+self.speedY+2),
+                                              (self.centre[0]+playerHalfSizeX, self.centre[1]+playerHalfSizeY-2)])
+            for platform in allPlatforms.platformLineStrings:
+                self.intersectPlatform(platform, collidingObject)
+            previousSpeed = self.speedY
+            for i in reversed(range(len(allRainbows.rainbows))):
+                if allRainbows.rainbows[i].timeFromCreation &gt;= 0:
+                    if self.intersectPlatform(allRainbows.rainbows[i].lineString, collidingObject):
+                        if previousSpeed &gt;= playerVerticalSpeedToDestroyRainbow:
+                            allRainbows.rainbowFall(i)
+            if not self.jumping and self.speedY &gt;= coyoteTimeVerticalSpeed:
+                self.jumping = True
+        if self.centre[1] &gt; 600 - playerHalfSizeY:
+            self.centre[1] = 600 - playerHalfSizeY
+            self.speedY = 0
+            self.jumping = False
+        else:
+            self.speedY += playerAccelerationDown
+        if self.speedY &gt; playerTerminalSpeed:
+            self.speedY = playerTerminalSpeed
+        self.centre[1] += self.speedY
+        if self.intersectEnemy(allEnemies):
+            self.active = False
+            self.speedY = -playerJumpSpeed
+            if self.centre[0] &gt; 400:
+                self.speedX = -playerLateralSpeed
+            else:
+                self.speedX = playerLateralSpeed
+        self.lineString = translate(self.centredLineString, self.centre[0], self.centre[1])
+        self.polygon = Polygon(self.lineString)
+        self.lastRainbowShot += 1
+    def jump(self):
+        if not self.jumping:
+            self.speedY = -playerJumpSpeed
+            self.jumping = True
+    def stopJump(self):
+        if self.jumping and self.speedY &lt; -playerJumpSpeed/2:
+            self.speedY = -playerJumpSpeed/2
+    def left(self):
+        self.centre[0] -= playerLateralSpeed
+        self.directionX = -1
+        if self.centre[0] &lt; playerHalfSizeX:
+            self.centre[0] = playerHalfSizeX
+        self.walking = True
+    def right(self):
+        self.centre[0] += playerLateralSpeed
+        self.directionX = 1
+        if self.centre[0] &gt; 800 - playerHalfSizeX:
+            self.centre[0] = 800 - playerHalfSizeX
+        self.walking = True
+    def still(self):
+        self.walking = False
+    def playerHalfSize(self):
+        return [playerHalfSizeX, playerHalfSizeY]
+    def shootRainbow(self, allRainbows):
+        if self.lastRainbowShot &gt; playerMinTimeBetweenRainbows:
+            self.lastRainbowShot = 0
+            allRainbows.addRainbows(self.numberOfRainbows, self.centre[0] + self.directionX * (playerHalfSizeX + 2), self.centre[1] + playerHalfSizeY, self.directionX)
+
+def ScreenPositionUpdate(player, screenPosition):
+    if player.centre[1] - screenPosition &lt; 150:
+        screenPosition = player.centre[1] - 150
+    elif player.centre[1] - screenPosition &gt; 600 - 150:
+        screenPosition = player.centre[1] - (600 - 150)
+        if screenPosition &gt; 0:
+            screenPosition = 0
+    return screenPosition
+
+backgroundBaseColour = (95, 148, 255)
+backgroundColour = (0,0,0)
+
+def BackgroundColour(screenPosition, maxScreenPosition):
+    colourScale = -screenPosition / maxScreenPosition
+    if colourScale &gt; 1:
+        colourScale = 1
+    return (backgroundBaseColour[0]*colourScale,
+            backgroundBaseColour[1]*colourScale,
+            backgroundBaseColour[2]*colourScale)
+
+allPlatforms = AllPlatforms()
+allRainbows = AllRainbows()
+player = Player()
+allEnemies = AllEnemies()
+allCollectables = Collectables()
+
+screenPosition = 0
+maxScreenPosition = allPlatforms.getMaxScreenPosition()
+
+levelClear = False
+
+def draw():
+    screen.fill(BackgroundColour(screenPosition, maxScreenPosition))
+    allPlatforms.draw()
+    allEnemies.draw(screenPosition)
+    allRainbows.draw(screenPosition)
+    allCollectables.draw(screenPosition)
+    player.draw(screenPosition)
+    for i in range(player.lives):
+        screen.blit(&#x27;player_icon&#x27;, (10+i*14, 10))
+    if player.lives == 0:
+        screen.draw.text(&quot;GAME OVER&quot;, center=(400, 260), fontsize=55, color=(255,0,0))
+    if levelClear:
+        screen.draw.text(&quot;LEVEL CLEAR&quot;, center=(400, 260), fontsize=55, color=(0,0,255))
+
+def update(dt):
+    global screenPosition, levelClear
+    if keyboard.left:
+        player.left()
+    elif keyboard.right:
+        player.right()
+    else:
+        player.still()
+    if keyboard.up:
+        player.jump()
+    else:
+        player.stopJump()
+    player.update(allPlatforms, allRainbows, allCollectables, allEnemies)
+    screenPosition = ScreenPositionUpdate(player, screenPosition)
+    allRainbows.update(allEnemies, allCollectables, screenPosition)
+    allEnemies.update(allPlatforms, allRainbows, screenPosition)
+    allCollectables.update(allPlatforms, player, screenPosition)
+    allPlatforms.update(screenPosition)
+    if player.centre[1] &lt; -maxScreenPosition:
+        levelClear = True
+
+def on_key_down(key):
+    if key == keys.SPACE:
+        player.shootRainbow(allRainbows)
+
+pgzrun.go()
+</code></pre>
+</main>
+
+<script>
+/*
+ * Player movement prototype program:
+ * - Cursor left-right: move player
+ * - Cursor up: player jump
+ * - Space: shoot a rainbow
+ */
+
+/*
+ * Return a random integer N such that min <= N < max.
+ */
+function getRandomInteger(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor((Math.random() * (max - min)) + min);
+}
+
+const LEVEL_DATA = JSON.parse(document.querySelector('#level').textContent);
+
+const MAX_HEIGHT_PLATFORM = 124;
+
+class AllPlatforms {
+  constructor() {
+    this.platformActors = [];
+    for (const name of Object.getOwnPropertyNames(LEVEL_DATA['platforms'])) {
+      for (let pos of LEVEL_DATA['platforms'][name]['pos']) {
+        let actor = new Actor(name);
+        actor.pos = pos;
+        actor.start = pos;
+        this.platformActors.push(actor);
+      }
+    }
+  }
+
+  draw() {
+    for (let platform of this.platformActors) {
+      if ((platform.posy > (-MAX_HEIGHT_PLATFORM / 2)) && (platform.posy < (600 + (MAX_HEIGHT_PLATFORM / 2)))) {
+        platform.draw();
+      }
+    }
+  }
+
+  drawLines() {
+    for (let platform of this.platformActors) {
+      let lines = LEVEL_DATA['platforms'][platform.name]['lines'];
+      for (let i = 1; i < lines.length; i++) {
+        screen.draw.line([lines[i-1][0] + platform.start[0], lines[i-1][1] + platform.start[1] - screenPosition],
+                         [lines[i][0] + platform.start[0], lines[i][1] + platform.start[1] - screenPosition], [255, 255, 255]);
+      }
+    }
+  }
+
+  update(screenPosition) {
+    for (let platform of this.platformActors) {
+      platform.posx = platform.start[0];
+      platform.posy = platform.start[1] - screenPosition;
+    }
+  }
+
+  getMaxScreenPosition() {
+    return -Math.min(...this.platformActors.map(a => a.start[1]));
+  }
+}
+
+const RAINBOW_HALF_SIZE = 39;
+const RAINBOW_TIME_LIFE = 200;
+
+class Rainbow {
+  constructor(centreX, centreY, creationTime) {
+    this.centre = [centreX, centreY];
+    this.timeFromCreation = creationTime;
+    this.rainbowActor = new Actor('rainbow');
+    this.rainbowActor.pos = [centreX, centreY - (RAINBOW_HALF_SIZE / 2)];
+    this.points = [];
+    for (let i = 0; i < (180 + 20); i += 20) {
+      this.points.push([this.centre[0] + (RAINBOW_HALF_SIZE * Math.cos(Math.PI * i / 180) * 0.75), this.centre[1] - (RAINBOW_HALF_SIZE * Math.sin(Math.PI * i / 180))]);
+    }
+  }
+
+  draw(screenPosition) {
+    if (this.timeFromCreation >= 0) {
+      this.rainbowActor.posy = this.centre[1] - (RAINBOW_HALF_SIZE / 2) - screenPosition;
+      this.rainbowActor.draw();
+    }
+  }
+
+  update(allEnemies, allCollectables) {
+    if (this.timeFromCreation === 0) {
+      for (let i = allEnemies.enemies.length - 1; i >= 0; i--) {
+        let enemyLine = new Rect(allEnemies.enemies[i].centre[0] - ENEMY_HALF_SIZE, allEnemies.enemies[i].centre[1] - ENEMY_HALF_SIZE, ENEMY_HALF_SIZE * 2, ENEMY_HALF_SIZE * 2);
+        if (this.rainbowActor.colliderect(enemyLine)) {
+          allEnemies.killEnemy(i, allCollectables);
+        }
+      }
+    }
+    this.timeFromCreation += 1;
+  }
+}
+
+const RAINBOW_ACCELERATION_DOWN = 1;
+
+class FallingRainbow {
+  constructor(centreX, centreY) {
+    this.centre = [centreX, centreY];
+    this.rainbowActor = new Actor('falling_rainbow');
+    this.rainbowActor.pos = [centreX, centreY - (RAINBOW_HALF_SIZE / 2)];
+    this.speedY = 0;
+  }
+
+  draw(screenPosition) {
+    this.rainbowActor.posy = this.centre[1] - (RAINBOW_HALF_SIZE / 2) - screenPosition;
+    this.rainbowActor.draw();
+  }
+
+  update(allEnemies, allRainbows, allCollectables) {
+    this.speedY += RAINBOW_ACCELERATION_DOWN;
+    this.centre[1] += this.speedY;
+    let rainbowRect = new Rect(this.centre[0] - RAINBOW_HALF_SIZE, this.centre[1] + (this.speedY * 2) - ((RAINBOW_HALF_SIZE + this.speedY) / 2), RAINBOW_HALF_SIZE * 2, RAINBOW_HALF_SIZE + this.speedY),
+        targetRect;
+    for (let i = allEnemies.enemies.length - 1; i >= 0; i--) {
+      targetRect = new Rect(allEnemies.enemies[i].centre[0] - ENEMY_HALF_SIZE, allEnemies.enemies[i].centre[1] - ENEMY_HALF_SIZE, ENEMY_HALF_SIZE * 2, ENEMY_HALF_SIZE * 2);
+      if (rainbowRect.colliderect(targetRect)) {
+        allEnemies.killEnemy(i, allCollectables);
+      }
+    }
+    for (let i = allRainbows.rainbows.length - 1; i >= 0; i--) {
+      targetRect = new Rect(allRainbows.rainbows[i].centre[0] - RAINBOW_HALF_SIZE, allRainbows.rainbows[i].centre[1] - (RAINBOW_HALF_SIZE / 2), RAINBOW_HALF_SIZE * 2, RAINBOW_HALF_SIZE);
+      if (rainbowRect.colliderect(targetRect)) {
+        allRainbows.rainbowFall(i);
+      }
+    }
+  }
+}
+
+class AllRainbows {
+  constructor() {
+    this.rainbows = [];
+    this.fallingRainbows = [];
+  }
+
+  restart() {
+    this.rainbows = [];
+    this.fallingRainbows = [];
+  }
+
+  draw(screenPosition) {
+    for (let rainbow of this.rainbows) {
+      rainbow.draw(screenPosition);
+    }
+    for (let rainbow of this.fallingRainbows) {
+      rainbow.draw(screenPosition);
+    }
+  }
+
+  update(allEnemies, allCollectables, screenPosition) {
+    for (let i = this.rainbows.length - 1; i >= 0; i--) {
+      this.rainbows[i].update(allEnemies, allCollectables);
+      if (this.rainbows[i].timeFromCreation > RAINBOW_TIME_LIFE) {
+        this.rainbowFall(i);
+      }
+    }
+    for (let i = this.fallingRainbows.length - 1; i >= 0; i--) {
+      this.fallingRainbows[i].update(allEnemies, this, allCollectables);
+      if ((this.fallingRainbows[i].centre[1] - screenPosition - RAINBOW_HALF_SIZE) > 600) {
+        this.fallingRainbows.splice(i, 1);
+      }
+    }
+  }
+
+  rainbowFall(index) {
+    this.fallingRainbows.push(new FallingRainbow(this.rainbows[index].centre[0], this.rainbows[index].centre[1]));
+    this.rainbows.splice(index, 1);
+  }
+
+  append(posX, posY, time) {
+    this.rainbows.push(new Rainbow(posX, posY, time));
+  }
+
+  addRainbows(numberOfRainbows, posX, posY, directionX) {
+    for (let i = 0; i < numberOfRainbows; i++) {
+      this.append(posX + (directionX * RAINBOW_HALF_SIZE) + (directionX * i * (RAINBOW_HALF_SIZE - 2) * 2), posY, -i * 10);
+    }
+  }
+}
+
+const ENEMY_HALF_SIZE = 12;
+const ENEMY_ACCELERATION_DOWN = 0.5;
+const ENEMY_TERMINAL_SPEED = 8;
+const ENEMY_LATERAL_SPEED = 2;
+const ENEMY_FLYING_VERTICAL_SPEED = 1;
+
+class Enemy {
+  constructor(centreX, centreY, name) {
+    let directionX = 1;
+    if (name.endsWith('_left')) {
+      directionX = -1;
+    }
+    this.centre = [centreX, centreY];
+    this.centredLineString = new Rect(-ENEMY_HALF_SIZE, -ENEMY_HALF_SIZE, ENEMY_HALF_SIZE * 2, ENEMY_HALF_SIZE * 2);
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+    this.speedX = directionX * ENEMY_LATERAL_SPEED;
+    this.speedY = 0;
+    if (name.startsWith('bee')) {
+      this.speedY = ENEMY_FLYING_VERTICAL_SPEED;
+      this.actors = [new Actor('bee_1_right'), new Actor('bee_1_left'),
+                     new Actor('bee_2_right'), new Actor('bee_2_left'),
+                     new Actor('bee_3_right'), new Actor('bee_3_left')];
+    }
+    else if (name.startsWith('red')) {
+      this.actors = [new Actor('red_worm_right'), new Actor('red_worm_left')];
+    }
+    else {
+      this.actors = [new Actor('green_worm_right'), new Actor('green_worm_left')];
+    }
+    this.active = false;
+  }
+
+  draw(screenPosition) {
+    if (this.active && ((this.centre[1] - screenPosition) > -ENEMY_HALF_SIZE) && ((this.centre[1] - screenPosition) < (600 + ENEMY_HALF_SIZE))) {
+      let indexActor = (Math.floor(this.centre[0] / 6) % Math.floor(this.actors.length / 2)) * 2;
+      if (this.speedX < 0) {
+        indexActor += 1;
+      }
+      this.actors[indexActor].posx = this.centre[0];
+      this.actors[indexActor].posy = this.centre[1] - screenPosition;
+      this.actors[indexActor].draw();
+    }
+  }
+
+  update(surface, backgroundColour, allPlatforms, allRainbows, screenPosition) {
+    if (surface == null) {
+      return;
+    }
+
+    if ((this.centre[1] - screenPosition) > (-ENEMY_HALF_SIZE / 2)) {
+      this.active = true;
+    }
+    if ((!this.active) || ((this.centre[1] - screenPosition) > (600 + ENEMY_HALF_SIZE))) {
+      return;
+    }
+    let intersectionFound = false,
+        lineIntersection, result;
+    if (this.actors[0].name.startsWith('green')) {
+      if (this.speedX > 0) {
+        lineIntersection = new Rect(this.centre[0] + ENEMY_HALF_SIZE, this.centre[1] - 6, 1, ENEMY_HALF_SIZE + 22);
+      }
+      else {
+        lineIntersection = new Rect(this.centre[0] - ENEMY_HALF_SIZE, this.centre[1] - 6, 1, ENEMY_HALF_SIZE + 22);
+      }
+    }
+    else {
+      lineIntersection = this.lineString.inflate(0, this.speedY + 2);
+    }
+
+    // Convert from global coordinates to screen coordinates
+    lineIntersection.move_ip(0, -screenPosition);
+
+    result = intersection(surface, lineIntersection, backgroundColour);
+    if (result.length > 0) {
+      intersectionFound = true;
+      if (!this.actors[0].name.startsWith('bee')) {
+        if (result.length > 1) {
+          this.centre[1] = Math.min(...result.map(c => c[1])) - ENEMY_HALF_SIZE;
+        }
+        else if (result.length === 1) {
+          this.centre[1] = result[0][1] - ENEMY_HALF_SIZE;
+        }
+
+        // Convert from screen coordinates to global coordinates
+        this.centre[1] += screenPosition;
+
+        this.speedY = 0;
+      }
+    }
+
+    // Convert from screen coordinates to global coordinates
+    lineIntersection.move_ip(0, screenPosition);
+
+    for (let rainbow of allRainbows.rainbows) {
+      if (lineIntersection.colliderect(rainbow.rainbowActor)) {
+        if (this.actors[0].name.startsWith('green') || this.actors[0].name.startsWith('bee')) {
+          this.speedX = -this.speedX;
+        }
+        else if (this.actors[0].name.startsWith('red') && (this.speedY < 1)) {
+          this.speedX = -this.speedX;
+        }
+        else {
+          this.centre[1] = Math.min(lineIntersection.bottom, rainbow.rainbowActor.bottom) - ENEMY_HALF_SIZE;
+        }
+      }
+    }
+    if ((!intersectionFound) && this.actors[0].name.startsWith('green')) {
+      this.speedX = -this.speedX;
+    }
+    else if (intersectionFound && this.actors[0].name.startsWith('bee')) {
+      this.speedY = -this.speedY;
+    }
+    else if (this.centre[0] >= (800 - ENEMY_HALF_SIZE)) {
+      this.speedX = -ENEMY_LATERAL_SPEED;
+    }
+    else if (this.centre[0] <= ENEMY_HALF_SIZE) {
+      this.speedX = ENEMY_LATERAL_SPEED;
+    }
+    if (this.centre[1] > (600 - ENEMY_HALF_SIZE)) {
+      this.centre[1] = 600 - ENEMY_HALF_SIZE;
+      if (!this.actors[0].name.startsWith('bee')) {
+        this.speedY = 0;
+      }
+    }
+    else if (this.actors[0].name.startsWith('red')) {
+      this.speedY += ENEMY_ACCELERATION_DOWN;
+      if (this.speedY > ENEMY_TERMINAL_SPEED) {
+        this.speedY = ENEMY_TERMINAL_SPEED;
+      }
+    }
+    this.centre[0] += this.speedX;
+    this.centre[1] += this.speedY;
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+  }
+}
+
+class AllEnemies {
+  constructor() {
+    this.restart();
+  }
+
+  restart() {
+    this.enemies = [];
+    for (const name of Object.getOwnPropertyNames(LEVEL_DATA['enemies'])) {
+      for (let pos of LEVEL_DATA['enemies'][name]) {
+        this.enemies.push(new Enemy(pos[0], pos[1], name));
+      }
+    }
+  }
+
+  draw(screenPosition) {
+    for (let enemy of this.enemies) {
+      enemy.draw(screenPosition);
+    }
+  }
+
+  update(surface, backgroundColour, allPlatforms, allRainbows, screenPosition) {
+    if (surface == null) {
+      return;
+    }
+    for (let enemy of this.enemies) {
+      enemy.update(surface, backgroundColour, allPlatforms, allRainbows, screenPosition);
+    }
+  }
+
+  killEnemy(index, allCollectables) {
+    allCollectables.addCollectable(this.enemies[index].centre[0], this.enemies[index].centre[1]);
+    this.enemies.splice(index, 1);
+  }
+
+  enemyHalfSize() {
+    return ENEMY_HALF_SIZE;
+  }
+}
+
+const COLLECTABLE_NAMES = ['collectable_1', 'collectable_2', 'collectable_3', 'collectable_4', 'collectable_5', 'collectable_rainbow'];
+const FLYING_COLLECTABLE_NAMES = ['flying_candy_1', 'flying_candy_2', 'flying_candy_3', 'flying_candy_4'];
+
+const COLLECTABLE_HALF_SIZE = 10;
+
+class CollectableFlying {
+  constructor(startX, startY) {
+    this.centre = [startX, startY];
+    this.speedX = getRandomInteger(-startX, 800 - startX + 1) / 100;
+    this.speedY = getRandomInteger(-6, -3);
+    this.accelerationDown = 0.1;
+    this.actors = [];
+    for (let name of FLYING_COLLECTABLE_NAMES) {
+      let actor = new Actor(name);
+      actor.pos = [startX, startY];
+      this.actors.push(actor);
+    }
+    this.indexActor = 0;
+  }
+
+  draw(screenPosition) {
+    let index = Math.floor(this.indexActor / 4) % FLYING_COLLECTABLE_NAMES.length;
+    this.actors[index].posx = this.centre[0];
+    this.actors[index].posy = this.centre[1] - screenPosition;
+    this.actors[index].draw();
+  }
+
+  update(screenPosition) {
+    this.centre[0] += this.speedX;
+    if ((this.centre[0] < COLLECTABLE_HALF_SIZE) || (this.centre[0] > (800 - COLLECTABLE_HALF_SIZE))) {
+      this.centre[0] -= this.speedX;
+      this.speedX = 0;
+    }
+    this.speedY += this.accelerationDown;
+    this.centre[1] += this.speedY;
+    this.indexActor += 1;
+  }
+
+  checkCollission(surface, backgroundColour, allPlatforms) {
+    if (surface == null) {
+      return [false, [0, 0]];
+    }
+
+    if (this.speedY > 1) {
+      let boundingBox = new Rect(this.centre[0] - COLLECTABLE_HALF_SIZE, this.centre[1], COLLECTABLE_HALF_SIZE * 2, COLLECTABLE_HALF_SIZE),
+          result, point;
+
+      // Convert from global coordinates to screen coordinates
+      boundingBox.move_ip(0, -screenPosition);
+
+      result = intersection(surface, boundingBox, backgroundColour);
+      if (result.length > 0) {
+        point = [this.centre[0], this.centre[1]];
+        if (result.length > 1) {
+          point[1] = Math.min(...result.map(c => c[1])) - COLLECTABLE_HALF_SIZE;
+        }
+        else if (result.length === 1) {
+          point[1] = result[0][1] - COLLECTABLE_HALF_SIZE;
+        }
+
+        // Convert from screen coordinates to global coordinates
+        point[1] += screenPosition;
+
+        return [true, point];
+      }
+    }
+    return [false, [0, 0]];
+  }
+}
+
+class Collectable {
+  constructor(startX, startY) {
+    this.centre = [startX, startY];
+    this.creationTime = 0;
+    this.actor = new Actor(COLLECTABLE_NAMES[getRandomInteger(0, 6)]);
+    this.actor.pos = [startX, startY];
+  }
+
+  draw(screenPosition) {
+    this.actor.posy = this.centre[1] - screenPosition;
+    this.actor.draw();
+  }
+
+  update() {
+    this.creationTime += 1;
+  }
+
+  isRainbow() {
+    if (this.actor.name === 'collectable_rainbow') {
+      return true;
+    }
+    return false;
+  }
+}
+
+class Collectables {
+  constructor() {
+    this.collectablesFlying = [];
+    this.collectables = [];
+  }
+
+  restart() {
+    this.collectablesFlying = [];
+    this.collectables = [];
+  }
+
+  addCollectable(startX, startY) {
+    this.collectablesFlying.push(new CollectableFlying(startX, startY));
+  }
+
+  draw(screenPosition) {
+    for (let collectable of this.collectablesFlying) {
+      collectable.draw(screenPosition);
+    }
+    for (let collectable of this.collectables) {
+      collectable.draw(screenPosition);
+    }
+  }
+
+  update(surface, backgroundColour, allPlatforms, player, screenPosition) {
+    if (surface == null) {
+      return;
+    }
+
+    for (let collectable of this.collectablesFlying) {
+      collectable.update(screenPosition);
+    }
+    for (let collectable of this.collectables) {
+      collectable.update();
+    }
+    for (let i = this.collectablesFlying.length - 1; i >= 0; i--) {
+      let [collission, point] = this.collectablesFlying[i].checkCollission(surface, backgroundColour);
+      if (collission) {
+        this.collectables.push(new Collectable(point[0], point[1]));
+        this.collectablesFlying.splice(i, 1);
+      }
+      else if (this.collectablesFlying[i].centre[1] > (600 + COLLECTABLE_HALF_SIZE)) {
+        this.collectablesFlying.splice(i, 1);
+      }
+    }
+    for (let i = this.collectables.length - 1; i >= 0; i--) {
+      let playerRect = new Rect(player.centre[0] - PLAYER_HALF_SIZE_X, player.centre[1] - PLAYER_HALF_SIZE_Y, PLAYER_HALF_SIZE_X * 2, PLAYER_HALF_SIZE_Y * 2),
+          collectableRect = new Rect(this.collectables[i].centre[0] - COLLECTABLE_HALF_SIZE, this.collectables[i].centre[1] - COLLECTABLE_HALF_SIZE, COLLECTABLE_HALF_SIZE * 2, COLLECTABLE_HALF_SIZE * 2);
+      if (playerRect.colliderect(collectableRect)) {
+        if (this.collectables[i].isRainbow()) {
+          player.addRainbow();
+        }
+        this.removeCollectable(i);
+      }
+    }
+  }
+
+  removeCollectable(index) {
+    this.collectables.splice(index, 1);
+  }
+}
+
+const PLAYER_HALF_SIZE_X = 10;
+const PLAYER_HALF_SIZE_Y = 18;
+const PLAYER_ACCELERATION_DOWN = 0.5;
+const PLAYER_JUMP_SPEED = 14;
+const PLAYER_TERMINAL_SPEED = 12;
+const PLAYER_LATERAL_SPEED = 4;
+const COYOTE_TIME_VERTICAL_SPEED = 4;
+const PLAYER_VERTICAL_SPEED_TO_DESTROY_RAINBOW = 5;
+const PLAYER_MIN_TIME_BETWEEN_RAINBOWS = 16;
+
+/*
+ * Return an Array of coordinates where boundingBox has collided with the platforms in surface.
+ *
+ * Due to smoothing to approximate lines that are not strictly horizontal or vertical,
+ * it is easier to check a particular pixel is not the background color than
+ * to check a particular pixel is of a particular color.
+ */
+function intersection(surface, boundingBox, background = [0, 0, 0]) {
+  let area = (new Rect(0, 0, surface.width, surface.height)).clip(boundingBox),
+      xMin = Math.floor(area.left),
+      xMax = Math.ceil(area.right),
+      yMin = Math.floor(area.top),
+      yMax = Math.ceil(area.bottom),
+      result = [];
+  for (let x = xMin; x < xMax; x++) {
+    for (let y = yMin; y < yMax; y++) {
+      if (!Surface.isColorEqual(surface.getAt(x, y), background)) {
+        result.push([x, y]);
+      }
+    }
+  }
+  return result;
+}
+
+const PLAYER_IMAGE_NAMES = ['player_stand_right', 'player_walk_1_right', 'player_stand_right', 'player_walk_2_right', 'player_jump_up_right', 'player_jump_down_right',
+                            'player_stand_left', 'player_walk_1_left', 'player_stand_left', 'player_walk_2_left', 'player_jump_up_left', 'player_jump_down_left',
+                            'player_collided_1', 'player_collided_2'];
+
+class Player {
+  constructor() {
+    this.centre = [400, 500];
+    this.centredLineString = new Rect(-PLAYER_HALF_SIZE_X, -PLAYER_HALF_SIZE_Y, PLAYER_HALF_SIZE_X * 2, PLAYER_HALF_SIZE_Y * 2);
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+    this.speedY = 0;
+    this.walking = false;
+    this.directionX = -1;
+    this.jumping = false;
+    this.actors = [];
+    for (let name of PLAYER_IMAGE_NAMES) {
+      this.actors.push(new Actor(name));
+    }
+    this.numberOfRainbows = 1;
+    this.lastRainbowShot = PLAYER_MIN_TIME_BETWEEN_RAINBOWS;
+    this.active = true;
+    this.lives = 3;
+  }
+
+  draw(screenPosition) {
+    let indexImage = 0;
+    if (this.active) {
+      if (this.jumping) {
+        if (this.speedY < 0) {
+          indexImage = 4;
+        }
+        else {
+          indexImage = 5;
+        }
+      }
+      else if (this.walking) {
+        indexImage = Math.floor(this.centre[0] / 13) % 4;
+      }
+      if (this.directionX < 0) {
+        indexImage += 6;
+      }
+    }
+    else {
+      indexImage = 12 + (Math.floor(this.centre[0] / 13) % 2);
+    }
+    this.actors[indexImage].posx = this.centre[0];
+    this.actors[indexImage].posy = this.centre[1] - screenPosition;
+    this.actors[indexImage].draw();
+  }
+
+  intersectEnemy(allEnemies) {
+    let playerRect = new Rect(this.centre[0] - PLAYER_HALF_SIZE_X, this.centre[1] - PLAYER_HALF_SIZE_Y, PLAYER_HALF_SIZE_X * 2, PLAYER_HALF_SIZE_Y * 2),
+        enemyRect;
+    for (let enemy of allEnemies.enemies) {
+      if (enemy.active) {
+        enemyRect = new Rect(enemy.centre[0] - allEnemies.enemyHalfSize(), enemy.centre[1] - allEnemies.enemyHalfSize(), allEnemies.enemyHalfSize() * 2, allEnemies.enemyHalfSize() * 2);
+        if (playerRect.colliderect(enemyRect)) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  addRainbow() {
+    if (this.numberOfRainbows < 3) {
+      this.numberOfRainbows += 1;
+    }
+  }
+
+  update(surface, backgroundColour, allPlatforms, allRainbows, allCollectables, allEnemies) {
+    if (surface == null) {
+      return;
+    }
+
+    if (this.lives === 0) {
+      return;
+    }
+    if (!this.active) {
+      this.speedY += PLAYER_ACCELERATION_DOWN;
+      this.centre[0] += Math.floor(this.speedX / 2);
+      this.centre[1] += Math.floor(this.speedY / 2);
+      if (this.centre[1] > (600 + (PLAYER_HALF_SIZE_Y * 6))) {
+        this.lives -= 1;
+        if (this.lives > 0) {
+          this.centre = [400, 500];
+          this.speedX = 0;
+          this.speedY = 0;
+          this.numberOfRainbows = 1;
+          this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+          allRainbows.restart();
+          allCollectables.restart();
+          allEnemies.restart();
+          this.active = true;
+        }
+      }
+      return;
+    }
+    if (this.speedY >= 0) {
+      let boundingBox, result, newPositionY;
+      if (!this.jumping) {
+        boundingBox = new Rect(this.lineString.x, this.lineString.y, this.lineString.width, this.lineString.height);
+      }
+      else {
+        boundingBox = new Rect(this.centre[0] - PLAYER_HALF_SIZE_X, this.centre[1] + PLAYER_HALF_SIZE_Y - 2, PLAYER_HALF_SIZE_X * 2, this.speedY + 4);
+      }
+
+      // Convert from global coordinates to screen coordinates
+      boundingBox.move_ip(0, -screenPosition);
+
+      result = intersection(surface, boundingBox, backgroundColour);
+      if (result.length > 0) {
+        newPositionY = this.centre[1];
+        if (result.length > 1) {
+          newPositionY = Math.min(...result.map(c => c[1])) - PLAYER_HALF_SIZE_Y;
+        }
+        else if (result.length === 1) {
+          newPositionY = result[0][1] - PLAYER_HALF_SIZE_Y;
+        }
+
+        // Convert from screen coordinates to global coordinates
+        newPositionY += screenPosition;
+
+        if (this.centre[1] > newPositionY) {
+          this.centre[1] = newPositionY;
+        }
+        this.speedY = 0;
+        this.jumping = false;
+      }
+
+      // Convert from screen coordinates to global coordinates
+      boundingBox.move_ip(0, screenPosition);
+
+      let previousSpeed = this.speedY;
+      for (let i = allRainbows.rainbows.length - 1; i >= 0; i--) {
+        if (allRainbows.rainbows[i].timeFromCreation >= 0) {
+          if (boundingBox.colliderect(allRainbows.rainbows[i].rainbowActor)) {
+            if (previousSpeed >= PLAYER_VERTICAL_SPEED_TO_DESTROY_RAINBOW) {
+              allRainbows.rainbowFall(i);
+            }
+          }
+        }
+      }
+      if ((!this.jumping) && (this.speedY >= COYOTE_TIME_VERTICAL_SPEED)) {
+        this.jumping = true;
+      }
+    }
+    if (this.centre[1] > (600 - PLAYER_HALF_SIZE_Y)) {
+      this.centre[1] = 600 - PLAYER_HALF_SIZE_Y;
+      this.speedY = 0;
+      this.jumping = false;
+    }
+    else {
+      this.speedY += PLAYER_ACCELERATION_DOWN;
+    }
+    if (this.speedY > PLAYER_TERMINAL_SPEED) {
+      this.speedY = PLAYER_TERMINAL_SPEED;
+    }
+    this.centre[1] += this.speedY;
+    if (this.intersectEnemy(allEnemies)) {
+      this.active = false;
+      this.speedY = -PLAYER_JUMP_SPEED;
+      if (this.centre[0] > 400) {
+        this.speedX = -PLAYER_LATERAL_SPEED;
+      }
+      else {
+        this.speedX = PLAYER_LATERAL_SPEED;
+      }
+    }
+    this.lineString = this.centredLineString.move(this.centre[0], this.centre[1]);
+    this.lastRainbowShot += 1;
+  }
+
+  jump() {
+    if (!this.jumping) {
+      this.speedY = -PLAYER_JUMP_SPEED;
+      this.jumping = true;
+    }
+  }
+
+  stopJump() {
+    if (this.jumping && (this.speedY < (-PLAYER_JUMP_SPEED / 2))) {
+      this.speedY = -PLAYER_JUMP_SPEED / 2;
+    }
+  }
+
+  left() {
+    this.centre[0] -= PLAYER_LATERAL_SPEED;
+    this.directionX = -1;
+    if (this.centre[0] < PLAYER_HALF_SIZE_X) {
+      this.centre[0] = PLAYER_HALF_SIZE_X;
+    }
+    this.walking = true;
+  }
+
+  right() {
+    this.centre[0] += PLAYER_LATERAL_SPEED;
+    this.directionX = 1;
+    if (this.centre[0] > (800 - PLAYER_HALF_SIZE_X)) {
+      this.centre[0] = 800 - PLAYER_HALF_SIZE_X;
+    }
+    this.walking = true;
+  }
+
+  still() {
+    this.walking = false;
+  }
+
+  shootRainbow(allRainbows) {
+    if (this.lastRainbowShot > PLAYER_MIN_TIME_BETWEEN_RAINBOWS) {
+      this.lastRainbowShot = 0;
+      allRainbows.addRainbows(this.numberOfRainbows, this.centre[0] + (this.directionX * (PLAYER_HALF_SIZE_X + 2)), this.centre[1] + PLAYER_HALF_SIZE_Y, this.directionX);
+    }
+  }
+}
+
+function ScreenPositionUpdate(player, screenPosition) {
+  if ((player.centre[1] - screenPosition) < 150) {
+    screenPosition = player.centre[1] - 150;
+  }
+  else if ((player.centre[1] - screenPosition) > (600 - 150)) {
+    screenPosition = player.centre[1] - (600 - 150);
+    if (screenPosition > 0) {
+      screenPosition = 0;
+    }
+  }
+  return screenPosition;
+}
+
+const BACKGROUND_BASE_COLOUR = [95, 148, 255];
+
+function BackgroundColour(screenPosition, maxScreenPosition) {
+  let colourScale = Math.abs(screenPosition / maxScreenPosition);
+  if (colourScale > 1) {
+    colourScale = 1;
+  }
+  return [Math.trunc(BACKGROUND_BASE_COLOUR[0] * colourScale),
+          Math.trunc(BACKGROUND_BASE_COLOUR[1] * colourScale),
+          Math.trunc(BACKGROUND_BASE_COLOUR[2] * colourScale)];
+}
+
+var surface, backgroundColour, allPlatforms, allRainbows, player, allEnemies, allCollectables, screenPosition, maxScreenPosition, levelClear;
+
+function reset() {
+  surface = null;
+  backgroundColour = [0, 0, 0];
+
+  allPlatforms = new AllPlatforms();
+  allRainbows = new AllRainbows();
+  player = new Player();
+  allEnemies = new AllEnemies();
+  allCollectables = new Collectables();
+  screenPosition = 0;
+  maxScreenPosition = allPlatforms.getMaxScreenPosition();
+  levelClear = false;
+}
+
+function draw() {
+  // Get the screen with just the platform lines
+  screen.fill(backgroundColour);
+  allPlatforms.drawLines();
+  surface = screen.getSurface();
+
+  screen.fill(backgroundColour);
+  allPlatforms.draw();
+  allEnemies.draw(screenPosition);
+  allRainbows.draw(screenPosition);
+  allCollectables.draw(screenPosition);
+  player.draw(screenPosition);
+  for (let i = 0; i < player.lives; i++) {
+    screen.blit('player_icon', [10 + (i * 14), 10]);
+  }
+  if (player.lives === 0) {
+    screen.draw.text("GAME OVER", {
+      center: [400, 260],
+      fontsize: 55,
+      color: [255, 0, 0]
+    });
+  }
+  if (levelClear) {
+    screen.draw.text("LEVEL CLEAR", {
+      center: [400, 260],
+      fontsize: 55,
+      color: [0, 0, 255]
+    });
+  }
+}
+
+function update(dt) {
+  if (keyboard[keys.LEFT]) {
+    player.left();
+  }
+  else if (keyboard[keys.RIGHT]) {
+    player.right();
+  }
+  else {
+    player.still();
+  }
+  if (keyboard[keys.UP]) {
+    player.jump();
+  }
+  else {
+    player.stopJump();
+  }
+  player.update(surface, backgroundColour, allPlatforms, allRainbows, allCollectables, allEnemies);
+  allRainbows.update(allEnemies, allCollectables, screenPosition);
+  allEnemies.update(surface, backgroundColour, allPlatforms, allRainbows, screenPosition);
+  allCollectables.update(surface, backgroundColour, allPlatforms, player, screenPosition);
+  allPlatforms.update(screenPosition);
+  if (player.centre[1] < -maxScreenPosition) {
+    levelClear = true;
+  }
+
+  // Update the screen position last so surface is consistent in the above updates
+  screenPosition = ScreenPositionUpdate(player, screenPosition);
+  backgroundColour = BackgroundColour(screenPosition, maxScreenPosition);
+}
+
+function on_key_down(key) {
+  if (key === keys.SPACE) {
+    player.shootRainbow(allRainbows);
+  }
+}
+
+window.addEventListener('load', (event) => {
+  images.LOAD('#imageLoader img');
+  reset();
+  screen.set_mode('#screen', '#reset', '#pause');
+});
+</script>
+</body>
+
+</html>
