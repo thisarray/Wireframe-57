@@ -548,6 +548,8 @@ pgzrun.go()
  * - Space: print the enemy positions
  */
 
+const output = document.querySelector('#output');
+
 const LEVEL_DATA = JSON.parse(document.querySelector('#level').textContent);
 
 const ENEMY_NAMES = ['green_worm_right', 'green_worm_left', 'red_worm_right', 'red_worm_left','bee_1_right', 'bee_1_left'];
